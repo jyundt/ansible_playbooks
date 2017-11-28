@@ -1,0 +1,32 @@
+homeassistant:
+  name: Home
+  latitude: 40.7308
+  longitude: -73.9975
+  elevation: 8
+  unit_system: imperial
+  time_zone: {{timezone}}
+  customize: !include customize.yaml
+frontend:
+config:
+http:
+  api_password: {{homeassistant_web_password}}
+  server_port: {{homeassistant_port}}
+updater:
+discovery:
+conversation:
+history:
+logbook:
+map:
+sun:
+sensor:
+  - platform: yr
+tts:
+  - platform: google
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+zwave:
+  usb_path: /dev/ttyUSB0
+zha:
+  usb_path: /dev/ttyUSB1
+  database_path: {{homeassistant_conf_dir}}/zha.db

@@ -1,0 +1,84 @@
+---
+- name: "Include OS specific vars"
+  include_vars: "{{ansible_distribution}}.yml"
+
+- name: "Include OS specific tasks"
+  include_tasks: "{{ansible_distribution}}.yml"
+
+- name: "Install Ansible deps"
+  package: 
+    name: "{{item}}"
+    update_cache: yes  
+  with_items: "{{base_deps}}"
+
+- name: "Include DigitalOcean specific tasks"
+  include_tasks: "digitalocean.yml"
+  when: ansible_system_vendor == "DigitalOcean"
+
+- name: "Run AWS specific tasks"
+  include_tasks: aws.yml
+  when: (ansible_product_uuid | search("^EC2") and ansible_system_vendor == "Xen")
+
+- name: "Disable password based root access"
+  lineinfile: 
+    dest: /etc/ssh/sshd_config
+    line: "PermitRootLogin without-password"
+    state: present
+    regexp: "^PermitRootLogin"
+  notify: Restart sshd
+
+- name: "Install ntp"
+  package:
+    name: "{{ntp_package}}"
+    update_cache: yes
+
+- name: "Enable ntp"
+  service:
+    name: "{{ntp_service}}"
+    state: started
+    enabled: True
+
+- name: "Install ssh pub keys for root"
+  authorized_key:
+    user: root
+    key: '{{lookup("file", item)}}'
+  with_items: "{{ssh_keys}}"
+
+- name: "Install firewalld"
+  package:
+    name: firewalld
+
+- name: "Enable firewalld"
+  service:
+    name: firewalld
+    state: started
+    enabled: True
+
+- name: "Open firewalld for sshd"
+  firewalld:
+    service: ssh
+    state: enabled
+    permanent: True
+    immediate: True
+
+- name: "Install sysstat"
+  package: 
+    name: sysstat
+    update_cache: yes
+
+- name: "Enable sysstat"
+  service:
+    name: sysstat
+    state: started
+    enabled: yes
+
+- name: "Set timezone"
+  timezone:
+    name: "{{timezone}}"
+  notify: Restart ntp
+
+- name: "Remove pi user"
+  user:
+    name: pi
+    state: absent
+    remove: yes

@@ -1,0 +1,14 @@
+---
+- name: Add DigitalOcean do-agent RPM GPG key
+  rpm_key:
+    state: present
+    key: "https://repos.sonar.digitalocean.com/sonar-agent.asc"
+
+- name: Install DigitalOcean do-agent repo
+  yum_repository:
+    name: "digitalocean-agent"
+    file: "DigitalOcean-Sonar"
+    description: "DigitalOcean agent"
+    baseurl: "https://repos.sonar.digitalocean.com/yum/$basearch"
+    gpgcheck: yes
+    gpgkey: "https://repos.sonar.digitalocean.com/sonar-agent.asc"

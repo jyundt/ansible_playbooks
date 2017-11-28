@@ -1,0 +1,11 @@
+---
+- name: Upgrade all packages
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: Remove ufw
+  apt:
+    name: ufw
+    state: absent
+    purge: yes

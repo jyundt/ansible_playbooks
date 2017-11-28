@@ -1,0 +1,25 @@
+---
+- name: Install EPEL
+  yum: 
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ansible_distribution_major_version}}.noarch.rpm"
+
+- name: Upgrade all packages
+  yum: 
+    name: "*"
+    state: latest 
+    update_cache: yes
+
+- name: Install Ansible deps
+  yum: 
+    name: "{{item}}"
+    update_cache: yes
+  with_items:
+  - libsemanage-python
+  - libselinux-python
+  - centos-release-scl-rh
+
+- name: Enable SELinux
+  selinux: 
+    policy: targeted
+    state: enforcing
+  when: ansible_os_family == "RedHat"

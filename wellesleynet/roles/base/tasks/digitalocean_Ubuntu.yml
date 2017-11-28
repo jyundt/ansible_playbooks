@@ -1,0 +1,10 @@
+---
+- name: Add DigitalOcean do-agent APT GPG key
+  apt_key:
+    state: present
+    url: "https://repos.sonar.digitalocean.com/sonar-agent.asc"
+
+- name: Install DigitalOcean do-agent repo
+  apt_repository:
+    repo: "deb https://repos.sonar.digitalocean.com/apt main main"
+    state: present

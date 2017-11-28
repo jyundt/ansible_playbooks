@@ -1,0 +1,97 @@
+---
+- name: "Include OS specific vars"
+  include_vars: "{{ansible_distribution}}.yml"
+
+- name: "Include OS specific tasks"
+  include_tasks: "{{ansible_distribution}}.yml"
+
+- name: "Create homeassistant group"
+  group:
+    name: "{{homeassistant_group}}"
+
+- name: "Create homeassistant user"
+  user:
+    name: "{{homeassistant_user}}"
+    group: "{{homeassistant_group}}"
+    groups: "{{homeassistant_group}},dialout"
+    shell: "{{homeassistant_shell}}"
+
+- name: "Create homeassistant dirs"
+  file:
+    path: "{{item}}"
+    state: directory
+    mode: 0755
+    group: "{{homeassistant_group}}"
+    owner: "{{homeassistant_user}}"
+  with_items:
+    - "{{homeassistant_dir}}"
+    - "{{homeassistant_conf_dir}}"
+
+- name: "Install home-assistant deps"
+  package: 
+    name: "{{item}}"
+    update_cache: yes
+  with_items: "{{homeassistant_deps}}"
+
+- name: "Create home-assistant requirements.txt"
+  copy:
+    src: "requirements.txt"
+    dest: "{{homeassistant_requirements}}"
+    mode: 0644
+    owner: "{{homeassistant_user}}"   
+    group: "{{homeassistant_group}}"   
+
+- name: "Install home-assistant + venv"
+  pip:
+    requirements: "{{homeassistant_requirements}}"
+    virtualenv: "{{homeassistant_venv}}"
+  become: yes
+  become_user: "{{homeassistant_user}}"
+  notify: Restart home-assistant
+
+- name: "Install home-assistant configuration file"
+  template:
+    src: configuration.yaml.j2
+    dest: "{{homeassistant_conf_dir}}/configuration.yaml"
+    mode: 0644
+    owner: "{{homeassistant_user}}"
+    group: "{{homeassistant_group}}"
+  notify: Restart home-assistant
+
+- name: "Installl misc home-assistant supporting conf files"
+  copy:
+    src: "{{item}}"
+    dest: "{{homeassistant_conf_dir}}/{{item}}"
+    mode: 0644
+    owner: "{{homeassistant_user}}"
+    group: "{{homeassistant_group}}"
+  notify: Restart home-assistant
+  with_items:
+    - automations.yaml
+    - customize.yaml
+    - groups.yaml
+    - scripts.yaml
+
+#This is clunky and makes everything systemd dependent, fixme!
+- name: "Create home-assistant systemd unit file"
+  template:
+    src: home-assistant.service.j2
+    dest: "{{homeassistant_systemd_unit_file}}"
+    mode: 0644
+    owner: "{{homeassistant_user}}"
+    group: "{{homeassistant_group}}"
+  notify: Restart home-assistant
+
+- name: "Start/enable home-assistant"
+  service:
+    name: "{{homeassistant_service}}"
+    state: started
+    enabled: yes
+
+# temp until proxy is written
+- name: "Open firewalld for home-assistant"
+  firewalld:
+    port: 8123/tcp
+    state: enabled
+    permanent: True
+    immediate: True

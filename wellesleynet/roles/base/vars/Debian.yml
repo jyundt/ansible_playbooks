@@ -1,0 +1,5 @@
+---
+ntp_package: "ntp"
+ntp_service: "{{ntp_package}}"
+base_deps:
+  - apt-transport-https

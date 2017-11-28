@@ -1,0 +1,14 @@
+---
+- name: "Include OS specific DigitalOcean tasks"
+  include_tasks: "digitalocean_{{ansible_distribution}}.yml"
+
+- name: Install DigitalOcean do-agent
+  package: 
+    name: "do-agent"
+    update_cache: yes
+
+- name: Start DigitalOcean do-agent
+  service: 
+    name: do-agent
+    state: started
+    enabled: yes

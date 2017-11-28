@@ -1,0 +1,10 @@
+---
+- name: Restart sshd
+  service:
+    name: sshd
+    state: restarted
+
+- name: Restart ntp
+  service:
+    name: "{{ntp_service}}"
+    state: restarted

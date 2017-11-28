@@ -1,0 +1,6 @@
+---
+homeassistant_deps:
+  - rh-python35
+  - rh-python35-python-pip
+  - rh-python35-python-virtualenv
+

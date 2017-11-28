@@ -1,0 +1,7 @@
+---
+#- name: Deploy unifi controller
+#  hosts: unifi
+#  roles:
+#    - base
+#    - unificontroller
+#    - certbot

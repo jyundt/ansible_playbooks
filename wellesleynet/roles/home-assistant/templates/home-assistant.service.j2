@@ -1,0 +1,11 @@
+[Unit]
+Description=Home Assistant
+After=network-online.target
+
+[Service]
+Type=simple
+User={{homeassistant_user}}
+ExecStart={{homeassistant_hass_bin}} -c "{{homeassistant_conf_dir}}"
+
+[Install]
+WantedBy=multi-user.target
