@@ -6,27 +6,49 @@ homeassistant:
   unit_system: imperial
   time_zone: {{timezone}}
   customize: !include customize.yaml
+  customize_domain: !include customize_domain.yaml
+
 frontend:
+
 config:
+
 http:
   api_password: {{homeassistant_web_password}}
   server_port: {{homeassistant_port}}
+
 updater:
+
 discovery:
+
 conversation:
+
 history:
+
 logbook:
+
 map:
-sun:
+
 sensor:
-  - platform: yr
+
 tts:
   - platform: google
+
 group: !include groups.yaml
+
 automation: !include automations.yaml
+
 script: !include scripts.yaml
+
 zwave:
   usb_path: /dev/ttyUSB0
+
 zha:
   usb_path: /dev/ttyUSB1
   database_path: {{homeassistant_conf_dir}}/zha.db
+
+device_tracker:
+  - platform: unifi
+    username: {{homeassistant_user}}
+    password: {{vault_homeassistant_unifi_password}}
+    host: {{unifi_url}}
+    track_new_devices: False

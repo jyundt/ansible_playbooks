@@ -69,8 +69,10 @@
   with_items:
     - automations.yaml
     - customize.yaml
+    - customize_domain.yaml
     - groups.yaml
     - scripts.yaml
+    - known_devices.yaml
 
 #This is clunky and makes everything systemd dependent, fixme!
 - name: "Create home-assistant systemd unit file"

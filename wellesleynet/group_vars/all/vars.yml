@@ -1,7 +1,10 @@
 ---
+timezone: UTC
 lets_encrypt_pub_key: "/etc/letsencrypt/live/{{inventory_hostname}}/fullchain.pem"
 lets_encrypt_priv_key: "/etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem"
 ssh_keys:
   - jyundt-id_rsa.pub
 certbot_username: "{{vault_certbot_username}}"
 ssl_cipher_suite: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS"
+homeassistant_unifi_password: "{{vault_homeassistant_unifi_password}}"
+unifi_url: "unifi.wellesleynet.com"
