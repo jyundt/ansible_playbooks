@@ -1,1 +1,3 @@
 ---
+nuc_packages:
+  - procps

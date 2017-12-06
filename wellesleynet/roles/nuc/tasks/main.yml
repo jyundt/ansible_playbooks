@@ -1,0 +1,12 @@
+---
+- name: "Install NUC packages"
+  package:
+    name: "{{item}}"
+    update_cache: yes
+  with_items: "{{nuc_packages}}"
+
+- name: "Enable NUC services"
+  service:
+    name: libvirtd
+    state: started
+    enabled: True

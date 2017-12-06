@@ -9,17 +9,7 @@
     state: latest 
     update_cache: yes
 
-- name: Install Ansible deps
-  yum: 
-    name: "{{item}}"
-    update_cache: yes
-  with_items:
-  - libsemanage-python
-  - libselinux-python
-  - centos-release-scl-rh
-
 - name: Enable SELinux
   selinux: 
     policy: targeted
     state: enforcing
-  when: ansible_os_family == "RedHat"
