@@ -9,3 +9,4 @@ ssl_cipher_suite: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AE
 homeassistant_unifi_password: "{{vault_homeassistant_unifi_password}}"
 unifi_url: "unifi.wellesleynet.com"
 zorya_root_password: "{{vault_zorya_root_password}}"
+homeassistant_lifx_api_token: "{{vault_homeassistant_lifx_api_token}}"
