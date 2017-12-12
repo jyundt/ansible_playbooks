@@ -3,4 +3,5 @@
   hosts: nuc
   roles:
     - base
+    - docker
     - nuc

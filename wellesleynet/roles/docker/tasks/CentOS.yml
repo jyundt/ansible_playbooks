@@ -1,0 +1,13 @@
+---
+- name: "Add Docker rpm GPG key"
+  rpm_key:
+    state: present
+    key: "{{docker_rpm_key}}"
+
+- name: "Add Docker yum repo"
+  yum_repository:
+    name: "docker-ce-stable"
+    file: "docker-ce"
+    description: "Docker CE Stable - $basearch"
+    baseurl: "https://download.docker.com/linux/centos/7/$basearch/stable"
+    gpgcheck: yes

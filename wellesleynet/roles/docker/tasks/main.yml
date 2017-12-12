@@ -1,0 +1,20 @@
+---
+- name: "Include OS specific vars"
+  include_vars: "{{ansible_distribution}}.yml"
+
+- name: "Remove OS docker packages"
+  package:
+    name: "{{item}}"
+    state: absent
+  with_items: "{{docker_os_docker_packages}}" 
+
+- name: "Include OS specific tasks"
+  include_tasks: "{{ansible_distribution}}.yml"
+
+- name: "Install Docker"
+  package:
+    name: docker-ce
+    update_cache: yes
+  notify: "Restart docker"
+
+
