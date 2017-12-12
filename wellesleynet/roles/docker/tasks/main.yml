@@ -11,10 +11,15 @@
 - name: "Include OS specific tasks"
   include_tasks: "{{ansible_distribution}}.yml"
 
-- name: "Install Docker"
+- name: "Install Docker packages"
   package:
-    name: docker-ce
+    name: "{{item}}"
     update_cache: yes
   notify: "Restart docker"
+  with_items: "{{docker_packages}}"
 
-
+- name: "Start/enable docker"
+  service:
+    name: "docker"
+    state: started
+    enabled: yes

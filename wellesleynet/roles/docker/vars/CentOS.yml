@@ -2,10 +2,12 @@
 docker_os_docker_packages:
   - docker
   - docker-common
-  - docker-selinux
   - docker-engine
 docker_deps:
   - yum-utils
   - device-mapper-persistent-data
   - lvm2
+docker_packages:
+  - docker-ce
+  - docker-python
 docker_rpm_key: https://download.docker.com/linux/centos/gpg
