@@ -1,13 +1,9 @@
 ---
-homeassistant_user: "homeassistant"
-homeassistant_group: "homeassistant"
+homeassistant_docker_image: "homeassistant/home-assistant"
+homeassistant_docker_image_version: "0.59.2"
 homeassistant_port: 8123
-homeassistant_dir: "/home/{{homeassistant_user}}/homeassistant"
-homeassistant_conf_dir: "/home/{{homeassistant_user}}/.homeassistant"
-homeassistant_venv: "{{homeassistant_dir}}"
-homeassistant_shell: "/bin/false"
-homeassistant_requirements: "{{homeassistant_dir}}/requirements.txt"
-homeassistant_hass_bin: "{{homeassistant_venv}}/bin/hass"
+homeassistant_conf_dir: "/root/homeassistant"
 homeassistant_service: "home-assistant"
 homeassistant_systemd_unit_file: "/etc/systemd/system/{{homeassistant_service}}.service"
+homeassistant_unifi_user: "homeassistant"
 homeassistant_web_password: "{{vault_homeassistant_web_password}}"

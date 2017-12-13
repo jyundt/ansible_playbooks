@@ -42,14 +42,15 @@ script: !include scripts.yaml
 zwave:
   usb_path: /dev/ttyUSB0
 
-zha:
-  usb_path: /dev/ttyUSB1
-  database_path: {{homeassistant_conf_dir}}/zha.db
+#temporarily disabling until I get more zigbee devices
+#zha:
+#  usb_path: /dev/ttyUSB1
+#  database_path: {{homeassistant_conf_dir}}/zha.db
 
 device_tracker:
   - platform: unifi
-    username: {{homeassistant_user}}
-    password: {{vault_homeassistant_unifi_password}}
+    username: {{homeassistant_unifi_user}}
+    password: {{homeassistant_unifi_password}}
     host: {{unifi_url}}
     track_new_devices: False
 

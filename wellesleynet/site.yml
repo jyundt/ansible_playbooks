@@ -1,3 +1,2 @@
 ---
-- import_playbook: home-assistant.yml
 - import_playbook: nuc.yml

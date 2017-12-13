@@ -4,4 +4,5 @@
   roles:
     - base
     - docker
+    - home-assistant
     - kvm
