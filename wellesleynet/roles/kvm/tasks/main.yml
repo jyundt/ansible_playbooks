@@ -1,11 +1,11 @@
 ---
-- name: "Install NUC packages"
+- name: "Install kvm packages"
   package:
     name: "{{item}}"
     update_cache: yes
-  with_items: "{{nuc_packages}}"
+  with_items: "{{kvm_packages}}"
 
-- name: "Enable NUC services"
+- name: "Enable kvm services"
   service:
     name: libvirtd
     state: started

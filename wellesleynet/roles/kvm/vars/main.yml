@@ -1,10 +1,10 @@
 ---
-nuc_packages:
+kvm_packages:
   - procps-ng
   - lsof 
   - nmap
   - vim
   - '@Virtualization'
   - '@^Virtualization Host'
-nuc_services:
+kvm_services:
   - libvirtd

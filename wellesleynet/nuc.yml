@@ -4,4 +4,4 @@
   roles:
     - base
     - docker
-    - nuc
+    - kvm
