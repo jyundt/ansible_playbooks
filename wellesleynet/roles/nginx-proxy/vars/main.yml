@@ -1,0 +1,8 @@
+---
+nginx_proxy_docker_image: "nginx"
+nginx_proxy_docker_image_version: "1.13.7-alpine"
+nginx_proxy_dir: "/root/nginx_proxy"
+nginx_proxy_conf_dir: "{{nginx_proxy_dir}}/conf"
+nginx_proxy_ssl_dir: "{{nginx_proxy_dir}}/ssl"
+nginx_proxy_service: "nginx-proxy"
+nginx_proxy_systemd_unit_file: "/etc/systemd/system/{{nginx_proxy_service}}.service"

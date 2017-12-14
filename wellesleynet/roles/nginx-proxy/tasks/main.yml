@@ -1,0 +1,55 @@
+---
+- name: "Create nginx-proxy dirs"
+  file:
+    path: "{{item}}"
+    state: directory
+    mode: 0755
+    group: "root"
+    owner: "root"
+  with_items:
+    - "{{nginx_proxy_dir}}"
+    - "{{nginx_proxy_conf_dir}}"
+    - "{{nginx_proxy_ssl_dir}}"
+
+- name: "Create default nginx server config"
+  copy:
+    src: "00_default.conf"
+    dest: "{{nginx_proxy_conf_dir}}/00_default.conf"
+    mode: 0755
+    group: "root"
+    owner: "root"
+
+- name: "Create strong Diffie Hellman key"
+  command: "openssl dhparam -out {{nginx_proxy_ssl_dir}}/dhparams.pem 2048"
+  args:
+    creates: "{{nginx_proxy_ssl_dir}}/dhparams.pem"
+  notify:
+    - Restart nginx-proxy
+
+#This is clunky and makes everything systemd dependent, fixme!
+- name: "Create nginx-proxy systemd unit file"
+  template:
+    src: nginx-proxy.service.j2
+    dest: "{{nginx_proxy_systemd_unit_file}}"
+    mode: 0644
+    owner: "root"
+    group: "root"
+  notify: Restart nginx-proxy
+
+- name: "Start/enable nginx-proxy"
+  systemd:
+    name: "{{nginx_proxy_service}}"
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+# temp until proxy is written
+- name: "Open firewalld for nginx-proxy"
+  firewalld:
+    service: "{{item}}"
+    state: enabled
+    permanent: True
+    immediate: True
+  with_items:
+    - http
+    - https
