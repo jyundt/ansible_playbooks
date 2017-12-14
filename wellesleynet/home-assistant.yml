@@ -2,7 +2,4 @@
 - name: Deploy home-assistant
   hosts: home-assistant
   roles:
-    - base
     - home-assistant
-    - certbot
-    - nginx
