@@ -32,7 +32,13 @@
     - scripts.yaml
     - known_devices.yaml
 
-#This is clunky and makes everything systemd dependent, fixme!
+# Download image prior to bouncing service, minimizes downtime
+# (Handy trick from some old pals at Uber...)
+- name: "Pull home-assistant container"
+  docker_image:
+    name: "{{homeassistant_docker_image}}:{{homeassistant_docker_image_version}}"
+
+# This is clunky and makes everything systemd dependent, fixme!
 - name: "Create home-assistant systemd unit file"
   template:
     src: home-assistant.service.j2
