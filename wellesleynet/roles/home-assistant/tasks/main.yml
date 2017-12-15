@@ -30,7 +30,25 @@
     - customize_domain.yaml
     - groups.yaml
     - scripts.yaml
-    - known_devices.yaml
+
+# This is super jank.
+# This whole task could be removed if ansible properly supported
+# updating/editing yaml files inline (similar to the ini_file_module)
+- name: "Update known_devices.yaml with existing clients"
+  blockinfile:
+    create: yes
+    owner: root
+    group: root
+    mode: 0644
+    path: "{{homeassistant_conf_dir}}/known_devices.yaml"
+    marker: "#####{{item}}#####"
+    block: |
+      {{ lookup('file', '{{item}}.yaml') }}
+  with_items:
+    - jy
+    - ew
+    - am
+  notify: Restart home-assistant
 
 # Download image prior to bouncing service, minimizes downtime
 # (Handy trick from some old pals at Uber...)
