@@ -1,0 +1,10 @@
+<pool type="iscsi">
+  <name>{{kvm_iscsi_pool}}</name>
+  <source>
+    <host name='{{kvm_iscsi_host}}'/>
+    <device path='{{kvm_iscsi_device}}'/>
+  </source>
+  <target>
+    <path>/dev/disk/by-path</path>
+  </target>
+</pool>
