@@ -8,7 +8,7 @@ Restart=on-failure
 RestartSec=10
 ExecStartPre=-/usr/bin/docker kill {{homeassistant_service}}
 ExecStartPre=-/usr/bin/docker rm {{homeassistant_service}}
-ExecStart=/usr/bin/docker run --name {{homeassistant_service}} -p {{homeassistant_port}}:{{homeassistant_port}} -v {{homeassistant_conf_dir}}:/config -v /etc/localtime:/etc/localtime:ro --device=/dev/ttyUSB0:/dev/ttyUSB0 --device=/dev/ttyUSB1:/dev/ttyUSB1 {{homeassistant_docker_image}}:{{homeassistant_docker_image_version}}
+ExecStart=/usr/bin/docker run --name {{homeassistant_service}} --net=host -v {{homeassistant_conf_dir}}:/config -v /etc/localtime:/etc/localtime:ro --device=/dev/ttyUSB0:/dev/ttyUSB0 --device=/dev/ttyUSB1:/dev/ttyUSB1 {{homeassistant_docker_image}}:{{homeassistant_docker_image_version}}
 ExecStop=/usr/bin/docker stop {{homeassistant_service}}
 
 [Install]

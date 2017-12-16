@@ -80,3 +80,10 @@
     state: enabled
     permanent: True
     immediate: True
+
+- name: "Open firewalld for home-assistant lifx functionality"
+  firewalld:
+    port: "{{homeassistant_lifx_port}}/udp"
+    state: enabled
+    permanent: True
+    immediate: True
