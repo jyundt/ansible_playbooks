@@ -41,7 +41,7 @@
     group: root
     mode: 0644
     path: "{{homeassistant_conf_dir}}/known_devices.yaml"
-    marker: "#####{{item}}#####"
+    marker: "#####{mark} {{item}}#####"
     block: |
       {{ lookup('file', '{{item}}.yaml') }}
   with_items:
