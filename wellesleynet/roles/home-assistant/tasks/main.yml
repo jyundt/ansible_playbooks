@@ -1,4 +1,8 @@
 ---
+- name: "Include nginx-proxy vars"
+  include_vars:
+    file: "../../nginx-proxy/vars/main.yml"
+
 - name: "Create homeassistant dirs"
   file:
     path: "{{homeassistant_conf_dir}}"
@@ -87,3 +91,32 @@
     state: enabled
     permanent: True
     immediate: True
+
+- name: "Create nginx-proxy config"
+  template:
+    src: home-assistant.conf.j2
+    dest: "{{nginx_proxy_conf_dir}}/home-assistant.conf"
+    mode: 0644
+    owner: "root"
+    group: "root"
+  notify: Restart nginx-proxy
+
+- name: "Copy home-assistant ssl cert"
+  copy:
+    src: "fullchain.pem"
+    dest: "{{nginx_proxy_ssl_dir}}/{{homeassistant_url}}_fullchain.pem"
+    owner: "root"
+    group: "root"
+    mode: 0600
+  notify:
+    - Restart nginx-proxy
+
+- name: "Copy home-assistant ssl key"
+  copy:
+    src: "privkey.pem"
+    dest: "{{nginx_proxy_ssl_dir}}/{{homeassistant_url}}_privkey.pem"
+    owner: "root"
+    group: "root"
+    mode: 0400
+  notify:
+    - Restart nginx-proxy
