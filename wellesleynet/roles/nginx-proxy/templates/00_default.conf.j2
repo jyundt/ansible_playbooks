@@ -1,0 +1,12 @@
+server {
+    listen 80 default_server;
+    server_name _;
+    return 444;
+}
+
+server {
+    listen 443 ssl default_server;
+    ssl_certificate {{nginx_proxy_container_ssl_dir}}/{{nginx_proxy_default_ssl_cert}};
+    ssl_certificate_key {{nginx_proxy_container_ssl_dir}}/{{nginx_proxy_default_ssl_key}};
+    return 444;
+}

@@ -12,12 +12,34 @@
     - "{{nginx_proxy_ssl_dir}}"
 
 - name: "Create default nginx server config"
-  copy:
-    src: "00_default.conf"
+  template:
+    src: "00_default.conf.j2"
     dest: "{{nginx_proxy_conf_dir}}/00_default.conf"
-    mode: 0755
+    mode: 0644
     group: "root"
     owner: "root"
+  notify:
+    - Restart nginx-proxy
+
+- name: "Copy default nginx ssl cert"
+  copy:
+    src: "{{nginx_proxy_default_ssl_cert}}"
+    dest: "{{nginx_proxy_ssl_dir}}/{{nginx_proxy_default_ssl_cert}}"
+    owner: "root"
+    group: "root"
+    mode: 0600
+  notify:
+    - Restart nginx-proxy
+
+- name: "Copy default nginx ssl key"
+  copy:
+    src: "{{nginx_proxy_default_ssl_key}}"
+    dest: "{{nginx_proxy_ssl_dir}}/{{nginx_proxy_default_ssl_key}}"
+    owner: "root"
+    group: "root"
+    mode: 0400
+  notify:
+    - Restart nginx-proxy
 
 - name: "Create strong Diffie Hellman key"
   command: "openssl dhparam -out {{nginx_proxy_ssl_dir}}/dhparams.pem 2048"

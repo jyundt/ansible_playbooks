@@ -8,7 +8,7 @@ Restart=on-failure
 RestartSec=10
 ExecStartPre=-/usr/bin/docker kill {{nginx_proxy_service}}
 ExecStartPre=-/usr/bin/docker rm {{nginx_proxy_service}}
-ExecStart=/usr/bin/docker run --name {{nginx_proxy_service}} --net=host --net=host -v {{nginx_proxy_conf_dir}}:/etc/nginx/conf.d -v /etc/localtime:/etc/localtime:ro -v {{nginx_proxy_ssl_dir}}:/etc/nginx/ssl {{nginx_proxy_docker_image}}:{{nginx_proxy_docker_image_version}}
+ExecStart=/usr/bin/docker run --name {{nginx_proxy_service}} --net=host --net=host -v {{nginx_proxy_conf_dir}}:{{nginx_proxy_container_conf_dir}} -v /etc/localtime:/etc/localtime:ro -v {{nginx_proxy_ssl_dir}}:{{nginx_proxy_container_ssl_dir}} {{nginx_proxy_docker_image}}:{{nginx_proxy_docker_image_version}}
 ExecStop=/usr/bin/docker stop {{nginx_proxy_service}}
 
 [Install]
