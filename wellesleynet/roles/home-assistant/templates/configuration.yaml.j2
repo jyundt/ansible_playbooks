@@ -52,7 +52,8 @@ device_tracker:
     username: {{homeassistant_unifi_user}}
     password: {{homeassistant_unifi_password}}
     host: {{unifi_url}}
-    track_new_devices: False
+    new_device_defaults:
+      track_new_devices: False
 
 light:
   - platform: lifx
