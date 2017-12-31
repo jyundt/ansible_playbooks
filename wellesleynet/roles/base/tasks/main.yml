@@ -82,3 +82,19 @@
     name: pi
     state: absent
     remove: yes
+
+- name: "Add base groups"
+  group: 
+    name: "{{item.group}}"
+    gid: "{{item.gid}}"
+  with_items: "{{group_list}}"
+  
+- name: "Add base users"
+  user: 
+    name: "{{item.user}}"
+    uid: "{{item.uid}}"
+    group: "{{item.group}}"
+    groups: "{{item.groups}}"
+    home: "{{item.home}}"
+    shell: "{{item.shell}}"
+  with_items: "{{user_list}}"
