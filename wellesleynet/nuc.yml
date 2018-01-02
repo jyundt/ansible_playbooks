@@ -6,3 +6,4 @@
     - docker
     - nginx-proxy
     - kvm
+    - nfs-client
