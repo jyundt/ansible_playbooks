@@ -3,5 +3,3 @@ nfs_packages:
   - nfs-utils
   - libnfsidmap
   - rpcbind
-nfs_services:
-  - rpcbind
