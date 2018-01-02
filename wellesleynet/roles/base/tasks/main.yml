@@ -98,3 +98,11 @@
     home: "{{item.home}}"
     shell: "{{item.shell}}"
   with_items: "{{user_list}}"
+
+- name: "Install ssh pub keys for base users"
+  authorized_key:
+    user: "{{item[0].user}}"
+    key: '{{lookup("file", item[1])}}'
+  with_nested: 
+    - "{{user_list}}"
+    - "{{ssh_keys}}"
