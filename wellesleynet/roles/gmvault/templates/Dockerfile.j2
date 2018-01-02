@@ -1,0 +1,8 @@
+FROM python:2.7-alpine
+
+
+RUN apk update && \
+    apk add bash && \
+    pip install --no-cache-dir gmvault=={{gmvault_version}}
+
+ENTRYPOINT ["/usr/local/bin/gmvault"]

@@ -1,0 +1,49 @@
+---
+- name: "Create gmvault dir"
+  file:
+    path: "{{gmvault_conf_dir}}"
+    state: directory
+    mode: 0755
+    group: "root"
+    owner: "root"
+
+- name: "Copy gmvault files"
+  copy:
+    src: "{{item.src}}"
+    dest: "{{gmvault_conf_dir}}/{{item.src}}"
+    mode: "{{item.mode}}"
+    owner: "root"
+    group: "root"
+  with_items:
+    -
+      src: "gmvault_defaults.conf"
+      mode: "0664"
+    -
+      src: "token.sec"
+      mode: "0600"
+
+- name: "Copy Dockerfile template"
+  template:
+    src: "Dockerfile.j2"
+    dest: "{{gmvault_conf_dir}}/Dockerfile"
+    mode: 0644
+    owner: "root"
+    group: "root"
+
+# This is a bit clunky, but the passwords are google app specific passwords
+# that gmvault then encrypts again. Because they are binary files, and
+# because gmvault expects the password files to include the email address
+# (which I consider "sensitive"), I had to mask this with a vault var (dict)
+- name: "Copy google app passwords"
+  copy:
+    src: "{{item.file}}"
+    dest: "{{gmvault_conf_dir}}/{{item.email}}.passwd"
+    mode: "0600"
+    owner: "root"
+    group: "root"
+  with_items: "{{gmvault_creds}}"
+
+- name: "Build docker container"
+  docker_image:
+    path: "{{gmvault_conf_dir}}"
+    name: "gmvault:{{gmvault_version}}"

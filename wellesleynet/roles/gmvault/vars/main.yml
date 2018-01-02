@@ -1,0 +1,4 @@
+---
+gmvault_version: "1.9.1"
+gmvault_creds: "{{vault_gmvault_creds}}"
+gmvault_conf_dir: "/root/gmvault/"
