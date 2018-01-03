@@ -6,3 +6,4 @@ base_deps:
   - libsemanage-python
   - libselinux-python
   - centos-release-scl-rh
+  - util-linux
