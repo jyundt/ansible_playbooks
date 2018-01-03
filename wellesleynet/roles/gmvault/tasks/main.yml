@@ -48,10 +48,20 @@
     path: "{{gmvault_conf_dir}}"
     name: "gmvault:{{gmvault_version}}"
 
-- name: "Create cron jobs for backups"
+# I'm cheating and using flock to make sure these nightly (quick) and
+# monthly (full) backups don't clobber each other
+- name: "Create cron jobs for monthly full sync backups"
   cron:
-    name: "{{item.email}} gmvault backup"
-    job: "/usr/bin/docker run --rm -v {{gmvault_conf_dir}}:/root/.gmvault -v {{gmvault_db_dir}}:{{gmvault_db_dir}} gmvault:{{gmvault_version}} sync -p -d {{gmvault_db_dir}}/{{item.email}} {{item.email}}"
+    name: "{{item.email}} gmvault monthly full backup"
+    job: "/usr/bin/flock -n /tmp/gmvault_{{item.email}}.lock /usr/bin/docker run --rm -v {{gmvault_conf_dir}}:/root/.gmvault -v {{gmvault_db_dir}}:{{gmvault_db_dir}} gmvault:{{gmvault_version}} sync -p -d {{gmvault_db_dir}}/{{item.email}} {{item.email}}"
     user: "root"
-    special_time: "weekly"
+    special_time: "monthly"
+  with_items: "{{gmvault_creds}}"
+
+- name: "Create cron jobs for nightly quick sync backups"
+  cron:
+    name: "{{item.email}} gmvault nightly quick backup"
+    job: "/usr/bin/flock -n /tmp/gmvault_{{item.email}}.lock /usr/bin/docker run --rm -v {{gmvault_conf_dir}}:/root/.gmvault -v {{gmvault_db_dir}}:{{gmvault_db_dir}} gmvault:{{gmvault_version}} sync -p -d {{gmvault_db_dir}}/{{item.email}} {{item.email}} -t quick"
+    user: "root"
+    special_time: "daily"
   with_items: "{{gmvault_creds}}"
