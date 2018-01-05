@@ -13,3 +13,23 @@
   selinux: 
     policy: targeted
     state: enforcing
+
+- name: "Installed tuned"
+  yum:
+    name: tuned
+    state: latest
+    update_cache: yes
+
+- name: "Start/enable tuned"
+  systemd:
+    name: "tuned"
+    state: started
+    enabled: yes
+
+- name: "Detect current tuned profile"
+  shell: "/usr/sbin/tuned-adm active| cut -f 2 -d : | sed 's/^[ \t]*//'"
+  register: current_tuned_profile
+
+- name: "Set tuned profile"
+  command: "/usr/sbin/tuned-adm profile {{tuned_profile}}"
+  when: current_tuned_profile != tuned_profile
