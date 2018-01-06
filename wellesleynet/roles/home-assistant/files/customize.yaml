@@ -1,8 +1,8 @@
 switch.leviton_dzpa11lw_plugin_appliance_module_switch:
   friendly_name: Living Room Light
 switch.leviton_dzpa11lw_plugin_appliance_module_switch_2:
-  friendly_name: Christmas Tree
+  friendly_name: Nightstand Light
 switch.switch:
   friendly_name: Living Room Light
 switch.switch_2:
-  friendly_name: Christmas Tree
+  friendly_name: Nightstand Light
