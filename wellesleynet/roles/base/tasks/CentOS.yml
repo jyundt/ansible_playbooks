@@ -29,7 +29,8 @@
 - name: "Detect current tuned profile"
   shell: "/usr/sbin/tuned-adm active| cut -f 2 -d : | sed 's/^[ \t]*//'"
   register: current_tuned_profile
+  changed_when: false
 
 - name: "Set tuned profile"
   command: "/usr/sbin/tuned-adm profile {{tuned_profile}}"
-  when: current_tuned_profile != tuned_profile
+  when: current_tuned_profile.stdout != tuned_profile
