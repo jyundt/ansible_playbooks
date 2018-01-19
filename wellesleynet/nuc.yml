@@ -3,6 +3,7 @@
   hosts: nuc
   roles:
     - base
+    - ohmycron
     - docker
     - nginx-proxy
     - kvm
