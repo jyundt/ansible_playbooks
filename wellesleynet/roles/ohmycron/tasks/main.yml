@@ -1,8 +1,0 @@
----
-- name: "Download ohmycron"
-  get_url:
-    url: "{{ohmycron_url}}"
-    dest: "{{ohmycron_path}}/ohmycron"
-    mode: 0755
-    owner: "root"
-    group: "root"
