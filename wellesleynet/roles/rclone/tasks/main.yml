@@ -1,0 +1,34 @@
+---
+- name: "Create rclone dir"
+  file:
+    path: "{{rclone_dir}}"
+    state: directory
+    mode: 0755
+    group: "root"
+    owner: "root"
+
+- name: "Download rclone"
+  unarchive:
+    src: "{{rclone_download_url}}"
+    dest: "{{rclone_dir}}"
+    remote_src: yes
+
+# Create an ini config file from template
+- name: "Create rclone config file"
+  template:
+    src: rclone.conf.j2
+    dest: "{{rclone_conf}}"
+    mode: 0644
+    owner: "root"
+    group: "root"
+
+# Create daily sync cronjobs
+- name: "Create cron jobs for nightly rclone backups"
+  cron:
+    name: "{{item.key}} rclone nightly backup"
+    job: "{{cronwrapper_cmd}} --tag rclone:{{item.key}} {{rclone_bin}} sync {{item.key}}:/ {{rclone_backup_dir}}/{{item.key}} {{rclone_sync_args}}"
+    user: "root"
+    special_time: "daily"
+    cron_file: "rclone" 
+  with_dict: "{{rclone_conf_data}}"
+

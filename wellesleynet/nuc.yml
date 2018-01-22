@@ -8,3 +8,4 @@
     - kvm
     - nfs-client
     - gmvault
+    - rclone

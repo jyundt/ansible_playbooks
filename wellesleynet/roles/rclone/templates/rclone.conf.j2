@@ -1,0 +1,6 @@
+{% for section in rclone_conf_data|sort %}
+[{{section}}]
+{% for parameter in rclone_conf_data[section]|sort %}
+{{parameter}}: {{rclone_conf_data[section][parameter]}}
+{% endfor %}
+{% endfor %}
