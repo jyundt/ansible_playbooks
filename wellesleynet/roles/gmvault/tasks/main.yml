@@ -53,7 +53,7 @@
 - name: "Create cron jobs for monthly full sync backups"
   cron:
     name: "{{item.email}} gmvault monthly full backup"
-    job: "{{cronwrapper_cmd}} --tag gmvault-monthly:{{item.email}} -- /usr/bin/docker run --rm -v {{gmvault_conf_dir}}:/root/.gmvault -v {{gmvault_db_dir}}:{{gmvault_db_dir}} gmvault-monthly:{{gmvault_version}} sync -p -d {{gmvault_db_dir}}/{{item.email}} {{item.email}}"
+    job: "{{cronwrapper_cmd}} --tag gmvault:{{item.email}} -- /usr/bin/docker run --rm -v {{gmvault_conf_dir}}:/root/.gmvault -v {{gmvault_db_dir}}:{{gmvault_db_dir}} gmvault-monthly:{{gmvault_version}} sync -p -d {{gmvault_db_dir}}/{{item.email}} {{item.email}}"
     user: "root"
     special_time: "monthly"
     cron_file: "gmvault-monthly"
@@ -62,7 +62,7 @@
 - name: "Create cron jobs for nightly quick sync backups"
   cron:
     name: "{{item.email}} gmvault nightly quick backup"
-    job: "{{cronwrapper_cmd}} --tag gmvault-daily:{{item.email}} -- /usr/bin/docker run --rm -v {{gmvault_conf_dir}}:/root/.gmvault -v {{gmvault_db_dir}}:{{gmvault_db_dir}} gmvault:{{gmvault_version}} sync -p -d {{gmvault_db_dir}}/{{item.email}} {{item.email}} -t quick"
+    job: "{{cronwrapper_cmd}} --tag gmvault:{{item.email}} -- /usr/bin/docker run --rm -v {{gmvault_conf_dir}}:/root/.gmvault -v {{gmvault_db_dir}}:{{gmvault_db_dir}} gmvault:{{gmvault_version}} sync -p -d {{gmvault_db_dir}}/{{item.email}} {{item.email}} -t quick"
     user: "root"
     special_time: "daily"
     cron_file: "gmvault-daily"
