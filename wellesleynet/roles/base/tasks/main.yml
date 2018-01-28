@@ -108,3 +108,8 @@
     mode: 0755
     owner: "root"
     group: "root"
+
+- name: "Run raspberry-pi specific tasks"
+  include_role:
+    name: raspberry-pi
+  when: (ansible_lsb.id is defined and ansible_lsb.id == "Raspbian")
