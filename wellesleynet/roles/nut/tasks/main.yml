@@ -1,0 +1,33 @@
+---
+- name: "Install NUT"
+  package:
+    name: "{{item}}"
+    update_cache: yes
+  with_items: "{{nut_packages}}"
+
+- name: "Open firewalld for NUT"
+  firewalld:
+    port: "{{nut_port}}/tcp"
+    state: enabled
+    permanent: true
+    immediate: true
+
+- name: "Copy NUT config files"
+  copy:
+    dest: "/etc/nut/{{item}}"
+    src: "{{item}}"
+    owner: "{{nut_user}}"
+    group: "{{nut_group}}"
+    mode: 0640
+  with_items:
+    - ups.conf
+    - upsd.conf
+    - upsd.users
+    - nut.conf
+  notify: "Restart NUT"
+
+- name: "Start/enable NUT"
+  service:
+    name: "{{nut_service}}"
+    state: started
+    enabled: true

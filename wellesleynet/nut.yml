@@ -1,0 +1,6 @@
+---
+- name: Deploy to Network UPS Tools (nut) server
+  hosts: electra.wellesleynet.com
+  roles:
+    - raspberry-pi
+    - nut

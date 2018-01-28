@@ -2,3 +2,4 @@
 - import_playbook: base.yml
 - import_playbook: nuc.yml
 - import_playbook: home-assistant.yml
+- import_playbook: nut.yml
