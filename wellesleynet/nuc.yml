@@ -2,7 +2,6 @@
 - name: Deploy to nuc(s)
   hosts: nuc
   roles:
-    - base
     - docker
     - nginx-proxy
     - kvm

@@ -2,5 +2,6 @@
 ntp_package: "ntp"
 ntp_service: "{{ntp_package}}"
 base_deps:
+  - python-apt
   - apt-transport-https
   - util-linux

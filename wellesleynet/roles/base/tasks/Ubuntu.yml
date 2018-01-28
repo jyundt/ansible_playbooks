@@ -9,3 +9,8 @@
     name: ufw
     state: absent
     purge: yes
+
+- name: "Set locale"
+  locale_gen:
+    name: "{{locale}}"
+    state: present

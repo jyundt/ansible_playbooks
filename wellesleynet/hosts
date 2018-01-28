@@ -2,7 +2,7 @@
 zorya.wellesleynet.com timezone=America/New_York
 
 [unifi]
-unifi.wellesleynet.com
+unifi.wellesleynet.com ansible_python_interpreter=/usr/bin/python3
 
 [nuc]
 zorya.wellesleynet.com timezone=America/New_York
