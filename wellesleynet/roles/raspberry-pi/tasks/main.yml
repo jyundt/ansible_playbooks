@@ -1,0 +1,13 @@
+---
+- name: "Remove pi user"
+  user:
+    name: pi
+    state: absent
+    remove: yes
+
+- name: "Set GPU memory"
+  lineinfile:
+    dest: "{{raspberry_pi_config_file}}"
+    line: "gpu_mem={{raspberry_pi_gpu_mem}}"
+    state: present
+    regexp: "^gpu_mem"
