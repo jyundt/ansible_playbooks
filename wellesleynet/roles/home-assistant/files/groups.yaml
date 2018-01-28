@@ -1,0 +1,16 @@
+living_room:
+  name: Living Room
+  entities:
+    - switch.leviton_dzpa11lw_plugin_appliance_module_switch
+
+bedroom:
+  name: Bedroom
+  entities:
+    - switch.leviton_dzpa11lw_plugin_appliance_module_switch_2
+
+office:
+  name: Office 
+  entities:
+    - sensor.ups_battery_charge 
+    - sensor.ups_battery_runtime
+    - sensor.ups_load

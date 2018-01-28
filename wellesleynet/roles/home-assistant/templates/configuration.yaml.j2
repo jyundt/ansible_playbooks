@@ -29,7 +29,17 @@ logbook:
 map:
 
 sensor:
-
+  - platform: nut
+    name: UPS
+    host: electra.wellesleynet.com
+    alias: ups
+    username: {{homeassistant_nut_user}}
+    password: {{homeassistant_nut_password}}
+    resources:
+      - battery.charge
+      - battery.runtime
+      - ups.load
+      
 tts:
   - platform: google
 

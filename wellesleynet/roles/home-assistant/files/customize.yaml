@@ -1,8 +1,12 @@
 switch.leviton_dzpa11lw_plugin_appliance_module_switch:
   friendly_name: Living Room Light
+  icon: mdi:lightbulb
 switch.leviton_dzpa11lw_plugin_appliance_module_switch_2:
   friendly_name: Nightstand Light
+  icon: mdi:weather-night
 switch.switch:
   friendly_name: Living Room Light
+  icon: mdi:lightbulb
 switch.switch_2:
   friendly_name: Nightstand Light
+  icon: mdi:weather-night
