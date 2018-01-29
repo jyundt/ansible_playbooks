@@ -1,7 +1,4 @@
 ---
-nut_packages:
-  - nut
 nut_port: "3493"
-nut_service: "nut-server"
 nut_user: "root"
 nut_group: "nut"

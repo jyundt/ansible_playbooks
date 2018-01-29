@@ -1,0 +1,7 @@
+---
+nut_packages:
+  - nut-client
+nut_service: "nut-monitor"
+nut_conf_dir: "/etc/ups"
+nut_conf_files:
+  - upsmon.conf
