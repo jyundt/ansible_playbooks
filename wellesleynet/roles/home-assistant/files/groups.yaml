@@ -11,6 +11,7 @@ bedroom:
 office:
   name: Office 
   entities:
+    - sensor.ups_status_data
     - sensor.ups_battery_charge 
     - sensor.ups_battery_runtime
     - sensor.ups_load
