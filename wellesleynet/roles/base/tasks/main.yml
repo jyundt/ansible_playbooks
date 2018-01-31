@@ -113,3 +113,8 @@
   include_role:
     name: raspberry-pi
   when: (ansible_lsb.id is defined and ansible_lsb.id == "Raspbian")
+
+- name: "Run NUC specific tasks"
+  include_role:
+    name: nuc
+  when: (ansible_product_name is defined and 'NUC' in ansible_product_name)

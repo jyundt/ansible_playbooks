@@ -1,0 +1,5 @@
+---
+nuc_packages:
+  - procps
+  - nvme-cli
+

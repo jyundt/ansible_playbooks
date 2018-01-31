@@ -1,0 +1,6 @@
+---
+- name: "Install NUC specific packages"
+  package:
+    name: "{{item}}"
+    update_cache: yes
+  with_items: "{{nuc_packages}}"
