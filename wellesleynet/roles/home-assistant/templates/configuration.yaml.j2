@@ -1,10 +1,10 @@
 homeassistant:
   name: Home
-  latitude: 40.7308
-  longitude: -73.9975
-  elevation: 8
-  unit_system: imperial
-  time_zone: {{timezone}}
+  latitude: {{homeassistant_latitude}}
+  longitude: {{homeassistant_longitude}}
+  elevation: {{homeassistant_elevation}}
+  unit_system: {{homeassistant_unit_system}}
+  time_zone: {{homeassistant_timezone}}
   customize: !include customize.yaml
   customize_domain: !include customize_domain.yaml
 
