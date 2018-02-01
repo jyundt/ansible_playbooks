@@ -72,3 +72,13 @@ light:
 scene:
   platform: lifx_cloud
   token: {{homeassistant_lifx_api_token}}
+
+notify:
+  - name: gmail
+    platform: smtp
+    sender: {{homeassistant_gmail_sender}}
+    recipient: {{homeassistant_gmail_recipient}}
+    server: smtp.gmail.com
+    sender_name: "home-assistant"
+    username: {{homeassistant_gmail_sender}}
+    password: {{homeassistant_gmail_password}}
