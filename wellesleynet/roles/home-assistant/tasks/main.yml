@@ -52,6 +52,7 @@
     - jy
     - ew
     - am
+    - hk
   notify: Restart home-assistant
 
 # Download image prior to bouncing service, minimizes downtime
