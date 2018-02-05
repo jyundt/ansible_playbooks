@@ -82,3 +82,9 @@ notify:
     sender_name: "home-assistant"
     username: {{homeassistant_gmail_sender}}
     password: {{homeassistant_gmail_password}}
+  - name: all
+    platform: group
+    services:
+      - service: gmail
+
+alert: !include alerts.yaml

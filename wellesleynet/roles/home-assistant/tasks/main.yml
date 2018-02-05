@@ -34,6 +34,7 @@
     - customize_domain.yaml
     - groups.yaml
     - scripts.yaml
+    - alerts.yaml
 
 # This is super jank.
 # This whole task could be removed if ansible properly supported

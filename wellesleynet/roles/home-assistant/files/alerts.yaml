@@ -1,0 +1,19 @@
+ups_on_battery:
+  name: UPS running on battery power
+  entity_id: sensor.ups_status_data
+  state: "OB"
+  repeat: 5
+  can_acknowledge: true
+  skip_first: true
+  notifiers:
+    - all
+
+ups_low_battery:
+  name: UPS battery critically low
+  entity_id: sensor.ups_status_data
+  state: "LB"
+  repeat: 5
+  can_acknowledge: true
+  skip_first: true
+  notifiers:
+    - all
