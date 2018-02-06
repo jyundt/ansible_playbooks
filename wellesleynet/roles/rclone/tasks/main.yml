@@ -28,7 +28,8 @@
     name: "{{item.key}} rclone nightly backup"
     job: "{{cronwrapper_cmd}} --tag rclone:{{item.key}} {{rclone_bin}} sync {{item.key}}:/ {{rclone_backup_dir}}/{{item.key}} {{rclone_sync_args}}"
     user: "root"
-    special_time: "daily"
     cron_file: "rclone" 
+    minute: "{{ 59 | random(seed=(item.key) )}}"
+    hour: "{{ 6 | random(seed=(item.key) ) }}"
   with_dict: "{{rclone_conf_data}}"
 
