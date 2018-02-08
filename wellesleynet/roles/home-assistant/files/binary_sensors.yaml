@@ -1,0 +1,6 @@
+- platform: template
+  sensors:
+    apartment_door_sensor:
+      device_class: door
+      friendly_name: 'Apartment Door'
+      value_template: "{{ is_state('sensor.hank_unknown_type0201_id0008_access_control', '22') }}"

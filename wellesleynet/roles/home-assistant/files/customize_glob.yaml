@@ -1,0 +1,4 @@
+"sensor.hank*":
+  hidden: true
+"binary_sensor.hank_unknown*":
+  hidden: true

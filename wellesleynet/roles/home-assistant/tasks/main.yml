@@ -32,9 +32,11 @@
     - automations.yaml
     - customize.yaml
     - customize_domain.yaml
+    - customize_glob.yaml
     - groups.yaml
     - scripts.yaml
     - alerts.yaml
+    - binary_sensors.yaml
 
 # This is super jank.
 # This whole task could be removed if ansible properly supported

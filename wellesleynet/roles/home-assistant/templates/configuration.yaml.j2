@@ -7,6 +7,7 @@ homeassistant:
   time_zone: {{homeassistant_timezone}}
   customize: !include customize.yaml
   customize_domain: !include customize_domain.yaml
+  customize_glob: !include customize_glob.yaml 
 
 frontend:
 
@@ -40,7 +41,7 @@ sensor:
       - battery.charge
       - battery.runtime
       - ups.load
-      
+
 tts:
   - platform: google
 
@@ -89,3 +90,4 @@ notify:
       - service: gmail
 
 alert: !include alerts.yaml
+binary_sensor: !include binary_sensors.yaml

@@ -2,6 +2,7 @@ living_room:
   name: Living Room
   entities:
     - switch.leviton_dzpa11lw_plugin_appliance_module_switch
+    - binary_sensor.apartment_door_sensor
 
 bedroom:
   name: Bedroom

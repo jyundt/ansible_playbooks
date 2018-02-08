@@ -17,3 +17,13 @@ ups_low_battery:
   skip_first: true
   notifiers:
     - all
+
+apartment_door_open:
+  name: Apartment door open for >5 minutes
+  done_message: Apartment door has been closed
+  entity_id: binary_sensor.apartment_door_sensor
+  repeat: 5
+  can_acknowledge: true
+  skip_first: true
+  notifiers:
+    - all
