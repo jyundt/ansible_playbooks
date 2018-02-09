@@ -1,5 +1,6 @@
 ---
-- name: Deploy to nuc(s)
+- name: Deploy to base to all hosts
   hosts: all
+  strategy: free
   roles:
     - base
