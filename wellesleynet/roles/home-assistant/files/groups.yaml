@@ -13,6 +13,7 @@ bedroom:
 office:
   name: Office 
   entities:
+    - light.office_sphere
     - sensor.ups_status_data
     - sensor.ups_battery_charge 
     - sensor.ups_battery_runtime
