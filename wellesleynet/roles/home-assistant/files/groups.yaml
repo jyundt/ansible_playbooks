@@ -4,6 +4,7 @@ living_room:
     - switch.leviton_dzpa11lw_plugin_appliance_module_switch
     - binary_sensor.apartment_door_sensor
     - light.living_room_floor_lamp
+    - media_player.double_r_diner
 
 bedroom:
   name: Bedroom
