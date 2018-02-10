@@ -9,6 +9,7 @@ living_room:
 bedroom:
   name: Bedroom
   entities:
+    - light.linear_lb60z1_dimmable_led_light_bulb_level
     - switch.leviton_dzpa11lw_plugin_appliance_module_switch_2
 
 office:
