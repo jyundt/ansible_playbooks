@@ -1,0 +1,3 @@
+---
+cifs_packages: 
+  - cifs-utils

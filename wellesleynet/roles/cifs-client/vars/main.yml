@@ -1,0 +1,9 @@
+---
+cifs_jyundt_password: "{{vault_cifs_jyundt_password}}"
+cifs_dirs: 
+  - 
+    src: "//bananastand.wellesleynet.com/secure"
+    path: "/mnt/secure"
+    state: mounted
+    opts: "_netdev,uid=jyundt,gid=jyundt,username=jyundt,password={{cifs_jyundt_password}}"
+    fstype: "cifs"

@@ -6,5 +6,6 @@
     - nginx-proxy
     - kvm
     - nfs-client
+    - cifs-client
     - gmvault
     - rclone
