@@ -1,0 +1,11 @@
+---
+# Supposedly this needs to be an import (static) instead of an include (dynamic)
+- name: Import nginx-proxy
+  import_tasks: "../../nginx-proxy/handlers/main.yml"
+
+- name: Restart stdiscosrv
+  service:
+    name: stdiscosrv
+    state: restarted
+    daemon_reload: yes
+

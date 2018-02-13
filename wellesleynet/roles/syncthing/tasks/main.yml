@@ -1,0 +1,70 @@
+---
+- name: "Include nginx-proxy vars"
+  include_vars:
+    file: "../../nginx-proxy/vars/main.yml"
+
+- name: "Create syncthing group"
+  group:
+    name: "{{syncthing_group}}"
+    gid: "{{syncthing_gid}}"
+
+- name: "Create syncthing user"
+  user:
+    name: "{{syncthing_user}}"
+    uid: "{{syncthing_uid}}"
+    group: "{{syncthing_group}}"
+    home: "{{syncthing_dir}}"
+    shell: "{{syncthing_shell}}"
+
+- name: "Download syncthing binaries"
+  unarchive:
+    src: "{{item.value.dl_url}}"
+    dest: "{{syncthing_dir}}"
+    remote_src: yes
+    owner: "{{syncthing_user}}"
+    group: "{{syncthing_group}}"
+  with_dict: "{{syncthing_data}}"
+
+- name: "Copy syncthing certs"
+  copy:
+    src: "{{item.key}}.cert.pem"
+    dest: "{{item.value.cert}}"
+    owner: "{{syncthing_user}}"
+    group: "{{syncthing_group}}"
+    mode: 0600
+  with_dict: "{{syncthing_data}}"
+
+- name: "Copy syncthing keys"
+  copy:
+    src: "{{item.key}}.key.pem"
+    dest: "{{item.value.key}}"
+    owner: "{{syncthing_user}}"
+    group: "{{syncthing_group}}"
+    mode: 0400
+  with_dict: "{{syncthing_data}}"
+
+- name: "Create stdiscosrv systemd unit file"
+  template:
+    src: stdiscosrv.service.j2
+    dest: "{{syncthing_stdiscosrv_systemd_unit_file}}"
+    mode: 0644
+    owner: "root"
+    group: "root"
+  notify: Restart stdiscosrv
+
+- name: "Start/enable stdiscosrv"
+  systemd:
+    name: stdiscosrv
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: "Create stdiscosrv nginx-proxy config"
+  template:
+    src: stdiscosrv.conf.j2
+    dest: "{{nginx_proxy_conf_dir}}/stdiscosrv.conf"
+    mode: 0644
+    owner: root
+    group: root
+  notify: Restart nginx-proxy
+

@@ -1,0 +1,57 @@
+---
+syncthing_user: "syncthing"
+syncthing_uid: 5000
+syncthing_group: "syncthing"
+syncthing_gid: 5000
+syncthing_dir: "/opt/syncthing/"
+syncthing_shell: "/usr/sbin/nologin"
+syncthing_conf: "{{syncthing_dir}}/config.xml"
+# Have to define this twice due to https://github.com/ansible/ansible/issues/8603
+syncthing_version: "0.14.44"
+syncthing_strelaysrv_version: "0.14.38"
+syncthing_stdiscosrv_version: "0.14.44"
+syncthing_stdiscosrv_url: "stdiscosrv.wellesleynet.com"
+syncthing_strelaysrv_url: "strelaysrv.wellesleynet.com"
+syncthing_stdiscosrv_db: "{{syncthing_dir}}/discovery.db"
+syncthing_stdiscosrv_systemd_unit_file: "/etc/systemd/system/stdiscosrv.service"
+syncthing_ports:
+  syncthing:
+    port: 22000
+    proto: tcp
+  syncthing_broadcast:
+    port: 21027
+    proto: udp
+  syncthing_gui:
+    port: 82384
+    proto: tcp
+  strelaysrv_data:
+    port: 22067
+    proto: tcp
+  strelaysrv_status:
+    port: 22070
+    proto: tcp
+  stdiscosrv_replication:
+    port: 19200
+    proto: tcp
+  stdiscosrv:
+    port: 8443
+    proto: tcp
+syncthing_data:
+  syncthing:
+    verison: "{{syncthing_version}}"
+    dl_url: "https://github.com/syncthing/syncthing/releases/download/v{{syncthing_version}}/syncthing-linux-amd64-v{{syncthing_version}}.tar.gz"
+    bin: "{{syncthing_dir}}/syncthing-linux-amd64-v{{syncthing_version}}/syncthing"
+    cert: "{{syncthing_dir}}/syncthing.cert.pem"
+    key: "{{syncthing_dir}}/syncthing.key.pem"
+  strelaysrv:
+    verison: "{{syncthing_strelaysrv_version}}"
+    dl_url: "https://github.com/syncthing/relaysrv/releases/download/v{{syncthing_strelaysrv_version}}/strelaysrv-linux-amd64-v{{syncthing_strelaysrv_version}}.tar.gz"
+    bin: "{{syncthing_dir}}/strelaysrv-linux-amd64-v{{syncthing_strelaysrv_version}}/strelaysrv"
+    cert: "{{syncthing_dir}}/strelaysrv.cert.pem"
+    key: "{{syncthing_dir}}/strelaysrv.key.pem"
+  stdiscosrv:
+    verison: "{{syncthing_stdiscosrv_version}}"
+    dl_url: "https://github.com/syncthing/discosrv/releases/download/v{{syncthing_stdiscosrv_version}}/stdiscosrv-linux-amd64-v{{syncthing_stdiscosrv_version}}.tar.gz"
+    bin: "{{syncthing_dir}}/stdiscosrv-linux-amd64-v{{syncthing_stdiscosrv_version}}/stdiscosrv"
+    cert: "{{syncthing_dir}}/stdiscosrv.cert.pem"
+    key: "{{syncthing_dir}}/stdiscosrv.key.pem"

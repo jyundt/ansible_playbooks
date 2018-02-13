@@ -4,6 +4,7 @@
   roles:
     - docker
     - nginx-proxy
+    - syncthing
     - kvm
     - nfs-client
     - cifs-client
