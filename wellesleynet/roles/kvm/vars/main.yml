@@ -7,8 +7,9 @@ kvm_packages:
   - python-lxml
   - '@Virtualization'
   - '@^Virtualization Host'
-kvm_services:
-  - libvirtd
+kvm_service: "libvirtd"
 kvm_iscsi_pool: "{{vault_kvm_iscsi_pool}}"
 kvm_iscsi_host: "{{vault_kvm_iscsi_host}}"
 kvm_iscsi_device: "{{vault_kvm_iscsi_device}}"
+kvm_modprobe_file: "/etc/modprobe.d/kvm.conf"
+kvm_module_args: "options kvm_intel nested=1"

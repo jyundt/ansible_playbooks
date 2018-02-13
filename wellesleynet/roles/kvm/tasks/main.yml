@@ -13,9 +13,17 @@
     state: present
   notify: "Restart iSCSI"
 
+- name: "Enable nested virt for Intel CPUs"
+  lineinfile:
+    path: "{{kvm_modprobe_file}}"
+    line: "{{kvm_module_args}}"
+    state: present
+    create: true
+  notify: "Restart libvirtd"
+
 - name: "Enable kvm services"
   service:
-    name: libvirtd
+    name: "{{kvm_service}}"
     state: started
     enabled: True
 
