@@ -41,6 +41,26 @@
   notify:
     - Restart nginx-proxy
 
+- name: "Copy wellesleynet wildcard nginx ssl cert"
+  copy:
+    src: "{{nginx_proxy_wellesleynet_wildcard_ssl_cert}}"
+    dest: "{{nginx_proxy_ssl_dir}}/{{nginx_proxy_wellesleynet_wildcard_ssl_cert}}"
+    owner: "root"
+    group: "root"
+    mode: 0600
+  notify:
+    - Restart nginx-proxy
+
+- name: "Copy wellesleynet wildcard nginx ssl key"
+  copy:
+    src: "{{nginx_proxy_wellesleynet_wildcard_ssl_key}}"
+    dest: "{{nginx_proxy_ssl_dir}}/{{nginx_proxy_wellesleynet_wildcard_ssl_key}}"
+    owner: "root"
+    group: "root"
+    mode: 0400
+  notify:
+    - Restart nginx-proxy
+
 - name: "Create strong Diffie Hellman key"
   command: "openssl dhparam -out {{nginx_proxy_ssl_dir}}/dhparams.pem 2048"
   args:
