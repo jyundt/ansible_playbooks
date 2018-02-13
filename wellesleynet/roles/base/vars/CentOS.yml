@@ -8,3 +8,4 @@ base_deps:
   - libselinux-python
   - centos-release-scl-rh
   - util-linux
+  - unzip

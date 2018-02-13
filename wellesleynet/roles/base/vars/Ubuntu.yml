@@ -5,3 +5,4 @@ base_deps:
   - python-apt
   - apt-transport-https
   - util-linux
+  - unzip
