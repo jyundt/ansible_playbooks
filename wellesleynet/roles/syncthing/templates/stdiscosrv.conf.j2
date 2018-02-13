@@ -24,7 +24,8 @@ server {
         ssl_ciphers "{{ssl_cipher_suite}}";
         ssl_prefer_server_ciphers on;
         ssl_session_timeout 5m;
-        ssl_session_cache shared:SSL:50m;
+        #TODO fixup this dupe
+        #ssl_session_cache shared:SSL:50m;
         ssl_certificate {{nginx_proxy_container_ssl_dir}}/{{nginx_proxy_wellesleynet_wildcard_ssl_cert}};
         ssl_certificate_key {{nginx_proxy_container_ssl_dir}}/{{nginx_proxy_wellesleynet_wildcard_ssl_key}};
         ssl_dhparam {{nginx_proxy_container_ssl_dir}}/dhparams.pem;
