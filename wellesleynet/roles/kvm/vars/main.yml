@@ -1,5 +1,6 @@
 ---
 kvm_packages:
+  - libvirt-python
   - procps-ng
   - lsof 
   - nmap
