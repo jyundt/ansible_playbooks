@@ -81,14 +81,6 @@
     enabled: yes
     daemon_reload: yes
 
-# temp until proxy is written
-- name: "Open firewalld for home-assistant"
-  firewalld:
-    port: "{{homeassistant_port}}/tcp"
-    state: enabled
-    permanent: True
-    immediate: True
-
 - name: "Open firewalld for home-assistant lifx functionality"
   firewalld:
     port: "{{homeassistant_lifx_port}}/udp"
