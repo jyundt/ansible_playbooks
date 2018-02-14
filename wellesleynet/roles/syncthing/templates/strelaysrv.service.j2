@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User={{syncthing_user}}
 Group={{syncthing_group}}
-ExecStart={{syncthing_data.strelaysrv.bin}} -keys {{syncthing_dir}} -pools ""
+ExecStart={{syncthing_data.strelaysrv.bin}} -keys {{syncthing_dir}} -pools "" -debug
 Restart=on-failure
 SuccessExitStatus=2
 
