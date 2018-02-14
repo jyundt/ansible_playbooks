@@ -13,7 +13,6 @@ syncthing_stdiscosrv_version: "0.14.44"
 syncthing_stdiscosrv_url: "stdiscosrv.wellesleynet.com"
 syncthing_strelaysrv_url: "strelaysrv.wellesleynet.com"
 syncthing_stdiscosrv_db: "{{syncthing_dir}}/discovery.db"
-syncthing_stdiscosrv_systemd_unit_file: "/etc/systemd/system/stdiscosrv.service"
 syncthing_ports:
   syncthing:
     port: 22000
@@ -49,9 +48,11 @@ syncthing_data:
     bin: "{{syncthing_dir}}/strelaysrv-linux-amd64-v{{syncthing_strelaysrv_version}}/strelaysrv"
     cert: "{{syncthing_dir}}/strelaysrv.cert.pem"
     key: "{{syncthing_dir}}/strelaysrv.key.pem"
+    systemd_unit_file: "/etc/systemd/system/strelaysrv.service"
   stdiscosrv:
     verison: "{{syncthing_stdiscosrv_version}}"
     dl_url: "https://github.com/syncthing/discosrv/releases/download/v{{syncthing_stdiscosrv_version}}/stdiscosrv-linux-amd64-v{{syncthing_stdiscosrv_version}}.tar.gz"
     bin: "{{syncthing_dir}}/stdiscosrv-linux-amd64-v{{syncthing_stdiscosrv_version}}/stdiscosrv"
     cert: "{{syncthing_dir}}/stdiscosrv.cert.pem"
     key: "{{syncthing_dir}}/stdiscosrv.key.pem"
+    systemd_unit_file: "/etc/systemd/system/stdiscosrv.service"

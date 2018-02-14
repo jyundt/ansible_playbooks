@@ -9,3 +9,9 @@
     state: restarted
     daemon_reload: yes
 
+- name: Restart strelaysrv
+  service:
+    name: strelaysrv
+    state: restarted
+    daemon_reload: yes
+

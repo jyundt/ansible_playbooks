@@ -43,21 +43,40 @@
     mode: 0400
   with_dict: "{{syncthing_data}}"
 
-- name: "Create stdiscosrv systemd unit file"
+# This is a hack because strelaysrv doesn't support specifying
+# cert and key files; only a dir with "cert.pem" and "key.pem"
+- name: "Create symlinks for pems for strelaysrv"
+  file:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    owner: "{{syncthing_user}}"
+    group: "{{syncthing_group}}"
+    state: link
+  with_items:
+    - { src: "{{syncthing_data.strelaysrv.cert}}", dest: "{{syncthing_dir}}/cert.pem" }
+    - { src: "{{syncthing_data.strelaysrv.key}}", dest: "{{syncthing_dir}}/key.pem" }
+
+- name: "Create syncthing systemd unit files"
   template:
-    src: stdiscosrv.service.j2
-    dest: "{{syncthing_stdiscosrv_systemd_unit_file}}"
+    src: "{{item}}.service.j2"
+    dest: "{{syncthing_data[item].systemd_unit_file}}"
     mode: 0644
     owner: "root"
     group: "root"
-  notify: Restart stdiscosrv
+  notify: "Restart {{item}}"
+  with_items:
+    - stdiscosrv
+    - strelaysrv
 
-- name: "Start/enable stdiscosrv"
+- name: "Start/enable syncthing services"
   systemd:
-    name: stdiscosrv
+    name: "{{item}}"
     state: started
     enabled: yes
     daemon_reload: yes
+  with_items:
+    - stdiscosrv
+    - strelaysrv
 
 - name: "Create stdiscosrv nginx-proxy config"
   template:
@@ -68,3 +87,11 @@
     group: root
   notify: Restart nginx-proxy
 
+- name: "Open firewalld for strelaysrv"
+  firewalld:
+    port: "{{syncthing_ports[item].port}}/{{syncthing_ports[item].proto}}"
+    state: enabled
+    permanent: true
+    immediate: true
+  with_items:
+    - strelaysrv_data
