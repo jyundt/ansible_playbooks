@@ -13,13 +13,22 @@
     name: "{{syncthing_user}}"
     uid: "{{syncthing_uid}}"
     group: "{{syncthing_group}}"
-    home: "{{syncthing_dir}}"
+    home: "{{syncthing_home}}"
     shell: "{{syncthing_shell}}"
+
+- name: "Create syncthing dirs"
+  file:
+    path: "{{item.value.dir}}"
+    owner: "{{syncthing_user}}"
+    group: "{{syncthing_group}}"
+    state: directory
+    mode: 0755
+  with_dict: "{{syncthing_data}}"
 
 - name: "Download syncthing binaries"
   unarchive:
     src: "{{item.value.dl_url}}"
-    dest: "{{syncthing_dir}}"
+    dest: "{{syncthing_home}}/{{item.key}}"
     remote_src: yes
     owner: "{{syncthing_user}}"
     group: "{{syncthing_group}}"
@@ -42,19 +51,6 @@
     group: "{{syncthing_group}}"
     mode: 0400
   with_dict: "{{syncthing_data}}"
-
-# This is a hack because strelaysrv doesn't support specifying
-# cert and key files; only a dir with "cert.pem" and "key.pem"
-- name: "Create symlinks for pems for strelaysrv"
-  file:
-    src: "{{item.src}}"
-    dest: "{{item.dest}}"
-    owner: "{{syncthing_user}}"
-    group: "{{syncthing_group}}"
-    state: link
-  with_items:
-    - { src: "{{syncthing_data.strelaysrv.cert}}", dest: "{{syncthing_dir}}/cert.pem" }
-    - { src: "{{syncthing_data.strelaysrv.key}}", dest: "{{syncthing_dir}}/key.pem" }
 
 - name: "Create syncthing systemd unit files"
   template:

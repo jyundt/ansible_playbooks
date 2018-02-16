@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User={{syncthing_user}}
 Group={{syncthing_group}}
-ExecStart={{syncthing_data.stdiscosrv.bin}} -db-dir {{syncthing_stdiscosrv_db}} -cert {{syncthing_data.stdiscosrv.cert}} -key {{syncthing_data.stdiscosrv.key}} -http -debug
+ExecStart={{syncthing_data.stdiscosrv.bin}} -db-dir {{syncthing_data.stdiscosrv.dir}} -cert {{syncthing_data.stdiscosrv.cert}} -key {{syncthing_data.stdiscosrv.key}} -http -debug
 Restart=on-failure
 SuccessExitStatus=2
 
