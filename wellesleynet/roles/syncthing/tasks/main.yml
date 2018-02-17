@@ -22,7 +22,7 @@
     owner: "{{syncthing_user}}"
     group: "{{syncthing_group}}"
     state: directory
-    mode: 0755
+    mode: "{{item.value.dir_perms}}"
   with_dict: "{{syncthing_data}}"
 
 - name: "Download syncthing binaries"
@@ -42,6 +42,7 @@
     group: "{{syncthing_group}}"
     mode: 0600
   with_dict: "{{syncthing_data}}"
+  notify: "Restart {{item.key}}"
 
 - name: "Copy syncthing keys"
   copy:
@@ -51,6 +52,16 @@
     group: "{{syncthing_group}}"
     mode: 0400
   with_dict: "{{syncthing_data}}"
+  notify: "Restart {{item.key}}"
+
+- name: "Copy syncthing xml config"
+  copy:
+    src: config.xml
+    dest: "{{syncthing_data.syncthing.dir}}/config.xml"
+    owner: "{{syncthing_user}}"
+    group: "{{syncthing_group}}"
+    mode: 0600
+  notify: "Restart syncthing"
 
 - name: "Create syncthing systemd unit files"
   template:
@@ -63,6 +74,7 @@
   with_items:
     - stdiscosrv
     - strelaysrv
+    - syncthing
 
 - name: "Start/enable syncthing services"
   systemd:
@@ -73,17 +85,20 @@
   with_items:
     - stdiscosrv
     - strelaysrv
+    - syncthing
 
-- name: "Create stdiscosrv nginx-proxy config"
+- name: "Create syncthing nginx-proxy configs"
   template:
-    src: stdiscosrv.conf.j2
-    dest: "{{nginx_proxy_conf_dir}}/stdiscosrv.conf"
+    src: "{{item}}.conf.j2"
+    dest: "{{nginx_proxy_conf_dir}}/{{item}}.conf"
     mode: 0644
     owner: root
     group: root
   notify: Restart nginx-proxy
+  with_items:
+    - stdiscosrv
 
-- name: "Open firewalld for strelaysrv"
+- name: "Open firewalld for syncthing services"
   firewalld:
     port: "{{syncthing_ports[item].port}}/{{syncthing_ports[item].proto}}"
     state: enabled
@@ -91,3 +106,4 @@
     immediate: true
   with_items:
     - strelaysrv_data
+    - syncthing

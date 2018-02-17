@@ -1,0 +1,30 @@
+upstream syncthing{
+    server 127.0.0.1:{{syncthing_ports.syncthing_gui.port}};
+}
+server {
+        server_name {{syncthing_data.syncthing.url}};
+        listen 80;
+        return 301 https://$host$request_uri;
+}
+server {
+        server_name {{syncthing_data.syncthing.url}};
+        listen 443 ssl http2;
+        ssl_protocols TLSv1.2;
+        ssl_ciphers "{{ssl_cipher_suite}}";
+        ssl_prefer_server_ciphers on;
+        ssl_session_timeout 5m;
+        #TODO fixup this dupe
+        #ssl_session_cache shared:SSL:50m;
+        ssl_certificate {{nginx_proxy_container_ssl_dir}}/{{nginx_proxy_wellesleynet_wildcard_ssl_cert}};
+        ssl_certificate_key {{nginx_proxy_container_ssl_dir}}/{{nginx_proxy_wellesleynet_wildcard_ssl_key}};
+        ssl_dhparam {{nginx_proxy_container_ssl_dir}}/dhparams.pem;
+        add_header Strict-Transport-Security "max-age=31536000";
+        ssl_verify_client optional_no_ca;
+        location / {
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_pass http://syncthing;
+        }
+}

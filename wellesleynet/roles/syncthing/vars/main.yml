@@ -20,7 +20,7 @@ syncthing_ports:
     port: 21027
     proto: udp
   syncthing_gui:
-    port: 82384
+    port: 8384
     proto: tcp
   strelaysrv_data:
     port: 22067
@@ -39,6 +39,7 @@ syncthing_data:
     verison: "{{syncthing_version}}"
     dl_url: "https://github.com/syncthing/syncthing/releases/download/v{{syncthing_version}}/syncthing-linux-amd64-v{{syncthing_version}}.tar.gz"
     dir: "{{syncthing_home}}/syncthing"
+    dir_perms: "0700"
     bin: "{{syncthing_home}}/syncthing/syncthing-linux-amd64-v{{syncthing_version}}/syncthing"
     cert: "{{syncthing_home}}/syncthing/cert.pem"
     key: "{{syncthing_home}}/syncthing/key.pem"
@@ -48,6 +49,7 @@ syncthing_data:
     verison: "{{syncthing_strelaysrv_version}}"
     dl_url: "https://github.com/syncthing/relaysrv/releases/download/v{{syncthing_strelaysrv_version}}/strelaysrv-linux-amd64-v{{syncthing_strelaysrv_version}}.tar.gz"
     dir: "{{syncthing_home}}/strelaysrv"
+    dir_perms: "0755"
     bin: "{{syncthing_home}}/strelaysrv/strelaysrv-linux-amd64-v{{syncthing_strelaysrv_version}}/strelaysrv"
     cert: "{{syncthing_home}}/strelaysrv/cert.pem"
     key: "{{syncthing_home}}/strelaysrv/key.pem"
@@ -57,6 +59,7 @@ syncthing_data:
     verison: "{{syncthing_stdiscosrv_version}}"
     dl_url: "https://github.com/syncthing/discosrv/releases/download/v{{syncthing_stdiscosrv_version}}/stdiscosrv-linux-amd64-v{{syncthing_stdiscosrv_version}}.tar.gz"
     dir: "{{syncthing_home}}/stdiscosrv"
+    dir_perms: "0755"
     bin: "{{syncthing_home}}/stdiscosrv/stdiscosrv-linux-amd64-v{{syncthing_stdiscosrv_version}}/stdiscosrv"
     cert: "{{syncthing_home}}/stdiscosrv/cert.pem"
     key: "{{syncthing_home}}/stdiscosrv/key.pem"
