@@ -1,15 +1,14 @@
 living_room:
   name: Living Room
   entities:
-    - switch.leviton_dzpa11lw_plugin_appliance_module_switch
-    - binary_sensor.apartment_door_sensor
+    - light.linear_lb60z1_dimmable_led_light_bulb_level
     - light.living_room_floor_lamp
+    - binary_sensor.apartment_door_sensor
     - media_player.double_r_diner
 
 bedroom:
   name: Bedroom
   entities:
-    - light.linear_lb60z1_dimmable_led_light_bulb_level
     - switch.leviton_dzpa11lw_plugin_appliance_module_switch_2
 
 office:
@@ -20,3 +19,4 @@ office:
     - sensor.ups_battery_charge 
     - sensor.ups_battery_runtime
     - sensor.ups_load
+    - switch.leviton_dzpa11lw_plugin_appliance_module_switch
