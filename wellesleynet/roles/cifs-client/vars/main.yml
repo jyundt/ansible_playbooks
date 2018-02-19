@@ -7,3 +7,9 @@ cifs_dirs:
     state: mounted
     opts: "_netdev,uid=jyundt,gid=jyundt,username=jyundt,password={{cifs_jyundt_password}}"
     fstype: "cifs"
+  - 
+    src: "//bananastand.wellesleynet.com/data/incoming/scratch"
+    path: "/mnt/scratch"
+    state: mounted
+    opts: "_netdev,uid=jyundt,gid=jyundt,username=jyundt,password={{cifs_jyundt_password}}"
+    fstype: "cifs"
