@@ -97,6 +97,7 @@
   notify: Restart nginx-proxy
   with_items:
     - stdiscosrv
+    - syncthing
 
 - name: "Open firewalld for syncthing services"
   firewalld:
