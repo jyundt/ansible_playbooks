@@ -1,6 +1,6 @@
 ---
 nginx_proxy_docker_image: "nginx"
-nginx_proxy_docker_image_version: "1.13.8-alpine"
+nginx_proxy_docker_image_version: "1.13.9-alpine"
 nginx_proxy_dir: "/root/nginx_proxy"
 nginx_proxy_conf_dir: "{{nginx_proxy_dir}}/conf"
 nginx_proxy_ssl_dir: "{{nginx_proxy_dir}}/ssl"
