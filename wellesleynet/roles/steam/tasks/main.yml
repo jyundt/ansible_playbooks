@@ -39,14 +39,14 @@
     state: directory
     recurse: yes
 
-#- name: "Download steam apps"
-#  command: "{{steam_cmd}} +login anonymous +force_install_dir \
-#             {{item.value.dir}} +app_update {{item.value.appid}} validate \
-#             +quit"
-#  args:
-#    chdir: "{{steam_home}}"
-#  become_user: "{{steam_user}}"
-#  with_dict: "{{steam_apps}}"
+- name: "Download steam apps"
+  command: "{{steam_cmd}} +login anonymous +force_install_dir \
+             {{item.value.dir}} +app_update {{item.value.appid}} validate \
+             +quit"
+  args:
+    chdir: "{{steam_home}}"
+  become_user: "{{steam_user}}"
+  with_dict: "{{steam_apps}}"
 
 - name: "Create steam apps config templates"
   template:

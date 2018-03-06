@@ -3,3 +3,4 @@
 - import_playbook: nuc.yml
 - import_playbook: home-assistant.yml
 - import_playbook: nut.yml
+- import_playbook: steam.yml
