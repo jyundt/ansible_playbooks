@@ -9,5 +9,4 @@ base_deps:
   - centos-release-scl-rh
   - util-linux
   - unzip
-  - iperf
   - iperf3

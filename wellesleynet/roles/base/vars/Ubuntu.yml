@@ -6,5 +6,4 @@ base_deps:
   - apt-transport-https
   - util-linux
   - unzip
-  - iperf
   - iperf3
