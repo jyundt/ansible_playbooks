@@ -1,0 +1,13 @@
+[Unit]
+Description={{steam_apps.csgo.server_name}}
+After=network.target
+
+[Service]
+WorkingDirectory={{steam_apps.csgo.dir}}
+User={{steam_user}}
+Group={{steam_group}}
+ExecStart={{steam_apps.csgo.bin}} {{steam_apps.csgo.srcds_args}}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

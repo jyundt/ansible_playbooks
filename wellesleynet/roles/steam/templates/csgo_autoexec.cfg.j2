@@ -1,0 +1,10 @@
+log on
+hostname "{{steam_apps.csgo.server_name}}"
+rcon_password "{{steam_apps.csgo.rcon_password}}"
+sv_password "{{steam_apps.csgo.server_password}}" //Only set this if you intend to have a private server!
+sv_cheats 0 //This should always be set, so you know it's not on
+sv_lan 0 //This should always be set, so you know it's not on
+exec banned_user.cfg
+exec banned_ip.cfg
+host_players_show 2
+host_info_show 2

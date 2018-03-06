@@ -1,0 +1,97 @@
+---
+- name: "Include OS specific vars"
+  include_vars: "{{ansible_distribution}}.yml"
+
+- name: "Install steam deps"
+  package:
+    name: "{{item}}"
+    update_cache: yes
+  with_items: "{{steam_packages}}"
+
+- name: "Create steam group"
+  group:
+    name: "{{steam_group}}"
+    gid: "{{steam_gid}}"
+
+- name: "Create steam user"
+  user:
+    name: "{{steam_user}}"
+    uid: "{{steam_uid}}"
+    group: "{{steam_group}}"
+    home: "{{steam_home}}"
+    shell: "{{steam_shell}}"
+
+- name: "Download steamcmd"
+  unarchive:
+    src: "{{steam_dl_url}}"
+    dest: "{{steam_home}}"
+    remote_src: yes
+    owner: "{{steam_user}}"
+    group: "{{steam_group}}"
+  notify: "Restart steam"
+
+# For some reason the unarchive module keeps the linux32 dir root:root
+- name: "Reset perms on steam dirs"
+  file:
+    path: "{{steam_home}}"
+    owner: "{{steam_user}}"
+    group: "{{steam_group}}"
+    state: directory
+    recurse: yes
+
+#- name: "Download steam apps"
+#  command: "{{steam_cmd}} +login anonymous +force_install_dir \
+#             {{item.value.dir}} +app_update {{item.value.appid}} validate \
+#             +quit"
+#  args:
+#    chdir: "{{steam_home}}"
+#  become_user: "{{steam_user}}"
+#  with_dict: "{{steam_apps}}"
+
+- name: "Create steam apps config templates"
+  template:
+    src: "{{item.1.src}}"
+    dest: "{{item.1.dest}}"
+    owner: "{{steam_user}}"
+    group: "{{steam_group}}"
+  notify: "Restart steam"
+  with_subelements:
+    - "{{steam_apps}}"
+    - "templates"
+
+- name: "Create steam apps config files"
+  copy:
+    src: "{{item.1.src}}"
+    dest: "{{item.1.dest}}"
+    owner: "{{steam_user}}"
+    group: "{{steam_group}}"
+  notify: "Restart steam"
+  with_subelements:
+    - "{{steam_apps}}"
+    - "files"
+
+- name: "Open firewalld for steam"
+  firewalld:
+    port: "{{item.port}}/{{item.proto}}" 
+    state: enabled
+    permanent: true
+    immediate: true
+  with_items: "{{steam_ports}}"
+
+- name: "Create systemd unit files"
+  template:
+    src: "{{item.key}}.service.j2"
+    dest: "{{item.value.systemd_unit_file}}"
+    mode: 0644
+    owner: "root"
+    group: "root"
+  notify: "Restart steam"
+  with_dict: "{{steam_apps}}"
+
+- name: "Start/enable steam apps"
+  systemd:
+    name: "{{item.key}}"
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  with_dict: "{{steam_apps}}"

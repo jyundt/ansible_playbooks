@@ -1,0 +1,32 @@
+---
+steam_dl_url: "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz"
+steam_user: "steam"
+steam_group: "steam"
+steam_uid: 5001
+steam_gid: 5001
+steam_home: "/opt/steam"
+steam_shell: "/usr/sbin/nologin"
+steam_cmd: "{{steam_home}}/steamcmd.sh"
+steam_ports:
+  - port: 27015
+    proto: tcp
+  - port: 27015
+    proto: udp
+  - port: 27020
+    proto: udp
+steam_apps:
+  csgo:
+    dir: "{{steam_home}}/csgo"
+    appid: 740
+    srcds_args: "-ip 0.0.0.0 -game csgo -console -usercon +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2"
+    server_name: "DigitalOcean CS:GO Dedicated Server"
+    rcon_password: "{{vault_docsgo_rcon_password}}"
+    server_password: "{{vault_docsgo_server_password}}"
+    bin: "{{steam_home}}/csgo/srcds_run"
+    systemd_unit_file: "/etc/systemd/system/csgo.service"
+    templates:
+      - src: "csgo_autoexec.cfg.j2"
+        dest: "{{steam_home}}/csgo/csgo/cfg/autoexec.cfg"
+    files:
+      - src: "csgo_server.cfg"
+        dest: "{{steam_home}}/csgo/csgo/cfg/server.cfg"
