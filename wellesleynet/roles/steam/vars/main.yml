@@ -18,7 +18,7 @@ steam_apps:
   csgo:
     dir: "{{steam_home}}/csgo"
     appid: 740
-    srcds_args: "-ip 0.0.0.0 -game csgo -console -usercon +game_type 0 +game_mode 0 +sv_lan 0 +mapgroup mg_active +map de_dust2"
+    srcds_args: "-ip 0.0.0.0 -game csgo -console -usercon +game_type 1 +game_mode 0 +sv_lan 0 +mapgroup mg_active +map de_dust2"
     server_name: "DigitalOcean CS:GO Dedicated Server"
     rcon_password: "{{vault_docsgo_rcon_password}}"
     server_password: "{{vault_docsgo_server_password}}"
