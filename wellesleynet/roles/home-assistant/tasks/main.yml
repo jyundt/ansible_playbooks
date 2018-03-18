@@ -96,23 +96,3 @@
     owner: "root"
     group: "root"
   notify: Restart nginx-proxy
-
-- name: "Copy home-assistant ssl cert"
-  copy:
-    src: "fullchain.pem"
-    dest: "{{nginx_proxy_ssl_dir}}/{{homeassistant_url}}_fullchain.pem"
-    owner: "root"
-    group: "root"
-    mode: 0600
-  notify:
-    - Restart nginx-proxy
-
-- name: "Copy home-assistant ssl key"
-  copy:
-    src: "privkey.pem"
-    dest: "{{nginx_proxy_ssl_dir}}/{{homeassistant_url}}_privkey.pem"
-    owner: "root"
-    group: "root"
-    mode: 0400
-  notify:
-    - Restart nginx-proxy
