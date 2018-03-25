@@ -7,3 +7,5 @@ base_deps:
   - util-linux
   - unzip
   - iperf3
+  - pv
+  - mbuffer
