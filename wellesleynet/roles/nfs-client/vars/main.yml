@@ -7,3 +7,15 @@ nfs_dirs:
     state: mounted
     opts: "_netdev"
     fstype: "nfs4"
+  - 
+    src: "io.wellesleynet.com:/mnt/data/backups/mail"
+    path: "/mnt/io/data/backups/mail"
+    state: mounted
+    opts: "_netdev"
+    fstype: "nfs4"
+  - 
+    src: "io.wellesleynet.com:/mnt/data/backups/cloud"
+    path: "/mnt/io/data/backups/cloud"
+    state: mounted
+    opts: "_netdev"
+    fstype: "nfs4"
