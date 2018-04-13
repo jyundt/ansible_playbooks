@@ -2,12 +2,6 @@
 nfs_domain: "wellesleynet.com"
 nfs_dirs: 
   - 
-    src: "bananastand.wellesleynet.com:/volume1/data"
-    path: "/mnt/bananastand"
-    state: mounted
-    opts: "_netdev"
-    fstype: "nfs4"
-  - 
     src: "io.wellesleynet.com:/mnt/data/backups/mail"
     path: "/mnt/io/data/backups/mail"
     state: mounted
