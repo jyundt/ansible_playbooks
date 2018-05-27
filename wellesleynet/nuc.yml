@@ -2,11 +2,11 @@
 - name: Deploy to nuc(s)
   hosts: nuc
   roles:
+    - nfs-client
+    - cifs-client
     - docker
     - nginx-proxy
     - syncthing
     - kvm
-    - nfs-client
-    - cifs-client
     - gmvault
     - rclone
