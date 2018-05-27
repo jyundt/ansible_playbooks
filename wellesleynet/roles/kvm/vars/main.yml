@@ -6,7 +6,6 @@ kvm_packages:
   - nmap
   - vim
   - python-lxml
-  - '@Virtualization'
   - '@^Virtualization Host'
 kvm_service: "libvirtd"
 kvm_iscsi_pool: "{{vault_kvm_iscsi_pool}}"
