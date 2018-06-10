@@ -17,7 +17,7 @@
 
 - name: "Run AWS specific tasks"
   include_tasks: aws.yml
-  when: (ansible_product_uuid | search("^EC2") and ansible_system_vendor == "Xen")
+  when: (ansible_product_uuid is search("^EC2") and ansible_system_vendor == "Xen")
 
 - name: "Disable password based root access"
   lineinfile: 
