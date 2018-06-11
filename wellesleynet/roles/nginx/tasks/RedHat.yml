@@ -1,0 +1,13 @@
+---
+- name: Add nginx RPM GPG key
+  rpm_key:
+    state: present
+    key: "https://nginx.org/keys/nginx_signing.key"
+
+- name: Install nginx repo
+  yum_repository:
+    name: "nginx"
+    file: "nginx"
+    description: "nginx mainline"
+    baseurl: "https://nginx.org/packages/centos/$releasever/$basearch"
+    gpgcheck: yes

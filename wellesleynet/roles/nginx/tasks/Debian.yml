@@ -1,0 +1,10 @@
+---
+- name: Add nginx APT GPG key
+  apt_key:
+    state: present
+    url: "https://nginx.org/keys/nginx_signing.key"
+
+- name: Install nginx repo (Ubuntu)
+  apt_repository:
+    repo: "deb https://nginx.org/packages/ubuntu/ {{ansible_distribution_release}} nginx"
+    state: present

@@ -1,5 +1,7 @@
 ---
 - import_playbook: base.yml
+  when: inventory_hostname not in groups.freenas_jails
+- import_playbook: nginx.yml
 - import_playbook: nuc.yml
 - import_playbook: home-assistant.yml
 - import_playbook: nut.yml

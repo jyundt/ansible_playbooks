@@ -1,0 +1,25 @@
+---
+- name: "Include OS specific vars"
+  include_vars: "{{ansible_os_family}}.yml"
+
+- name: "Include OS specific tasks"
+  include_tasks: "{{ansible_os_family}}.yml"
+
+- name: "Install nginx"
+  package:
+    name: nginx
+    state: present
+
+- name: "Copy nginx conf"
+  template:
+    dest: "{{ nginx_conf_file }}"
+    src: "{{ inventory_hostname}}.conf.j2"
+    owner: root
+    mode: 0644
+  notify: Restart nginx
+
+- name: "Start/enable nginx"
+  service:
+    name: nginx
+    state: started
+    enabled: yes
