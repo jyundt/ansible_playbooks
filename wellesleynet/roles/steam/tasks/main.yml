@@ -70,6 +70,18 @@
     - "{{steam_apps}}"
     - "files"
 
+- name: "Download CS:GO mods"
+  unarchive:
+    src: "{{ item }}"
+    dest: "{{ steam_apps.csgo.dir }}/csgo/"
+    remote_src: yes
+    owner: "{{ steam_user }}"
+    group: "{{ steam_group }}"
+  notify: "Restart steam"
+  with_items:
+    - "{{ steam_metamod }}"
+    - "{{ steam_sourcemod }}"
+
 - name: "Open firewalld for steam"
   firewalld:
     port: "{{item.port}}/{{item.proto}}" 

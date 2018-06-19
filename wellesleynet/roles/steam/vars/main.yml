@@ -7,6 +7,8 @@ steam_gid: 5001
 steam_home: "/opt/steam"
 steam_shell: "/usr/sbin/nologin"
 steam_cmd: "{{steam_home}}/steamcmd.sh"
+steam_metamod: "https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git961-linux.tar.gz"
+steam_sourcemod: "https://sm.alliedmods.net/smdrop/1.8/sourcemod-1.8.0-git6047-linux.tar.gz"
 steam_ports:
   - port: 27015
     proto: tcp
