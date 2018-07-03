@@ -9,6 +9,7 @@ steam_shell: "/usr/sbin/nologin"
 steam_cmd: "{{steam_home}}/steamcmd.sh"
 steam_metamod: "https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git961-linux.tar.gz"
 steam_sourcemod: "https://sm.alliedmods.net/smdrop/1.8/sourcemod-1.8.0-git6047-linux.tar.gz"
+steam_web_api_key: "{{ vault_steam_web_api_key }}"
 steam_ports:
   - port: 27015
     proto: tcp
@@ -20,7 +21,7 @@ steam_apps:
   csgo:
     dir: "{{steam_home}}/csgo"
     appid: 740
-    srcds_args: "-ip 0.0.0.0 -game csgo -console -usercon +game_type 1 +game_mode 0 +sv_lan 0 +mapgroup mg_armsrace +map ar_dizzy"
+    srcds_args: "-ip 0.0.0.0 -game csgo -console -usercon +game_type 1 +game_mode 0 +sv_lan 0 +mapgroup mg_armsrace +map ar_dizzy -authkey {{ steam_web_api_key }}"
     server_name: "DigitalOcean CS:GO Dedicated Server"
     rcon_password: "{{vault_docsgo_rcon_password}}"
     server_password: "{{vault_docsgo_server_password}}"
