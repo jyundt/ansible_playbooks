@@ -1,0 +1,17 @@
+---
+- name: "Include OS specific vars"
+  include_vars: "{{ansible_os_family}}.yml"
+
+- name: "Include OS specific tasks"
+  include_tasks: "{{ansible_os_family}}.yml"
+
+- name: "Install plex"
+  package:
+    name: plexmediaserver 
+    state: present
+
+- name: "Start/enable plex"
+  service:
+    name: plexmediaserver
+    state: started
+    enabled: yes

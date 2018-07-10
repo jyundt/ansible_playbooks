@@ -1,0 +1,5 @@
+---
+- name: Deploy plex to plex hosts
+  hosts: plex 
+  roles:
+    - plex

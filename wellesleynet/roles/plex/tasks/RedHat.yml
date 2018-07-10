@@ -1,0 +1,13 @@
+---
+- name: Add plex RPM GPG key
+  rpm_key:
+    state: present
+    key: "https://downloads.plex.tv/plex-keys/PlexSign.key"
+
+- name: Install nginx repo
+  yum_repository:
+    name: "PlexRepo"
+    file: "plex"
+    description: "Plex Media Server"
+    baseurl: "https://downloads.plex.tv/repo/rpm/$basearch/"
+    gpgcheck: yes

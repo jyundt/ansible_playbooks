@@ -6,3 +6,4 @@
 - import_playbook: home-assistant.yml
 - import_playbook: nut.yml
 - import_playbook: steam.yml
+- import_playbook: plex.yml

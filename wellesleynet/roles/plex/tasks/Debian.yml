@@ -1,0 +1,10 @@
+---
+- name: Add plex APT GPG key
+  apt_key:
+    state: present
+    url: "https://downloads.plex.tv/plex-keys/PlexSign.key"
+
+- name: Install plex apt repo
+  apt_repository:
+    repo: "deb https://downloads.plex.tv/repo/deb public main"
+    state: present
