@@ -34,5 +34,3 @@ steam_apps:
     files:
       - src: "csgo_server.cfg"
         dest: "{{steam_home}}/csgo/csgo/cfg/server.cfg"
-      - src: "csgo_gamemodes_server.txt"
-        dest: "{{steam_home}}/csgo/csgo/gamemodes_server.txt"
