@@ -37,7 +37,7 @@ syncthing_ports:
 syncthing_data:
   syncthing:
     verison: "{{syncthing_version}}"
-    dl_url: "https://github.com/syncthing/syncthing/releases/download/v{{syncthing_version}}/syncthing-linux-amd64-v{{syncthing_version}}.tar.gz"
+    dl_url: "https://github.com/syncthing/syncthing/releases/download/v{{syncthing_version}}/syncthing-{{ ansible_system | lower }}-amd64-v{{syncthing_version}}.tar.gz"
     dir: "{{syncthing_home}}/syncthing"
     dir_perms: "0700"
     bin: "{{syncthing_home}}/syncthing/syncthing-linux-amd64-v{{syncthing_version}}/syncthing"
