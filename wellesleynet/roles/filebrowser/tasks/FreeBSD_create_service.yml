@@ -1,0 +1,18 @@
+---
+- name: "Create FreeBSD rc.d service"
+  template:
+    src: "filebrowser_{{ ansible_distribution }}_service.j2"
+    dest: "/usr/local/etc/rc.d/filebrowser"
+    mode: 0555
+    group: "wheel"
+    owner: "root"
+  notify: "Restart filebrowser"
+
+- name: "Set pidfile dir permissions"
+  file:
+    state: directory
+    mode: 0755
+    owner: "{{ filebrowser_user }}"
+    group: "{{ filebrowser_group }}"
+    path: "{{ filebrowser_pid_directory }}"
+  notify: "Restart filebrowser"

@@ -1,0 +1,5 @@
+---
+- name: Deploy filebrowser to filebrowser hosts
+  hosts: filebrowser
+  roles:
+    - filebrowser
