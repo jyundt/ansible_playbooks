@@ -1,0 +1,24 @@
+---
+- name: "Create filebrowser dir"
+  file:
+    path: "{{filebrowser_dir}}"
+    state: directory
+    mode: 0755
+    group: "root"
+    owner: "root"
+
+- name: "Download filebrowser"
+  unarchive:
+    src: "{{filebrowser_download_url}}"
+    dest: "{{filebrowser_dir}}"
+    remote_src: yes
+
+# Create an ini config file from template
+- name: "Create filebrowser config file"
+  template:
+    src: filebrowser.conf.j2
+    dest: "{{filebrowser_conf}}"
+    mode: 0644
+    owner: "root"
+    group: "root"
+
