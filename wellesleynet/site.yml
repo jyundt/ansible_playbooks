@@ -7,3 +7,4 @@
 - import_playbook: nut.yml
 - import_playbook: steam.yml
 - import_playbook: plex.yml
+- import_playbook: filebrowser.yml
