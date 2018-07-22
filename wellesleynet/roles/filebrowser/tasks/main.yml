@@ -9,6 +9,7 @@
   group:
     name: "{{ filebrowser_group }}"
     gid: "{{ filebrowser_gid }}"
+  notify: "Restart filebrowser"
 
 - name: "Create filebrowser user"
   user:
@@ -17,6 +18,7 @@
     group: "{{ filebrowser_group }}"
     home: "{{ filebrowser_dir }}"
     shell: "{{ filebrowser_shell }}"
+  notify: "Restart filebrowser"
 
 - name: "Create filebrowser dir"
   file:
@@ -25,12 +27,14 @@
     mode: 0755
     group: "{{ filebrowser_group }}"
     owner: "{{ filebrowser_user }}"
+  notify: "Restart filebrowser"
 
 - name: "Download filebrowser"
   unarchive:
     src: "{{ filebrowser_download_url }}"
     dest: "{{ filebrowser_dir }}"
     remote_src: yes
+  notify: "Restart filebrowser"
 
 - name: "Create filebrowser config file"
   template:
@@ -39,6 +43,7 @@
     mode: 0644
     group: "{{ filebrowser_group }}"
     owner: "{{ filebrowser_user }}"
+  notify: "Restart filebrowser"
 
 - name: "Create filebrowser service definition"
   include_tasks: "{{ansible_distribution }}_create_service.yml"
