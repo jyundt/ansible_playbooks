@@ -1,3 +1,4 @@
 ---
+filebrowser_dir: "/usr/local/filebrowser"
 filebrowser_deps:
   - "gtar"

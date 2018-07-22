@@ -5,6 +5,19 @@
 - name: "Include OS specific tasks"
   include_tasks: "{{ansible_distribution}}.yml"
 
+- name: "Create filebrowser group"
+  group:
+    name: "{{filebrowser_group}}"
+    gid: "{{filebrowser_gid}}"
+
+- name: "Create filebrowser user"
+  user:
+    name: "{{filebrowser_user}}"
+    uid: "{{filebrowser_uid}}"
+    group: "{{filebrowser_group}}"
+    home: "{{filebrowser_dir}}"
+    shell: "{{filebrowser_shell}}"
+
 - name: "Create filebrowser dir"
   file:
     path: "{{filebrowser_dir}}"
