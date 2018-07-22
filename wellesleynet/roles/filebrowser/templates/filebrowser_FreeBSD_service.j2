@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# PROVIDE: filebrowser
+# REQUIRE: LOGIN cleanvar
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name=filebrowser
+rcvar=filebrowser_enabled
+
+pidfile="{{ filebrowser_pid_file }}"
+command="/usr/sbin/daemon"
+command_args="-P ${pidfile} -r -f {{ filebrowser_bin }} -c {{ filebrowser_conf }}"
+filebrowser_user="{{ filebrowser_user }}"
+filebrowser_group="{{ filebrowser_group }}"
+
+load_rc_config $name
+run_rc_command "$1"
