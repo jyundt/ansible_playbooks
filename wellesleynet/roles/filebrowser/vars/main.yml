@@ -9,7 +9,7 @@ filebrowser_address: "127.0.0.1"
 filebrowser_port: 8080
 #I may regret this later but I'm using the same UID/GID as my normal (non-root) user to help avoid weird file permissions issues
 filebrowser_user: "filebrowser"
-filebrowser_uid: 5002
-filebrowser_group: "users"
-filebrowser_gid: 2001
+filebrowser_uid: "{{ user_dict.jyundt.uid }}"
+filebrowser_group: "{{ group_dict.users.group }}"
+filebrowser_gid: "{{ group_dict.users.gid }}"
 filebrowser_shell: "/usr/sbin/nologin"
