@@ -79,27 +79,25 @@
 
 - name: "Add base groups"
   group: 
-    name: "{{item.group}}"
-    gid: "{{item.gid}}"
-  with_items: "{{group_list}}"
+    name: "{{ item.value.group }}"
+    gid: "{{ item.value.gid }}"
+  with_dict: "{{ group_dict }}"
   
 - name: "Add base users"
   user: 
-    name: "{{item.user}}"
-    uid: "{{item.uid}}"
-    group: "{{item.group}}"
-    groups: "{{item.groups}}"
-    home: "{{item.home}}"
-    shell: "{{item.shell}}"
-  with_items: "{{user_list}}"
+    name: "{{ item.value.user }}"
+    uid: "{{ item.value.uid }}"
+    group: "{{ item.value.group }}"
+    groups: "{{ item.value.groups }}"
+    home: "{{ item.value.home }}"
+    shell: "{{ item.value.shell }}"
+  with_dict: "{{ user_dict }}"
 
 - name: "Install ssh pub keys for base users"
   authorized_key:
-    user: "{{item[0].user}}"
-    key: '{{lookup("file", item[1])}}'
-  with_nested: 
-    - "{{user_list}}"
-    - "{{ssh_keys}}"
+    user: "{{ item.value.user }}"
+    key: "{{ item.value.ssh_pub_key | default(None) }}"
+  with_dict: "{{ user_dict }}"
 
 - name: "Download {{cronwrapper}}"
   get_url:
