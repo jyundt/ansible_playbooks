@@ -9,6 +9,7 @@
   package:
     name: nginx
     state: present
+  notify: Restart nginx
 
 - name: "Copy nginx conf"
   template:
@@ -17,6 +18,33 @@
     owner: root
     mode: 0644
   notify: Restart nginx
+
+- name: "Create SSL dirs"
+  file:
+    owner: "root"
+    state: directory
+    path: "{{ nginx_ssl_dir }}/{{ item }}"
+  loop:
+    - "certs"
+    - "private"
+
+- name: "Copy wellesleynet wildcard certs"
+  copy:
+    owner: "root"
+    dest: "{{ nginx_ssl_dir }}/{{ item.dir }}/{{item.file }}"
+    mode: "{{ item.mode }}"
+    src: "{{ item.file }}"
+  loop:
+    - { file: "{{ nginx_wellesleynet_wildcard_ssl_cert }}", mode: "0644", dir: "certs" }
+    - { file: "{{ nginx_wellesleynet_wildcard_ssl_key }}", mode: "0400", dir: "private" }
+  notify: Restart nginx
+
+- name: "Create strong Diffie Hellman key"
+  command: "openssl dhparam -out {{nginx_ssl_dir}}/dhparams.pem 2048"
+  args:
+    creates: "{{nginx_ssl_dir}}/private/dhparams.pem"
+  notify:
+    - Restart nginx
 
 - name: "Start/enable nginx"
   service:

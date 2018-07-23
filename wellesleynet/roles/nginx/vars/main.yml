@@ -1,0 +1,3 @@
+---
+nginx_wellesleynet_wildcard_ssl_cert: "wellesleynet.com.pem"
+nginx_wellesleynet_wildcard_ssl_key: "wellesleynet.com.key"
