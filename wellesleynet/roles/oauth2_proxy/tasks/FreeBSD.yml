@@ -1,0 +1,5 @@
+---
+- name: Install oauth2_proxy deps
+  package:
+    name: "{{ item }}"
+  with_items: "{{ oauth2_proxy_deps }}"

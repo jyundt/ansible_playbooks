@@ -1,0 +1,4 @@
+---
+oauth2_proxy_dir: "/tmp"
+oauth2_proxy_deps:
+  - gtar
