@@ -5,13 +5,13 @@
     update_cache: yes
   with_items: "{{kvm_packages}}"
 
-- name: "Update iscsi initiator name"
-  lineinfile:
-    path: "/etc/iscsi/initiatorname.iscsi"
-    regexp: "^InitiatorName"
-    line: "InitiatorName={{iscsi_initiator_name}}"
-    state: present
-  notify: "Restart iSCSI"
+#- name: "Update iscsi initiator name"
+#  lineinfile:
+#    path: "/etc/iscsi/initiatorname.iscsi"
+#    regexp: "^InitiatorName"
+#    line: "InitiatorName={{iscsi_initiator_name}}"
+#    state: present
+#  notify: "Restart iSCSI"
 
 - name: "Enable nested virt for Intel CPUs"
   lineinfile:
@@ -27,17 +27,17 @@
     state: started
     enabled: True
 
-- name: "Define iSCSI kvm storage pool"
-  virt_pool:
-    command: define
-    name: "{{kvm_iscsi_pool}}"
-    xml: '{{lookup("template", "iscsi.xml.j2")}}'
+#- name: "Define iSCSI kvm storage pool"
+#  virt_pool:
+#    command: define
+#    name: "{{kvm_iscsi_pool}}"
+#    xml: '{{lookup("template", "iscsi.xml.j2")}}'
 
-- name: "Activate iSCSI kvm storage pool"
-  virt_pool:
-    state: active
-    name: "{{kvm_iscsi_pool}}"
-    autostart: yes
+#- name: "Activate iSCSI kvm storage pool"
+#  virt_pool:
+#    state: active
+#    name: "{{kvm_iscsi_pool}}"
+#    autostart: yes
   
 - name: "Add kvm migrate ssh private key"
   copy:
