@@ -8,7 +8,7 @@ http {
     sendfile        on;
     tcp_nopush      on;
     tcp_nodelay     on;
-    keepalive_timeout  65;
+    keepalive_timeout  0;
     server {
         listen       80;
         server_name  {{ inventory_hostname }};
