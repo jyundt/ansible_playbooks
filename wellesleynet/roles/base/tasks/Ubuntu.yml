@@ -15,6 +15,13 @@
     name: "{{locale}}"
     state: present
 
+# Don't tell me how to live my life, Ubuntu...
+- name: "Remove Ubuntu release upgrader"
+  apt:
+    name: ubuntu-release-upgrader-core
+    state: absent
+    purge: yes
+
 # Why is Bionic the worst?
 - name: "Remove Ubuntu Advantage bloatware"
   apt:
