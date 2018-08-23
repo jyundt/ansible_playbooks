@@ -14,3 +14,26 @@
   locale_gen:
     name: "{{locale}}"
     state: present
+
+# Why is Bionic the worst?
+- name: "Remove Ubuntu Advantage bloatware"
+  apt:
+    name: ubuntu-advantage-tools
+    state: absent
+    purge: yes
+  when: ansible_distribution_release == "bionic"
+
+- name: "Disable motd-news timer"
+  systemd:
+    name: motd-news.timer
+    state: stopped
+    enabled: no
+  when: ansible_distribution_release == "bionic"
+
+- name: "Disable motd-news in /etc/default"
+  lineinfile:
+    dest: /etc/default/motd-news
+    line: "ENABLED=0"
+    state: present
+    regexp: "^ENABLED="
+  when: ansible_distribution_release == "bionic"
