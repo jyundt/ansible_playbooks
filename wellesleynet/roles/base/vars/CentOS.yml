@@ -9,6 +9,7 @@ base_deps:
   - centos-release-scl-rh
   - util-linux
   - unzip
+base_packages:
   - iperf3
   - pv
   - mbuffer

@@ -107,6 +107,11 @@
     owner: "root"
     group: "root"
 
+- name: "Install misc base packages"
+  package:
+    name: "{{ item }}"
+  with_items: "{{ base_packages }}"
+
 - name: "Run raspberry-pi specific tasks"
   include_role:
     name: raspberry-pi

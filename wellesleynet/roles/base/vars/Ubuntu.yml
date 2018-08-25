@@ -6,6 +6,7 @@ base_deps:
   - apt-transport-https
   - util-linux
   - unzip
+base_packages:
   - iperf3
   - pv
   - mbuffer
