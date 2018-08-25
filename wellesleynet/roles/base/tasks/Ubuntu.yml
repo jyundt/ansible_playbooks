@@ -16,19 +16,15 @@
     state: present
 
 # Don't tell me how to live my life, Ubuntu...
-- name: "Remove Ubuntu release upgrader"
+- name: "Remove Ubuntu bloatware"
   apt:
-    name: ubuntu-release-upgrader-core
+    name: "{{ item }}"
     state: absent
     purge: yes
-
-# Why is Bionic the worst?
-- name: "Remove Ubuntu Advantage bloatware"
-  apt:
-    name: ubuntu-advantage-tools
-    state: absent
-    purge: yes
-  when: ansible_distribution_release == "bionic"
+  loop:
+    - ubuntu-release-uprgader-core
+    - ubuntu-advantage-tools
+    - landscape-common
 
 - name: "Disable motd-news timer"
   systemd:
