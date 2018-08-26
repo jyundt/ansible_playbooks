@@ -1,0 +1,13 @@
+---
+- name: "Add wireguard copr gpg key"
+  rpm_key:
+    state: present
+    key: "https://copr-be.cloud.fedoraproject.org/results/jdoss/wireguard/pubkey.gpg"
+
+- name: "Add wireguard copr repo"
+  yum_repository:
+    name: jdoss-wireguard
+    file: wireguard
+    baseurl: "https://copr-be.cloud.fedoraproject.org/results/jdoss/wireguard/epel-7-$basearch/"
+    gpgkey: "https://copr-be.cloud.fedoraproject.org/results/jdoss/wireguard/pubkey.gpg"
+    description: "Copr repo for wireguard owned by jdoss"

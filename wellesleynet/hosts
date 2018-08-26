@@ -1,3 +1,8 @@
+
+[wireguard]
+nyx.wellesleynet.com ansible_python_interpreter=/usr/bin/python3 timezone=America/New_York
+wireguarduk1.wellesleynet.com ansible_python_interpreter=/usr/bin/python3 ansible_host=178.128.45.47
+
 [home-assistant]
 zorya.wellesleynet.com timezone=America/New_York nut_role="client"
 

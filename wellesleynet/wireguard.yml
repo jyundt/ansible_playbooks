@@ -1,0 +1,5 @@
+---
+- name: Deploy wireguard to wireguard hosts
+  hosts: wireguard
+  roles:
+    - wireguard

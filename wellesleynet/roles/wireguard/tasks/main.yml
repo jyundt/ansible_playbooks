@@ -1,0 +1,65 @@
+---
+- assert:
+    that:
+      - ansible_hostname in wireguard_data
+    msg: "No wireguard configuration for {{ ansible_hostname }}!"
+
+- name: "Include OS specific vars"
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: "Include OS specific tasks"
+  include_tasks: "{{ ansible_distribution }}.yml"
+
+- name: "Install wireguard packages"
+  package:
+    name: "{{ item }}"
+  with_items: "{{ wireguard_packages }}"
+  notify: "Restart wireguard"
+
+- name: "Create wireguard config directory"
+  file:
+    path: "{{ wireguard_conf_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: "Create wireguard config file"
+  template:
+    src: "{{ wireguard_interface}}.conf.j2"
+    dest: "{{ wireguard_conf_dir }}/{{ wireguard_interface}}.conf"
+    owner: root
+    group: root
+    mode: 0600
+  notify: "Restart wireguard"
+
+- name: "Open firewalld for wireguard"
+  firewalld:
+    port: "{{ wireguard_port }}/udp"
+    state: enabled
+    permanent: true
+    immediate: true
+  notify: "Restart firewalld"
+
+- name: "Add wireguard interface to trusted zone"
+  firewalld:
+    zone: trusted
+    interface: "{{ wireguard_interface }}"
+    permanent: true
+    state: enabled
+  notify: "Restart firewalld"
+
+- name: "Enable ipv4 forwarding"
+  sysctl:
+    name: "net.ipv4.ip_forward"
+    value: 1
+    sysctl_file: "/etc/sysctl.d/99-wireguard.conf"
+    sysctl_set: yes
+    reload: yes
+
+- name: "Start/enable wireguard interface"
+  systemd:
+    name: "wg-quick@{{ wireguard_interface }}"
+    state: started
+    enabled: yes
+    daemon_reload: yes

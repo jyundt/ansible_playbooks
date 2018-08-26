@@ -1,0 +1,23 @@
+---
+wireguard_port: 51820
+wireguard_conf_dir: "/etc/wireguard"
+wireguard_interface: "wg0"
+wireguard_data:
+  nyx:
+    privatekey: "{{ vault_wireguard_nyx_privatekey }}"
+    publickey: "QP4XabSpp1zy1/JGZzWYyQR6b6dSJhrNAuLMjYVqOVk="
+    ip: "10.0.0.1/24"
+    publicip: "108.30.14.28"
+  luna:
+    privatekey: "{{ vault_wireguard_luna_privatekey }}"
+    publickey: "f5oPsrFFGW3DrucfBXVkJekewv0IGCp+gvuA28deCQU="
+    ip: "10.0.0.2/24"
+  wireguarduk1:
+    privatekey: "{{ vault_wireguard_wireguarduk1_privatekey }}"
+    publickey: "5B6h9Lcx+kXauwyJEdySe6deRsFESpbsX1B6CFBnkQo="
+    ip: "10.0.0.3/24"
+    publicip: "178.128.45.47"
+  nex6p:
+    privatekey: "{{ vault_wireguard_nex6p_privatekey }}"
+    publickey: "OFN8vJ+pmbJzhJIwbveNYa3nX5C9ybzQgudrhN8IaRI="
+    ip: "10.0.0.4/24"

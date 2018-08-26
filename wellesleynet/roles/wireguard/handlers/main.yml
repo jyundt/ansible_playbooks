@@ -1,0 +1,12 @@
+---
+- name: "Restart wireguard"
+  service:
+    name: "wg-quick@{{ wireguard_interface }}"
+    state: restarted
+
+# I'm unsure of why a simple "firewalld-cmd --reload" doesn't work
+# ...but it doesn't. (At least when making zone changes.)
+- name: "Restart firewalld"
+  service:
+    name: firewalld
+    state: restarted

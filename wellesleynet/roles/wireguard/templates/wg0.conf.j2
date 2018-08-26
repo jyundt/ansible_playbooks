@@ -1,0 +1,14 @@
+[Interface]
+PrivateKey = {{ wireguard_data[ansible_hostname]['privatekey'] }}
+ListenPort = {{ wireguard_port }}
+Address = {{ wireguard_data[ansible_hostname]['ip'] }}
+
+{% for peer in wireguard_data.keys() if peer != ansible_hostname %}
+# {{ peer }}
+[Peer]
+PublicKey = {{ wireguard_data[peer]['publickey'] }}
+AllowedIPS = {{ wireguard_data[peer]['ip'] | ipaddr('address') }}/32
+{% if 'publicip' in wireguard_data[peer] %}
+Endpoint = {{ wireguard_data[peer]['publicip'] }}:{{ wireguard_port }}
+{% endif %}
+{% endfor %}
