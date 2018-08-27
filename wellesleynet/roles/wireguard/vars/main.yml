@@ -21,3 +21,7 @@ wireguard_data:
     privatekey: "{{ vault_wireguard_nex6p_privatekey }}"
     publickey: "OFN8vJ+pmbJzhJIwbveNYa3nX5C9ybzQgudrhN8IaRI="
     ip: "10.0.0.4/24"
+  domacbookpro:
+    privatekey: "{{ vault_wireguard_domacbookpro_privatekey }}"
+    publickey: "28DZlAqnqS5PAmP2cCg7TzoBbgN8Sbtvuuf9D/fPv0Q="
+    ip: "10.0.0.5/24"
