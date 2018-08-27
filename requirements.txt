@@ -8,6 +8,7 @@ idna==2.6
 ipaddress==1.0.22
 Jinja2==2.10
 MarkupSafe==1.0
+netaddr==0.7.19
 paramiko==2.4.1
 pip==10.0.1
 pyasn1==0.4.3
