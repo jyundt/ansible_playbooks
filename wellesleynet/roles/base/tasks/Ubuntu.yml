@@ -22,9 +22,10 @@
     state: absent
     purge: yes
   loop:
-    - ubuntu-release-uprgader-core
+    - ubuntu-release-upgrader-core
     - ubuntu-advantage-tools
     - landscape-common
+    - update-notifier-common
 
 - name: "Disable motd-news timer"
   systemd:
