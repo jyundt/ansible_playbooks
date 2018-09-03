@@ -29,7 +29,7 @@ wireguard_data:
     privatekey: "{{ vault_wireguard_wgus01_privatekey }}"
     publickey: "H/IhdKvD/IMunFpqeoRZ4yFY1wUR4GQuL3hv2XvkOGQ="
     ip: "10.0.0.6/24"
-    publicip: "158.203.107.147"
+    publicip: "159.203.107.147"
   wgnl01:
     privatekey: "{{ vault_wireguard_wgnl01_privatekey }}"
     publickey: "7Ba1mZobsxF1RdJytk+sH2lZm63TJ13XInYQerqNehQ="
