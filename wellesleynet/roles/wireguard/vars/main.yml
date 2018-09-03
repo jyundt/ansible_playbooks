@@ -12,11 +12,11 @@ wireguard_data:
     privatekey: "{{ vault_wireguard_luna_privatekey }}"
     publickey: "f5oPsrFFGW3DrucfBXVkJekewv0IGCp+gvuA28deCQU="
     ip: "10.0.0.2/24"
-  wireguarduk1:
-    privatekey: "{{ vault_wireguard_wireguarduk1_privatekey }}"
+  wggb01:
+    privatekey: "{{ vault_wireguard_wggb01_privatekey }}"
     publickey: "5B6h9Lcx+kXauwyJEdySe6deRsFESpbsX1B6CFBnkQo="
     ip: "10.0.0.3/24"
-    publicip: "178.128.45.47"
+    publicip: "138.68.141.148"
   nex6p:
     privatekey: "{{ vault_wireguard_nex6p_privatekey }}"
     publickey: "OFN8vJ+pmbJzhJIwbveNYa3nX5C9ybzQgudrhN8IaRI="
@@ -25,3 +25,33 @@ wireguard_data:
     privatekey: "{{ vault_wireguard_domacbookpro_privatekey }}"
     publickey: "28DZlAqnqS5PAmP2cCg7TzoBbgN8Sbtvuuf9D/fPv0Q="
     ip: "10.0.0.5/24"
+  wgus01:
+    privatekey: "{{ vault_wireguard_wgus01_privatekey }}"
+    publickey: "H/IhdKvD/IMunFpqeoRZ4yFY1wUR4GQuL3hv2XvkOGQ="
+    ip: "10.0.0.6/24"
+    publicip: "158.203.107.147"
+  wgnl01:
+    privatekey: "{{ vault_wireguard_wgnl01_privatekey }}"
+    publickey: "7Ba1mZobsxF1RdJytk+sH2lZm63TJ13XInYQerqNehQ="
+    ip: "10.0.0.7/24"
+    publicip: "159.65.206.158"
+  wgsg01:
+    privatekey: "{{ vault_wireguard_wgsg01_privatekey }}"
+    publickey: "RD5NirJCWTfXnBT814p4KJSFLZ2H9fWSrFxXR0I6CAk="
+    ip: "10.0.0.8/24"
+    publicip: "178.128.113.111"
+  wgde01:
+    privatekey: "{{ vault_wireguard_wgde01_privatekey }}"
+    publickey: "R25tOF+fumNza8rufHWcbYBLf+IIeqjIMyIlYHddUlU="
+    ip: "10.0.0.9/24"
+    publicip: "104.248.38.59"
+  wgca01:
+    privatekey: "{{ vault_wireguard_wgca01_privatekey }}"
+    publickey: "6uQV05IyDBMGFKmYKC6VqJnzAOaRtQVtTJVVSG0K9hU="
+    ip: "10.0.0.10/24"
+    publicip: "138.197.133.231"
+  wgin01:
+    privatekey: "{{ vault_wireguard_wgin01_privatekey }}"
+    publickey: "v8a2DJEWU8YT53MSZpn9sLNau4Pnwd3WlGihLbXtY2k="
+    ip: "10.0.0.11/24"
+    publicip: "159.65.149.232"
