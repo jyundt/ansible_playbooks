@@ -55,3 +55,7 @@ wireguard_data:
     publickey: "v8a2DJEWU8YT53MSZpn9sLNau4Pnwd3WlGihLbXtY2k="
     ip: "10.0.0.11/24"
     publicip: "159.65.149.232"
+  mia2:
+    privatekey: "{{ vault_wireguard_mia2_privatekey }}"
+    publickey: "6U8GJN8gfi6g7V4jg3ORHrDUnl2Z8S9KDh5LEB7UZSc="
+    ip: "10.0.0.12/24"
