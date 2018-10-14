@@ -59,3 +59,7 @@ wireguard_data:
     privatekey: "{{ vault_wireguard_mia2_privatekey }}"
     publickey: "6U8GJN8gfi6g7V4jg3ORHrDUnl2Z8S9KDh5LEB7UZSc="
     ip: "10.0.0.12/24"
+  mnemosyne:
+    privatekey: "{{ vault_wireguard_mnemosyne_privatekey }}"
+    publickey: "1vI8EyvrjTiP3XBdoKGl0lLmZM3t2/i6Ntq4XoeVTgU="
+    ip: "10.0.0.13/24"

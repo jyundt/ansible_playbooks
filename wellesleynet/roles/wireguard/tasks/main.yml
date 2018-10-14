@@ -13,6 +13,7 @@
 - name: "Install wireguard packages"
   package:
     name: "{{ item }}"
+    state: latest
   with_items: "{{ wireguard_packages }}"
   notify: "Restart wireguard"
 

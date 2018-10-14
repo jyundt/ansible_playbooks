@@ -7,6 +7,7 @@ wgsg01.wellesleynet.com ansible_host=178.128.113.111
 wgde01.wellesleynet.com ansible_host=104.248.38.59
 wgca01.wellesleynet.com ansible_host=138.197.133.231
 wgin01.wellesleynet.com ansible_host=159.65.149.232
+mnemosyne.wellesleynet.com
 
 [home-assistant]
 zorya.wellesleynet.com timezone=America/New_York nut_role="client"
