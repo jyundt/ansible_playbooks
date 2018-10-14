@@ -4,5 +4,6 @@ zfs_repo_package: "http://download.zfsonlinux.org/epel/zfs-release.el{{ ansible_
 zfs_deps:
   - kernel-devel
   - dkms
+  - cryptsetup
 zfs_packages:
   - zfs

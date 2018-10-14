@@ -1,3 +1,5 @@
 ---
+zfs_deps:
+  - cryptsetup
 zfs_packages:
   - zfsutils-linux
