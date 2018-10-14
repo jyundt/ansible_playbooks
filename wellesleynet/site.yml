@@ -9,3 +9,4 @@
 - import_playbook: steam.yml
 - import_playbook: plex.yml
 - import_playbook: filebrowser.yml
+- import_playbook: zfs.yml

@@ -1,0 +1,25 @@
+---
+- name: "Include OS specific vars"
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: "Install ZFS repo package"
+  package:
+    name: "{{ zfs_repo_package }}"
+    state: present
+  when: zfs_repo_package is defined
+
+- name: "Install ZFS dependencies"
+  package:
+    name: "{{ zfs_deps }}"
+    state: present
+  when: zfs_deps is defined
+
+- name: "Install zfs packages"
+  package:
+    name: "{{ zfs_packages }}"
+    state: present
+
+- name: "Load zfs kmod"
+  modprobe:
+    name: "{{ zfs_kmod }}"
+    state: present

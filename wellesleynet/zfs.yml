@@ -1,0 +1,5 @@
+---
+- name: Install zfs
+  hosts: zfs
+  roles:
+    - zfs

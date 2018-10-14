@@ -1,0 +1,8 @@
+---
+# CentOS does goofy things and lists versions like "7.5.1804", instead of simply "7.5"
+zfs_repo_package: "http://download.zfsonlinux.org/epel/zfs-release.el{{ ansible_distribution_version.split('.')[0] }}_{{ ansible_distribution_version.split('.')[1] }}.noarch.rpm"
+zfs_deps:
+  - kernel-devel
+  - dkms
+zfs_packages:
+  - zfs

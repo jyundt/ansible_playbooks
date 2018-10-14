@@ -38,3 +38,6 @@ plex-io ansible_ssh_host=plex-io@io.wellesleynet.com ansible_connection=sshjail 
 
 [filebrowser]
 files ansible_ssh_host=files@io.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+
+[zfs]
+mnemosyne.wellesleynet.com
