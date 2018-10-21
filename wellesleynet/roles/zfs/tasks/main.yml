@@ -23,3 +23,9 @@
   modprobe:
     name: "{{ zfs_kmod }}"
     state: present
+
+- name: "Add zfs replication keys"
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.key }}"
+  with_items: "{{ zfs_replication_keys }}"

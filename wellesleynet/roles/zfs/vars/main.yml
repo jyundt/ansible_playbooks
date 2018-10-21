@@ -1,2 +1,5 @@
 ---
 zfs_kmod: "zfs"
+zfs_replication_keys:
+  - name: "root"
+    key: "{{ lookup('file', 'io_id_rsa.pub') }}"
