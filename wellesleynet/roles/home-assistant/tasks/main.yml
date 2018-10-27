@@ -20,6 +20,11 @@
     group: "root"
   notify: Restart home-assistant
 
+# Unfortunately auth setup post-install is a "manual" thing after 0.77-ish
+# The switch to the builtin auth provider makes it nearly impossible to
+# automate the deployment of users/passwords.
+# Note to self: if provisioning a fresh install, log in and configure
+# an initial account.
 - name: "Installl misc home-assistant supporting conf files"
   copy:
     src: "{{item}}"
