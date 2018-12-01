@@ -1,13 +1,7 @@
 switch.leviton_dzpa11lw_plugin_appliance_module_switch:
-  friendly_name: Spare Switch
-  icon: mdi:lightbulb
+  friendly_name: Christmas Tree
+  icon: mdi:pine-tree
 switch.leviton_dzpa11lw_plugin_appliance_module_switch_2:
-  friendly_name: Nightstand Light
-  icon: mdi:weather-night
-switch.switch:
-  friendly_name: Spare Switch
-  icon: mdi:lightbulb
-switch.switch_2:
   friendly_name: Nightstand Light
   icon: mdi:weather-night
 light.linear_lb60z1_dimmable_led_light_bulb_level:

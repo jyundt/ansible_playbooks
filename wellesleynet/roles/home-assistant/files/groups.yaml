@@ -5,6 +5,7 @@ living_room:
     - light.living_room_floor_lamp
     - binary_sensor.apartment_door_sensor
     - media_player.double_r_diner
+    - switch.leviton_dzpa11lw_plugin_appliance_module_switch
 
 bedroom:
   name: Bedroom
@@ -19,4 +20,3 @@ office:
     - sensor.ups_battery_charge 
     - sensor.ups_battery_runtime
     - sensor.ups_load
-    - switch.leviton_dzpa11lw_plugin_appliance_module_switch
