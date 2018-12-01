@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# This is superjank, but we need to add the plex user to the host's "video"
+# group before the /init scrip executes
+
+usermod -a -G {{ pms_host_video_gid }} plex
+/init

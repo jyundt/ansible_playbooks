@@ -1,1 +1,6 @@
 ---
+- name: "Install plex"
+  package:
+    name: plexmediaserver
+    state: present
+  notify: Restart pms

@@ -5,13 +5,8 @@
 - name: "Include OS specific tasks"
   include_tasks: "{{ansible_os_family}}.yml"
 
-- name: "Install plex"
-  package:
-    name: plexmediaserver 
-    state: present
-
 - name: "Start/enable plex"
   service:
-    name: plexmediaserver
+    name: "{{ pms_service }}"
     state: started
     enabled: yes

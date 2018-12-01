@@ -36,6 +36,7 @@ files ansible_ssh_host=files@io.wellesleynet.com ansible_connection=sshjail ansi
 
 [plex]
 plex-io ansible_ssh_host=plex-io@io.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+zorya.wellesleynet.com timezone=America/New_York nut_role="client"
 
 [filebrowser]
 files ansible_ssh_host=files@io.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7

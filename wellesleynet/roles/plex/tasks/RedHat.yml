@@ -1,13 +1,53 @@
 ---
-- name: Add plex RPM GPG key
-  rpm_key:
-    state: present
-    key: "https://downloads.plex.tv/plex-keys/PlexSign.key"
+#- name: Add plex RPM GPG key
+#  rpm_key:
+#    state: present
+#    key: "https://downloads.plex.tv/plex-keys/PlexSign.key"
 
-- name: Install nginx repo
-  yum_repository:
-    name: "PlexRepo"
-    file: "plex"
-    description: "Plex Media Server"
-    baseurl: "https://downloads.plex.tv/repo/rpm/$basearch/"
-    gpgcheck: yes
+#- name: Install Plex repo
+#  yum_repository:
+#    name: "PlexRepo"
+#    file: "plex"
+#    description: "Plex Media Server"
+#    baseurl: "https://downloads.plex.tv/repo/rpm/$basearch/"
+#    gpgcheck: yes
+
+- name: "Create pms conf dir"
+  file:
+    path: "{{ pms_conf_dir }}"
+    state: directory
+    mode: 0755
+    group: "{{ pms_group }}"
+    owner: "{{ pms_user }}"
+
+- name: "Pull pms docker container"
+  docker_image:
+    name: "{{ pms_docker_image }}:{{ pms_docker_image_version }}"
+  notify: Restart pms
+
+- name: "Create jank gid fixup entrypoint.sh wrapper"
+  template:
+    src: entrypoint.sh.j2
+    dest: "{{ pms_conf_dir }}/entrypoint.sh"
+    mode: 0755
+    owner: "root"
+    group: "root"
+  notify: Restart pms
+
+- name: "Create pms systemd unit file"
+  template:
+    src: plexmediaserver.service.j2
+    dest: "{{ pms_systemd_unit_file }}"
+    mode: 0644
+    owner: "root"
+    group: "root"
+  notify: Restart pms
+
+- name: "Open firewalld ports for pms"
+  firewalld:
+    port: "{{ item.port }}/{{ item.proto }}"
+    state: enabled
+    permanent: True
+    immediate: True
+  with_items: "{{ pms_ports }}"
+  notify: Restart pms

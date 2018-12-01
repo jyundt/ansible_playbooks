@@ -1,0 +1,33 @@
+---
+pms_docker_image: "plexinc/pms-docker"
+pms_docker_image_version: "1.14.0.5470-9d51fdfaa"
+pms_conf_dir: "/root/pms"
+pms_data_dir: "/mnt/video"
+pms_service: "plexmediaserver"
+pms_systemd_unit_file: "/etc/systemd/system/{{ pms_service }}.service"
+pms_user: "root"
+pms_group: "root"
+pms_ports:
+  - port: 32400
+    proto: tcp
+  - port: 1900
+    proto: udp
+  - port: 3005
+    proto: tcp
+  - port: 5353
+    proto: udp
+  - port: 8324
+    proto: tcp
+  - port: 32410
+    proto: udp
+  - port: 32412
+    proto: udp
+  - port: 32413
+    proto: udp
+  - port: 32414
+    proto: udp
+  - port: 32469
+    proto: tcp
+# This is necessary to handle differences between the host's 'video' gid
+# for the /dev/dri/* devices vs the 'video' gid in the pms container
+pms_host_video_gid: "39"

@@ -13,3 +13,9 @@ cifs_dirs:
     state: mounted
     opts: "_netdev,noperm,uid=jyundt,gid=jyundt,username=jyundt,password={{cifs_jyundt_password}},vers=3.0"
     fstype: "cifs"
+  -
+    src: "//io.wellesleynet.com/video"
+    path: "/mnt/video"
+    state: mounted
+    opts: "_netdev,noperm,ro,uid=jyundt,gid=jyundt,username=jyundt,password={{cifs_jyundt_password}},vers=3.0"
+    fstype: "cifs"
