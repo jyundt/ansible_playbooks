@@ -17,3 +17,4 @@ cronwrapper_url: "https://raw.githubusercontent.com/instacart/ohmycron/master/oh
 cronwrapper_path: "/usr/local/bin"
 cronwrapper_cmd: "{{cronwrapper_path}}/{{cronwrapper}}"
 locale: "en_US.UTF-8"
+x_plex_token: "{{ vault_x_plex_token }}"

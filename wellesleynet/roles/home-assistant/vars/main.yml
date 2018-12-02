@@ -1,6 +1,6 @@
 ---
 homeassistant_docker_image: "homeassistant/home-assistant"
-homeassistant_docker_image_version: "0.80.3"
+homeassistant_docker_image_version: "0.83.2"
 homeassistant_url: "avcad.wellesleynet.com"
 homeassistant_port: 8123
 homeassistant_lifx_port: 56700

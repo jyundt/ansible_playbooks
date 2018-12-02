@@ -20,3 +20,4 @@ office:
     - sensor.ups_battery_charge 
     - sensor.ups_battery_runtime
     - sensor.ups_load
+    - sensor.plex

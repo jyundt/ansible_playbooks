@@ -18,6 +18,9 @@ config:
 updater:
 
 discovery:
+  ignore:
+    - plex_mediaserver
+    - google_cast
 
 conversation:
 
@@ -39,6 +42,11 @@ sensor:
       - battery.charge
       - battery.runtime
       - ups.load
+  - platform: plex
+    host: zorya.wellesleynet.com
+    port: 32400
+    name: Plex
+    token: {{ x_plex_token }}
 
 tts:
   - platform: google
@@ -66,8 +74,7 @@ device_tracker:
     new_device_defaults:
       track_new_devices: False
 
-light:
-  - platform: lifx
+lifx:
 
 scene:
   platform: lifx_cloud

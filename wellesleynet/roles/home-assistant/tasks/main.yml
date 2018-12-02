@@ -88,12 +88,20 @@
     enabled: yes
     daemon_reload: yes
 
+# The home-assistant lifx integration changed behavior somewhere around 0.80.3.
+# As a result, simply allowing incoming UDP port 56700 no longer works, the
+# lifx bulbs will attempt to establish a connection on a random port.
+# The source port is seemingly always 56700 though.
+# https://github.com/home-assistant/home-assistant/issues/17949
 - name: "Open firewalld for home-assistant lifx functionality"
   firewalld:
-    port: "{{homeassistant_lifx_port}}/udp"
+    rich_rule: rule family=ipv4 source address={{ net_mask | ipaddr('net') }} source-port port=56700 protocol=udp accept
     state: enabled
     permanent: True
     immediate: True
+  vars:
+    net_mask: "{{ ansible_default_ipv4.network }}/{{ ansible_default_ipv4.netmask }}"
+  notify: Restart home-assistant
 
 - name: "Create nginx-proxy config"
   template:
