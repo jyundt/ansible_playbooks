@@ -1,0 +1,5 @@
+---
+- name: Install filebrowser deps
+  package:
+    name: "{{ item }}"
+  with_items: "{{ filebrowser_deps }}"

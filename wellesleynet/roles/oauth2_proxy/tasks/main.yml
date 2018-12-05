@@ -1,0 +1,55 @@
+---
+- name: "Include OS specific vars"
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: "Include OS specific tasks"
+  include_tasks: "{{ ansible_distribution }}.yml"
+
+- name: "Create filebrowser group"
+  group:
+    name: "{{ filebrowser_group }}"
+    gid: "{{ filebrowser_gid }}"
+  notify: "Restart filebrowser"
+
+- name: "Create filebrowser user"
+  user:
+    name: "{{ filebrowser_user }}"
+    uid: "{{ filebrowser_uid }}"
+    group: "{{ filebrowser_group }}"
+    home: "{{ filebrowser_dir }}"
+    shell: "{{ filebrowser_shell }}"
+  notify: "Restart filebrowser"
+
+- name: "Create filebrowser dir"
+  file:
+    path: "{{ filebrowser_dir }}"
+    state: directory
+    mode: 0755
+    group: "{{ filebrowser_group }}"
+    owner: "{{ filebrowser_user }}"
+  notify: "Restart filebrowser"
+
+- name: "Download filebrowser"
+  unarchive:
+    src: "{{ filebrowser_download_url }}"
+    dest: "{{ filebrowser_dir }}"
+    remote_src: yes
+  notify: "Restart filebrowser"
+
+- name: "Create filebrowser config file"
+  template:
+    src: filebrowser.conf.j2
+    dest: "{{ filebrowser_conf }}"
+    mode: 0644
+    group: "{{ filebrowser_group }}"
+    owner: "{{ filebrowser_user }}"
+  notify: "Restart filebrowser"
+
+- name: "Create filebrowser service definition"
+  include_tasks: "{{ansible_distribution }}_create_service.yml"
+
+- name: "Start/enable filebrowser"
+  service:
+    name: filebrowser
+    state: started
+    enabled: yes
