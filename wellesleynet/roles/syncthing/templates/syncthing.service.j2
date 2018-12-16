@@ -1,6 +1,7 @@
 [Unit]
 Description=Syncthing Server
-After=network.target
+After=network-online.target
+RequiresMountsFor={% for mount in cifs_dirs %}{{ mount.path }} {% endfor %}
 
 [Service]
 User={{syncthing_user}}

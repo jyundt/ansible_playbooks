@@ -3,6 +3,10 @@
   include_vars:
     file: "../../nginx-proxy/vars/main.yml"
 
+- name: "Include cifs-client vars"
+  include_vars:
+    file: "../../cifs-client/vars/main.yml"
+
 - name: "Create syncthing group"
   group:
     name: "{{syncthing_group}}"
