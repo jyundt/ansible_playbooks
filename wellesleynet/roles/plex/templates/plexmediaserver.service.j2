@@ -2,6 +2,7 @@
 Description=Plex Media Server
 After=docker.service
 Requires=docker.service
+RequiresMountsFor={{ pms_data_dir }}
 
 [Service]
 Restart=on-failure
