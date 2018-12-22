@@ -1,6 +1,6 @@
 ---
 pms_docker_image: "plexinc/pms-docker"
-pms_docker_image_version: "1.14.0.5470-9d51fdfaa"
+pms_docker_image_version: "1.14.1.5488-cc260c476"
 pms_conf_dir: "/root/pms"
 pms_data_dir: "/mnt/video"
 pms_service: "plexmediaserver"
