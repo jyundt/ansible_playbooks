@@ -1,5 +1,5 @@
 ---
-filebrowser_version: "1.10.0"
+filebrowser_version: "1.11.0"
 filebrowser_download_url: "https://github.com/filebrowser/filebrowser/releases/download/v{{ filebrowser_version }}/{{ ansible_system | lower }}-amd64-filebrowser.tar.gz"
 filebrowser_bin: "{{ filebrowser_dir }}/filebrowser"
 filebrowser_db: "{{ filebrowser_dir }}/filebrowser.db"

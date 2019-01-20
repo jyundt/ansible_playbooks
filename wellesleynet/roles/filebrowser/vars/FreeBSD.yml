@@ -2,5 +2,6 @@
 filebrowser_dir: "/usr/local/filebrowser"
 filebrowser_deps:
   - "gtar"
+  - "ca_root_nss"
 filebrowser_pid_directory: "/var/run/filebrowser"
 filebrowser_pid_file: "{{ filebrowser_pid_directory }}/filebrowser.pid"
