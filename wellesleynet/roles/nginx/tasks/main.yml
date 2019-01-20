@@ -42,7 +42,7 @@
 - name: "Create strong Diffie Hellman key"
   command: "openssl dhparam -out {{nginx_ssl_dir}}/dhparams.pem 2048"
   args:
-    creates: "{{nginx_ssl_dir}}/private/dhparams.pem"
+    creates: "{{nginx_ssl_dir}}/dhparams.pem"
   notify:
     - Restart nginx
 

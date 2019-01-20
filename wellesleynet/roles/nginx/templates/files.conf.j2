@@ -30,7 +30,7 @@ http {
         ssl_session_timeout 5m;
         ssl_certificate {{ nginx_ssl_dir }}/certs/{{ nginx_wellesleynet_wildcard_ssl_cert }};
         ssl_certificate_key {{ nginx_ssl_dir }}/private/{{ nginx_wellesleynet_wildcard_ssl_key }};
-        ssl_dhparam {{ nginx_ssl_dir }}/private/dhparams.pem;
+        ssl_dhparam {{ nginx_ssl_dir }}/dhparams.pem;
         add_header Strict-Transport-Security "max-age=31536000";
         location / {
                 proxy_set_header Host localhost;
