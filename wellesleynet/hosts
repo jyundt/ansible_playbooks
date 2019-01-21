@@ -19,7 +19,6 @@ unifi.wellesleynet.com ansible_python_interpreter=/usr/bin/python3
 zorya.wellesleynet.com timezone=America/New_York nut_role="client"
 
 [nut]
-electra.wellesleynet.com timezone=America/New_York ansible_python_interpreter=/usr/bin/python3 nut_role="server"
 zorya.wellesleynet.com timezone=America/New_York nut_role="client"
 
 [steam]
