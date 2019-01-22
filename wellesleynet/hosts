@@ -25,18 +25,18 @@ zorya.wellesleynet.com timezone=America/New_York nut_role="client"
 steam.shametime.com
 
 [freenas_jails]
-pxe-http ansible_ssh_host=pxe-http@io.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
-files ansible_ssh_host=files@io.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+pxe-http ansible_ssh_host=pxe-http@callisto.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+files ansible_ssh_host=files@callisto.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
 
 [nginx]
-pxe-http ansible_ssh_host=pxe-http@io.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
-files ansible_ssh_host=files@io.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+pxe-http ansible_ssh_host=pxe-http@callisto.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+files ansible_ssh_host=files@callisto.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
 
 [plex]
 zorya.wellesleynet.com timezone=America/New_York nut_role="client"
 
 [filebrowser]
-files ansible_ssh_host=files@io.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+files ansible_ssh_host=files@callisto.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
 
 [zfs]
 mnemosyne.wellesleynet.com
