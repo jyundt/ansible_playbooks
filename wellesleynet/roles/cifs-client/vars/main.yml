@@ -2,19 +2,19 @@
 cifs_jyundt_password: "{{vault_cifs_jyundt_password}}"
 cifs_dirs: 
   - 
-    src: "//io.wellesleynet.com/secure"
+    src: "//callisto.wellesleynet.com/secure"
     path: "/mnt/secure"
     state: mounted
     opts: "_netdev,noperm,uid=jyundt,gid=jyundt,username=jyundt,password={{cifs_jyundt_password}},vers=3.0"
     fstype: "cifs"
   - 
-    src: "//io.wellesleynet.com/incoming/scratch"
+    src: "//callisto.wellesleynet.com/incoming/scratch"
     path: "/mnt/scratch"
     state: mounted
     opts: "_netdev,noperm,uid=jyundt,gid=jyundt,username=jyundt,password={{cifs_jyundt_password}},vers=3.0"
     fstype: "cifs"
   -
-    src: "//io.wellesleynet.com/video"
+    src: "//callisto.wellesleynet.com/video"
     path: "/mnt/video"
     state: mounted
     opts: "_netdev,noperm,ro,uid=jyundt,gid=jyundt,username=jyundt,password={{cifs_jyundt_password}},vers=3.0"
