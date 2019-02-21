@@ -68,3 +68,11 @@ wireguard_data:
     privatekey: "{{ vault_wireguard_donuc_privatekey }}"
     publickey: "nrCuLQKYeH5xih6pIhdQWWQNZCQAv5ZAQJUNeFSjlnM="
     ip: "10.0.0.14/24"
+  elena:
+    privatekey: "{{ vault_wireguard_elena_privatekey }}"
+    publickey: "9UiteuiQbSXYzXL3/tOVFY3UL8tHEuVGjLK1yiHxCEM="
+    ip: "10.0.0.15/24"
+  iphone:
+    privatekey: "{{ vault_wireguard_elena_privatekey }}"
+    publickey: "ClpnPUpXazUnNqmitVsIwhjDFOvZxDMCR/+uNZVKQ1E="
+    ip: "10.0.0.16/24"
