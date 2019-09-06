@@ -1,5 +1,6 @@
 ---
-- assert:
+- name: "Check for wireguard definition"
+  assert:
     that:
       - ansible_hostname in wireguard_data
     msg: "No wireguard configuration for {{ ansible_hostname }}!"
@@ -27,8 +28,8 @@
 
 - name: "Create wireguard config file"
   template:
-    src: "{{ wireguard_interface}}.conf.j2"
-    dest: "{{ wireguard_conf_dir }}/{{ wireguard_interface}}.conf"
+    src: "{{ wireguard_interface }}.conf.j2"
+    dest: "{{ wireguard_conf_dir }}/{{ wireguard_interface }}.conf"
     owner: root
     group: root
     mode: 0600

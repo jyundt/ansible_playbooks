@@ -12,5 +12,5 @@
 
 - name: "Set locale"
   locale_gen:
-    name: "{{locale}}"
+    name: "{{ locale }}"
     state: present

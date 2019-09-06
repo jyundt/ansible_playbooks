@@ -1,16 +1,16 @@
 ---
 - name: "Include nut role specific vars"
-  include_vars: "nut-{{nut_role}}-{{ansible_distribution}}.yml"
+  include_vars: "nut-{{ nut_role }}-{{ ansible_distribution }}.yml"
 
 - name: "Install nut packages"
   package:
-    name: "{{item}}"
+    name: "{{ item }}"
     update_cache: yes
-  with_items: "{{nut_packages}}"
+  with_items: "{{ nut_packages }}"
 
 - name: "Open firewalld for nut-server"
   firewalld:
-    port: "{{nut_port}}/tcp"
+    port: "{{ nut_port }}/tcp"
     state: enabled
     permanent: true
     immediate: true
@@ -18,16 +18,16 @@
 
 - name: "Copy nut config files"
   copy:
-    dest: "{{nut_conf_dir}}/{{item}}"
-    src: "{{item}}"
-    owner: "{{nut_user}}"
-    group: "{{nut_group}}"
+    dest: "{{ nut_conf_dir }}/{{ item }}"
+    src: "{{ item }}"
+    owner: "{{ nut_user }}"
+    group: "{{ nut_group }}"
     mode: 0640
-  with_items: "{{nut_conf_files}}"
+  with_items: "{{ nut_conf_files }}"
   notify: "Restart NUT"
 
 - name: "Start/enable nut"
   service:
-    name: "{{nut_service}}"
+    name: "{{ nut_service }}"
     state: started
     enabled: true

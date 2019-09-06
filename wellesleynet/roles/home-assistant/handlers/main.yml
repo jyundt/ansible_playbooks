@@ -1,8 +1,8 @@
 ---
 # Supposedly this needs to be an import (static) instead of an include (dynamic)
-- name: Import nginx-proxy 
+- name: Import nginx-proxy
   import_tasks: "../../nginx-proxy/handlers/main.yml"
-  
+
 - name: Restart home-assistant
   service:
     name: home-assistant

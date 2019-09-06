@@ -1,7 +1,7 @@
 ---
 - name: "Create gmvault dir"
   file:
-    path: "{{gmvault_conf_dir}}"
+    path: "{{ gmvault_conf_dir }}"
     state: directory
     mode: 0755
     group: "root"
@@ -9,9 +9,9 @@
 
 - name: "Copy gmvault files"
   copy:
-    src: "{{item.src}}"
-    dest: "{{gmvault_conf_dir}}/{{item.src}}"
-    mode: "{{item.mode}}"
+    src: "{{ item.src }}"
+    dest: "{{ gmvault_conf_dir }}/{{ item.src }}"
+    mode: "{{ item.mode }}"
     owner: "root"
     group: "root"
   with_items:
@@ -25,7 +25,7 @@
 - name: "Copy Dockerfile template"
   template:
     src: "Dockerfile.j2"
-    dest: "{{gmvault_conf_dir}}/Dockerfile"
+    dest: "{{ gmvault_conf_dir }}/Dockerfile"
     mode: 0644
     owner: "root"
     group: "root"
@@ -36,24 +36,24 @@
 # (which I consider "sensitive"), I had to mask this with a vault var (dict)
 - name: "Copy google app passwords"
   copy:
-    src: "{{item.file}}"
-    dest: "{{gmvault_conf_dir}}/{{item.email}}.passwd"
+    src: "{{ item.file }}"
+    dest: "{{ gmvault_conf_dir }}/{{ item.email }}.passwd"
     mode: "0600"
     owner: "root"
     group: "root"
-  with_items: "{{gmvault_creds}}"
+  with_items: "{{ gmvault_creds }}"
 
 - name: "Build docker container"
   docker_image:
-    path: "{{gmvault_conf_dir}}"
-    name: "gmvault:{{gmvault_version}}"
+    path: "{{ gmvault_conf_dir }}"
+    name: "gmvault:{{ gmvault_version }}"
 
 - name: "Create cron jobs for nightly backups"
   cron:
-    name: "{{item.email}} gmvault nightly backup"
-    job: "{{cronwrapper_cmd}} --tag gmvault:{{item.email}} -- /usr/bin/docker run --rm -v {{gmvault_conf_dir}}:/root/.gmvault -v {{gmvault_db_dir}}:{{gmvault_db_dir}} gmvault:{{gmvault_version}} sync -p -d {{gmvault_db_dir}}/{{item.email}} {{item.email}}"
+    name: "{{ item.email }} gmvault nightly backup"
+    job: "{{ cronwrapper_cmd }} --tag gmvault:{{ item.email }} -- /usr/bin/docker run --rm -v {{ gmvault_conf_dir }}:/root/.gmvault -v {{ gmvault_db_dir }}:{{ gmvault_db_dir }} gmvault:{{ gmvault_version }} sync -p -d {{ gmvault_db_dir }}/{{ item.email }} {{ item.email }}"
     user: "root"
     cron_file: "gmvault"
-    minute: "{{ 59 | random(seed=(item.email) )}}"
+    minute: "{{ 59 | random(seed=(item.email) ) }}"
     hour: "{{ 6 | random(seed=(item.email) ) }}"
-  with_items: "{{gmvault_creds}}"
+  with_items: "{{ gmvault_creds }}"

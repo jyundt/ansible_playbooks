@@ -1,16 +1,16 @@
 ---
 - name: Install EPEL
-  yum: 
-    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ansible_distribution_major_version}}.noarch.rpm"
+  yum:
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
 
 - name: Upgrade all packages
-  yum: 
+  yum:
     name: "*"
-    state: latest 
+    state: latest
     update_cache: yes
 
 - name: Enable SELinux
-  selinux: 
+  selinux:
     policy: targeted
     state: enforcing
 
@@ -32,5 +32,5 @@
   changed_when: false
 
 - name: "Set tuned profile"
-  command: "/usr/sbin/tuned-adm profile {{tuned_profile}}"
+  command: "/usr/sbin/tuned-adm profile {{ tuned_profile }}"
   when: current_tuned_profile.stdout != tuned_profile

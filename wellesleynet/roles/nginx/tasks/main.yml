@@ -1,9 +1,9 @@
 ---
 - name: "Include OS specific vars"
-  include_vars: "{{ansible_os_family}}.yml"
+  include_vars: "{{ ansible_os_family }}.yml"
 
 - name: "Include OS specific tasks"
-  include_tasks: "{{ansible_os_family}}.yml"
+  include_tasks: "{{ ansible_os_family }}.yml"
 
 - name: "Install nginx"
   package:
@@ -14,7 +14,7 @@
 - name: "Copy nginx conf"
   template:
     dest: "{{ nginx_conf_file }}"
-    src: "{{ inventory_hostname}}.conf.j2"
+    src: "{{ inventory_hostname }}.conf.j2"
     owner: root
     mode: 0644
   notify: Restart nginx
@@ -31,7 +31,7 @@
 - name: "Copy wellesleynet wildcard certs"
   copy:
     owner: "root"
-    dest: "{{ nginx_ssl_dir }}/{{ item.dir }}/{{item.file }}"
+    dest: "{{ nginx_ssl_dir }}/{{ item.dir }}/{{ item.file }}"
     mode: "{{ item.mode }}"
     src: "{{ item.file }}"
   loop:
@@ -40,9 +40,9 @@
   notify: Restart nginx
 
 - name: "Create strong Diffie Hellman key"
-  command: "openssl dhparam -out {{nginx_ssl_dir}}/dhparams.pem 2048"
+  command: "openssl dhparam -out {{ nginx_ssl_dir }}/dhparams.pem 2048"
   args:
-    creates: "{{nginx_ssl_dir}}/dhparams.pem"
+    creates: "{{ nginx_ssl_dir }}/dhparams.pem"
   notify:
     - Restart nginx
 

@@ -1,44 +1,44 @@
 ---
 - name: "Install kvm packages"
   package:
-    name: "{{item}}"
+    name: "{{ item }}"
     update_cache: yes
-  with_items: "{{kvm_packages}}"
+  with_items: "{{ kvm_packages }}"
 
 #- name: "Update iscsi initiator name"
 #  lineinfile:
 #    path: "/etc/iscsi/initiatorname.iscsi"
 #    regexp: "^InitiatorName"
-#    line: "InitiatorName={{iscsi_initiator_name}}"
+#    line: "InitiatorName={{ iscsi_initiator_name }}"
 #    state: present
 #  notify: "Restart iSCSI"
 
 - name: "Enable nested virt for Intel CPUs"
   lineinfile:
-    path: "{{kvm_modprobe_file}}"
-    line: "{{kvm_module_args}}"
+    path: "{{ kvm_modprobe_file }}"
+    line: "{{ kvm_module_args }}"
     state: present
     create: true
   notify: "Restart libvirtd"
 
 - name: "Enable kvm services"
   service:
-    name: "{{kvm_service}}"
+    name: "{{ kvm_service }}"
     state: started
     enabled: True
 
 #- name: "Define iSCSI kvm storage pool"
 #  virt_pool:
 #    command: define
-#    name: "{{kvm_iscsi_pool}}"
-#    xml: '{{lookup("template", "iscsi.xml.j2")}}'
+#    name: "{{ kvm_iscsi_pool }}"
+#    xml: '{{ lookup("template", "iscsi.xml.j2") }}'
 
 #- name: "Activate iSCSI kvm storage pool"
 #  virt_pool:
 #    state: active
-#    name: "{{kvm_iscsi_pool}}"
+#    name: "{{ kvm_iscsi_pool }}"
 #    autostart: yes
-  
+
 - name: "Add kvm migrate ssh private key"
   copy:
     src: id_rsa

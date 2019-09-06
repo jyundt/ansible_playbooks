@@ -46,7 +46,7 @@
   notify: "Restart filebrowser"
 
 - name: "Create filebrowser service definition"
-  include_tasks: "{{ansible_distribution }}_create_service.yml"
+  include_tasks: "{{ ansible_distribution }}_create_service.yml"
 
 - name: "Start/enable filebrowser"
   service:

@@ -12,7 +12,7 @@
 
 - name: "Set locale"
   locale_gen:
-    name: "{{locale}}"
+    name: "{{ locale }}"
     state: present
 
 # Don't tell me how to live my life, Ubuntu...

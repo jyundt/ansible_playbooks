@@ -1,7 +1,7 @@
 ---
 - name: Restart libvirtd
   service:
-    name: "{{kvm_service}}"
+    name: "{{ kvm_service }}"
     state: restarted
 
 - name: Restart iSCSI

@@ -1,25 +1,25 @@
 ---
 - name: "Include OS specific vars"
-  include_vars: "{{ansible_distribution}}.yml"
+  include_vars: "{{ ansible_distribution }}.yml"
 
 - name: "Install NFS client packages"
   package:
-    name: "{{item}}"
+    name: "{{ item }}"
     update_cache: yes
-  with_items: "{{nfs_packages}}"
+  with_items: "{{ nfs_packages }}"
 
 - name: "Update idmapd domain"
   ini_file:
     path: /etc/idmapd.conf
     section: General
     option: Domain
-    value: "{{nfs_domain}}"
+    value: "{{ nfs_domain }}"
 
 - name: "Mount NFS shares"
   mount:
-    path: "{{item.path}}"
-    src: "{{item.src}}"
-    state: "{{item.state}}"
-    opts: "{{item.opts}}"
-    fstype: "{{item.fstype}}"
-  with_items: "{{nfs_dirs}}"
+    path: "{{ item.path }}"
+    src: "{{ item.src }}"
+    state: "{{ item.state }}"
+    opts: "{{ item.opts }}"
+    fstype: "{{ item.fstype }}"
+  with_items: "{{ nfs_dirs }}"

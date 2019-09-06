@@ -6,5 +6,5 @@
 
 - name: Install nginx repo (Ubuntu)
   apt_repository:
-    repo: "deb https://nginx.org/packages/ubuntu/ {{ansible_distribution_release}} nginx"
+    repo: "deb https://nginx.org/packages/ubuntu/ {{ ansible_distribution_release }} nginx"
     state: present

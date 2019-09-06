@@ -1,22 +1,22 @@
 ---
 - name: "Include OS specific vars"
-  include_vars: "{{ansible_distribution}}.yml"
+  include_vars: "{{ ansible_distribution }}.yml"
 
 - name: "Remove OS docker packages"
   package:
-    name: "{{item}}"
+    name: "{{ item }}"
     state: absent
-  with_items: "{{docker_os_docker_packages}}" 
+  with_items: "{{ docker_os_docker_packages }}"
 
 - name: "Include OS specific tasks"
-  include_tasks: "{{ansible_distribution}}.yml"
+  include_tasks: "{{ ansible_distribution }}.yml"
 
 - name: "Install Docker packages"
   package:
-    name: "{{item}}"
+    name: "{{ item }}"
     update_cache: yes
   notify: "Restart docker"
-  with_items: "{{docker_packages}}"
+  with_items: "{{ docker_packages }}"
 
 - name: "Start/enable docker"
   service:

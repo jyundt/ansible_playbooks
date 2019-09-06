@@ -5,7 +5,7 @@
 
 - name: "Create homeassistant dirs"
   file:
-    path: "{{homeassistant_conf_dir}}"
+    path: "{{ homeassistant_conf_dir }}"
     state: directory
     mode: 0755
     group: "root"
@@ -14,7 +14,7 @@
 - name: "Install home-assistant configuration file"
   template:
     src: configuration.yaml.j2
-    dest: "{{homeassistant_conf_dir}}/configuration.yaml"
+    dest: "{{ homeassistant_conf_dir }}/configuration.yaml"
     mode: 0644
     owner: "root"
     group: "root"
@@ -27,8 +27,8 @@
 # an initial account.
 - name: "Installl misc home-assistant supporting conf files"
   copy:
-    src: "{{item}}"
-    dest: "{{homeassistant_conf_dir}}/{{item}}"
+    src: "{{ item }}"
+    dest: "{{ homeassistant_conf_dir }}/{{ item }}"
     mode: 0644
     owner: "root"
     group: "root"
@@ -52,10 +52,10 @@
     owner: root
     group: root
     mode: 0644
-    path: "{{homeassistant_conf_dir}}/known_devices.yaml"
-    marker: "#####{mark} {{item}}#####"
+    path: "{{ homeassistant_conf_dir }}/known_devices.yaml"
+    marker: "#####{mark} {{ item }}#####"
     block: |
-      {{ lookup('file', '{{item}}.yaml') }}
+      {{ lookup('file', '{{ item }}.yaml') }}
   with_items:
     - jy
     - ew
@@ -69,13 +69,13 @@
 # (Handy trick from some old pals at Uber...)
 - name: "Pull home-assistant container"
   docker_image:
-    name: "{{homeassistant_docker_image}}:{{homeassistant_docker_image_version}}"
+    name: "{{ homeassistant_docker_image }}:{{ homeassistant_docker_image_version }}"
 
 # This is clunky and makes everything systemd dependent, fixme!
 - name: "Create home-assistant systemd unit file"
   template:
     src: home-assistant.service.j2
-    dest: "{{homeassistant_systemd_unit_file}}"
+    dest: "{{ homeassistant_systemd_unit_file }}"
     mode: 0644
     owner: "root"
     group: "root"
@@ -83,7 +83,7 @@
 
 - name: "Start/enable home-assistant"
   systemd:
-    name: "{{homeassistant_service}}"
+    name: "{{ homeassistant_service }}"
     state: started
     enabled: yes
     daemon_reload: yes
@@ -106,7 +106,7 @@
 - name: "Create nginx-proxy config"
   template:
     src: home-assistant.conf.j2
-    dest: "{{nginx_proxy_conf_dir}}/home-assistant.conf"
+    dest: "{{ nginx_proxy_conf_dir }}/home-assistant.conf"
     mode: 0644
     owner: "root"
     group: "root"

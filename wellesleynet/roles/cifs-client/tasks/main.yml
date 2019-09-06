@@ -1,18 +1,18 @@
 ---
 - name: "Include OS specific vars"
-  include_vars: "{{ansible_distribution}}.yml"
+  include_vars: "{{ ansible_distribution }}.yml"
 
 - name: "Install CIFS client packages"
   package:
-    name: "{{item}}"
+    name: "{{ item }}"
     update_cache: yes
-  with_items: "{{cifs_packages}}"
+  with_items: "{{ cifs_packages }}"
 
 - name: "Mount CIFS shares"
   mount:
-    path: "{{item.path}}"
-    src: "{{item.src}}"
-    state: "{{item.state}}"
-    opts: "{{item.opts}}"
-    fstype: "{{item.fstype}}"
-  with_items: "{{cifs_dirs}}"
+    path: "{{ item.path }}"
+    src: "{{ item.src }}"
+    state: "{{ item.state }}"
+    opts: "{{ item.opts }}"
+    fstype: "{{ item.fstype }}"
+  with_items: "{{ cifs_dirs }}"

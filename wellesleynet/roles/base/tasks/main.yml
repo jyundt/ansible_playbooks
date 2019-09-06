@@ -1,15 +1,15 @@
 ---
 - name: "Include OS specific vars"
-  include_vars: "{{ansible_distribution}}.yml"
+  include_vars: "{{ ansible_distribution }}.yml"
 
 - name: "Install Ansible deps"
-  package: 
-    name: "{{item}}"
-    update_cache: yes  
-  with_items: "{{base_deps}}"
+  package:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items: "{{ base_deps }}"
 
 - name: "Include OS specific tasks"
-  include_tasks: "{{ansible_distribution}}.yml"
+  include_tasks: "{{ ansible_distribution }}.yml"
 
 - name: "Include DigitalOcean specific tasks"
   include_tasks: "digitalocean.yml"
@@ -20,7 +20,7 @@
   when: (ansible_product_uuid is search("^EC2") and ansible_system_vendor == "Xen")
 
 - name: "Disable password based root access"
-  lineinfile: 
+  lineinfile:
     dest: /etc/ssh/sshd_config
     line: "PermitRootLogin without-password"
     state: present
@@ -29,20 +29,20 @@
 
 - name: "Install ntp"
   package:
-    name: "{{ntp_package}}"
+    name: "{{ ntp_package }}"
     update_cache: yes
 
 - name: "Enable ntp"
   service:
-    name: "{{ntp_service}}"
+    name: "{{ ntp_service }}"
     state: started
     enabled: True
 
 - name: "Install ssh pub keys for root"
   authorized_key:
     user: root
-    key: '{{lookup("file", item)}}'
-  with_items: "{{ssh_keys}}"
+    key: '{{ lookup("file", item) }}'
+  with_items: "{{ ssh_keys }}"
 
 - name: "Install firewalld"
   package:
@@ -62,7 +62,7 @@
     immediate: True
 
 - name: "Install sysstat"
-  package: 
+  package:
     name: sysstat
     update_cache: yes
 
@@ -74,17 +74,17 @@
 
 - name: "Set timezone"
   timezone:
-    name: "{{timezone}}"
+    name: "{{ timezone }}"
   notify: Restart ntp
 
 - name: "Add base groups"
-  group: 
+  group:
     name: "{{ item.value.group }}"
     gid: "{{ item.value.gid }}"
   with_dict: "{{ group_dict }}"
-  
+
 - name: "Add base users"
-  user: 
+  user:
     name: "{{ item.value.user }}"
     uid: "{{ item.value.uid }}"
     group: "{{ item.value.group }}"
@@ -99,10 +99,10 @@
     key: "{{ item.value.ssh_pub_key | default(None) }}"
   with_dict: "{{ user_dict }}"
 
-- name: "Download {{cronwrapper}}"
+- name: "Download {{ cronwrapper }}"
   get_url:
-    url: "{{cronwrapper_url}}"
-    dest: "{{cronwrapper_path}}/{{cronwrapper}}"
+    url: "{{ cronwrapper_url }}"
+    dest: "{{ cronwrapper_path }}/{{ cronwrapper }}"
     mode: 0755
     owner: "root"
     group: "root"
