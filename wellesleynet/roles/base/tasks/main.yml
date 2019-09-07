@@ -4,9 +4,8 @@
 
 - name: "Install Ansible deps"
   package:
-    name: "{{ item }}"
+    name: "{{ base_deps }}"
     update_cache: yes
-  with_items: "{{ base_deps }}"
 
 - name: "Include OS specific tasks"
   include_tasks: "{{ ansible_distribution }}.yml"
@@ -109,8 +108,7 @@
 
 - name: "Install misc base packages"
   package:
-    name: "{{ item }}"
-  with_items: "{{ base_packages }}"
+    name: "{{ base_packages }}"
 
 - name: "Run raspberry-pi specific tasks"
   include_role:
