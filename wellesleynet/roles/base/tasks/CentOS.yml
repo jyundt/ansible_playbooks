@@ -8,11 +8,17 @@
     name: "*"
     state: latest
     update_cache: yes
+  when: "'k8s' not in group_names"
 
 - name: Enable SELinux
   selinux:
-    policy: targeted
-    state: enforcing
+    policy: "{{ selinux_policy }}"
+    state: "{{ selinux_state }}"
+  register: selinux_status
+
+- name: Reboot for SELinux change
+  reboot:
+  when: selinux_status.reboot_required
 
 - name: "Installed tuned"
   yum:
