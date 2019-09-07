@@ -14,7 +14,7 @@
 
 - name: "Install Docker package"
   yum:
-    name: "{{ docker_package }}-{{ docker_version }}"
+    name: "{{ docker_packages }}"
     update_cache: yes
     allow_downgrade: yes
     state: present

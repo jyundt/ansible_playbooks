@@ -11,7 +11,7 @@
 
 - name: "Install Docker package"
   apt:
-    name: "{{ docker_package }}={{ docker_version }}"
+    name: "{{ docker_packages }}"
     update_cache: yes
     install_recommends: no
     state: present
