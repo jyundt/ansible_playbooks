@@ -20,6 +20,14 @@
 
 # To be candid, I'm not sure what this does or why this is needed, but the k8s
 # documentation says to "do it".
+- name: Create docker daemon config dir
+  file:
+    path: /etc/docker
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
 - name: Create Docker daemon config
   copy:
     src: daemon.json
