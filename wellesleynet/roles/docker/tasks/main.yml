@@ -18,6 +18,28 @@
     update_cache: yes
   notify: "Restart docker"
 
+# To be candid, I'm not sure what this does or why this is needed, but the k8s
+# documentation says to "do it".
+- name: Create Docker daemon config
+  copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify: "Restart docker"
+
+# Even though we don't seem to use this directory, we'll create it anyways
+- name: Create docker systemd conf dir
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+  notify: "Restart docker"
+
 - name: "Start/enable docker"
   service:
     name: "docker"
