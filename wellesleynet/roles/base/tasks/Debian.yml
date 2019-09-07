@@ -3,6 +3,7 @@
   apt:
     upgrade: dist
     update_cache: yes
+  when: "'k8s' not in group_names"
 
 - name: Remove ufw
   apt:

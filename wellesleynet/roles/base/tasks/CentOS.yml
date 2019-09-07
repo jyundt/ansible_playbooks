@@ -10,7 +10,7 @@
     update_cache: yes
   when: "'k8s' not in group_names"
 
-- name: Enable SELinux
+- name: Configure SELinux
   selinux:
     policy: "{{ selinux_policy }}"
     state: "{{ selinux_state }}"
