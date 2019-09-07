@@ -7,7 +7,8 @@ docker_deps:
   - yum-utils
   - device-mapper-persistent-data
   - lvm2
-docker_packages:
-  - docker-ce
+docker_package: docker-ce
+docker_version: 18.09.9-3.el7
+docker_ansible_deps:
   - docker-python
 docker_rpm_key: https://download.docker.com/linux/centos/gpg

@@ -9,5 +9,13 @@
     name: "docker-ce-stable"
     file: "docker-ce"
     description: "Docker CE Stable - $basearch"
-    baseurl: "https://download.docker.com/linux/centos/7/$basearch/stable"
+    baseurl: "https://download.docker.com/linux/centos/{{ ansible_distribution_major_version }}/$basearch/stable"
     gpgcheck: yes
+
+- name: "Install Docker package"
+  yum:
+    name: "{{ docker_package }}-{{ docker_version }}"
+    update_cache: yes
+    allow_downgrade: yes
+    state: present
+  notify: "Restart docker"

@@ -8,8 +8,9 @@ docker_deps:
   - ca-certificates
   - curl
   - software-properties-common
-docker_packages:
-  - docker-ce
+docker_package: docker-ce
+docker_version: 5:18.09.9~3-0~ubuntu-bionic
+docker_ansible_deps:
   - python3-docker
 docker_apt_key: https://download.docker.com/linux/ubuntu/gpg
 

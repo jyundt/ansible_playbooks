@@ -4,19 +4,19 @@
 
 - name: "Remove OS docker packages"
   package:
-    name: "{{ item }}"
+    name: "{{ docker_os_docker_packages }}"
     state: absent
-  with_items: "{{ docker_os_docker_packages }}"
 
+# We have to use OS specific package modules (yum, apt) to install Docker due
+# due to the different options, unfortunately vanilla package won't suffice.
 - name: "Include OS specific tasks"
   include_tasks: "{{ ansible_distribution }}.yml"
 
-- name: "Install Docker packages"
+- name: "Install Ansible Docker deps"
   package:
-    name: "{{ item }}"
+    name: "{{ docker_ansible_deps }}"
     update_cache: yes
   notify: "Restart docker"
-  with_items: "{{ docker_packages }}"
 
 - name: "Start/enable docker"
   service:
