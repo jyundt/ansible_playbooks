@@ -1,0 +1,39 @@
+global_defs {
+    script_user root
+
+    enable_script_security
+}
+
+vrrp_script chk_k8s {
+    script "/usr/bin/pgrep kube-apiserver"
+
+    interval 2
+}
+
+vrrp_instance VI_1 {
+    state BACKUP
+
+    interface {{ ansible_default_ipv4.interface }}
+
+    virtual_router_id 51
+
+    # I should probably base the priority on the position of the node in the
+    # ansible group list, but instead I'm going to be lazy and randomly assign
+    # an idempotent priority.
+    priority {{ 255 | random(seed=inventory_hostname) }}
+
+    # Let's not "failback" if someone comes online suddenly.
+    # This is important for initial cluster bringup when VIPs can float around
+    # while kube-apiserver is initializing
+    nopreempt
+
+    advert_int 1
+
+    virtual_ipaddress {
+        {{ k8s_vrrp_vip }}
+    }
+
+    track_script {
+        chk_k8s
+    }
+}

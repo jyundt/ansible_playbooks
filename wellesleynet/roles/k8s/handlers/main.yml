@@ -1,0 +1,10 @@
+---
+- name: "Restart keepalived"
+  service:
+    name: keepalived
+    state: restarted
+
+- name: "Restart kubelet"
+  service:
+    name: kubelet
+    state: restarted

@@ -1,0 +1,8 @@
+---
+- name: Open kubernetes worker firewalld ports
+  firewalld:
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  with_items: "{{ k8s_worker_ports }}"

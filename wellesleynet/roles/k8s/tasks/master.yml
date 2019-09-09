@@ -1,0 +1,87 @@
+---
+# Get VRRP / keepalived installed
+# (We'll use VRRP for our k8s VIP.)
+# Yes, I recognize that k8s _could_ manage this, but I'd prefer to keep it
+# simple and external to k8s.
+
+# Worth noting, Keepalive strongly recommends using the same keepalived
+# version for all nodes participating in the some VRRP vip.
+# I'm going to #yolo a bit with the package module and hope that I don't
+# forget about this and mix distros.
+
+- name: Install keepalived
+  package:
+    name: keepalived
+    state: present
+    update_cache: True
+  notify: "Restart keepalived"
+
+- name: Open firewalld for keepalived
+  firewalld:
+    rich_rule: rule protocol value=vrrp accept
+    state: enabled
+    permanent: True
+    immediate: True
+  notify: "Restart keepalived"
+
+- name: Copy keepalived config
+  template:
+    dest: "/etc/keepalived/keepalived.conf"
+    src: "keepalived.conf.j2"
+    owner: root
+    group: root
+    mode: 0644
+  notify: "Restart keepalived"
+
+- name: Start/enable keepalived
+  service:
+    name: keepalived
+    enabled: True
+    state: started
+
+- name: Open kubernetes master firewalld ports
+  firewalld:
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  with_items: "{{ k8s_master_ports }}"
+
+# Ok, this is going to be tricky, we need to find a way to determine if a
+# cluster exists on any of the masters before we run init.
+# If we have one, let's use that as our master master and generate join tokens
+# from that node.
+# If we don't have any nodes in a cluster, let's assume we do _not_ have an
+# existing cluster, pick a new master master node and bootstrap from that.
+
+# There are probably better ways to determine if a prior cluster exists, I'm
+# going to list nodes in the cluster and compare to our inventory. If either
+# the kubectl command fails or we aren't listed as a master, then join the
+# cluster. If there are _zero_ nodes in the cluster, select one node to be the
+# "master master" and run kubeadm init on it. After that, join the remaining
+# master nodes.
+# There are probably a gazillion better ways to check for cluter health,
+# like looking at /etc/kubernetes/pki, /etc/kubernetes/admin.conf, etc. but
+# I'm lazy and this works for now™.
+
+# Set failed_when: False in case we are on a non init-ed cluster.
+- name: Gather list of nodes in cluster
+  shell: kubectl get nodes --kubeconfig /etc/kubernetes/admin.conf --no-headers
+  changed_when: false
+  failed_when: false
+  register: kubectl_output
+
+- name: Derive list of master nodes according to kubectl
+  set_fact:
+    kubectl_master: "{{ kubectl_output.stdout | regex_findall('^(\\w+)\\s+\\w+\\s+master', '\\1') }}"
+  when: kubectl_output.rc == '0'
+
+# add_host is similar to run_once, it only executes once on one host.
+# Because of that, we'll loop through hosts in the master group
+- name: Build list of unconfigured master nodes
+  add_host:
+    name: "{{ item }}"
+    groups: unconfigured_master
+   when: (hostvars[item]['kubectl_output']['rc'] != 0 or item not in hostvars[item]['kubectl_master'] | default([]))
+   with_items: "{{ groups['master'] }}"
+

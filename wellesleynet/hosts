@@ -40,3 +40,17 @@ files ansible_ssh_host=files@callisto.wellesleynet.com ansible_connection=sshjai
 
 [zfs]
 mnemosyne.wellesleynet.com
+
+[master]
+k8s1
+k8s3
+k8s4 ansible_python_interpreter=/usr/bin/python3
+
+[worker]
+k8s1
+k8s2
+k8s4 ansible_python_interpreter=/usr/bin/python3
+
+[k8s:children]
+master
+worker

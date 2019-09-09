@@ -1,0 +1,60 @@
+---
+- name: Include OS specific vars
+  include_vars: "{{ ansible_distribution }}.yml"
+
+# preflight stuff
+
+- name: Deactivate swap
+  command: swapoff -a
+  when: ansible_swaptotal_mb > 0
+
+# CentOS fstype = swap
+# Ubuntu fstype = none
+- name: Disable swap
+  mount:
+    state: absent
+    fstype: swap
+    path: "{{ item }}"
+  with_items:
+    - swap
+    - none
+
+- name: Load kmod deps for k8s
+  modprobe:
+    name: "{{ item }}"
+  with_items: "{{ k8s_kmod_deps }}"
+
+- name: Configure kubernetes sysctl settings
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_file: "{{ k8s_sysctl_file }}"
+    sysctl_set: yes
+  with_dict: "{{ k8s_sysctl }}"
+
+- name: Include OS specific tasks
+  include_tasks: "{{ ansible_distribution }}.yml"
+
+- name: Start/enable kubelet
+  service:
+    name: kubelet
+    state: started
+    enabled: yes
+
+# Sanity check to make sure we either have 1 or 3 masters
+# We either want one master or 3 nodes (HA)
+- name: Check for correct number of master nodes
+  assert:
+    that: (master_count == '1' or master_count == '3')
+    msg: "Invalid number of master nodes. Should be 1 or 3."
+  vars:
+    master_count: "{{ groups['master'] | length }}"
+
+- name: Include kubernetes master tasks
+  include_tasks: master.yml
+  when: "'master' in group_names"
+
+- name: Include kubernetes worker tasks
+  include_tasks: worker.yml
+  when: "'worker' in group_names"

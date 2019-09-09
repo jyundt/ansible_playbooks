@@ -1,0 +1,20 @@
+---
+- name: Add kubernetes apt GPG key
+  apt_key:
+    state: present
+    url: "{{ k8s_apt_key }}"
+
+# Crazy enough, everything is under the xenial repo
+- name: Add kubernetes apt repo
+  apt_repository:
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+    filename: kubernetes
+
+- name: Install kubernetes packages
+  apt:
+    name: "{{ k8s_packages }}"
+    update_cache: yes
+    install_recommends: no
+    state: present
+  notify: Restart kubelet
