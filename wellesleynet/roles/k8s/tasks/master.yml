@@ -74,14 +74,81 @@
 - name: Derive list of master nodes according to kubectl
   set_fact:
     kubectl_master: "{{ kubectl_output.stdout | regex_findall('^(\\w+)\\s+\\w+\\s+master', '\\1') }}"
-  when: kubectl_output.rc == '0'
+  when: kubectl_output.rc == 0
 
 # add_host is similar to run_once, it only executes once on one host.
 # Because of that, we'll loop through hosts in the master group
-- name: Build list of unconfigured master nodes
+- name: Build list of configured master nodes
   add_host:
     name: "{{ item }}"
-    groups: unconfigured_master
-   when: (hostvars[item]['kubectl_output']['rc'] != 0 or item not in hostvars[item]['kubectl_master'] | default([]))
-   with_items: "{{ groups['master'] }}"
+    groups: configured_master
+  when:
+    - hostvars[item]['kubectl_output']['rc'] == 0
+    - item in hostvars[item]['kubectl_master'] | default([])
+  with_items: "{{ groups['master'] }}"
+  changed_when: False
 
+# Only init a (seemingly) unconfigured cluster if we manually set an extra
+# run time variable: k8s_init_cluster
+# (This is probably unnecessary, but I want to avoid an oops where some k8s
+# service is down and the cluster is accidentaly re init-ed)
+
+- name: Ensure we really want to init an unconfigured cluster
+  assert:
+    that:
+      - k8s_init_cluster | default(False)
+    fail_msg: "Error, unconfigured cluster detected and k8s_init_cluster not set to True"
+    success_msg: "k8s_init_cluster detected for unconfigured cluster"
+  when: "'configured_master' not in groups"
+  run_once: True
+
+
+# Logic to init a cluster, let's wrap in a block
+- name: init an unconfigured kubernetes cluster
+  block:
+  - name: Copy kubeadm-config.yaml
+    template:
+      dest: /root/kubeadm-config.yaml
+      src: kubeadm-config.yaml.j2
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: Create new cluster on initial master
+    command: kubeadm init --config /root/kubeadm-config.yml --upload-certs
+
+  - name: Cleanup kubeadm-config.yaml
+    file:
+      name: /root/kubeadm-config.yaml
+      state: absent
+
+  # Weird observation, we need this task at the end of the block, otherwise
+  # the conditional to check for 'configured_master in groups' will start to
+  # pass and anything after add_host will be skipped.
+  # I assumed the when: in this block was only evaluated once, but it looks
+  # like maybe it is evaluated on every task in the block(?)
+  - name: Add unconfigured host as a configured master
+    add_host:
+      name: "{{ inventory_hostname }}"
+      groups: configured_master
+    changed_when: False
+
+  run_once: True
+  when:
+   - "'configured_master' not in groups"
+   - k8s_init_cluster | default(False)
+
+# Block of tasks to skip if all master nodes are configured
+- name: Join unconfigured master nodes to cluster
+  block:
+  - name: Generate a certificate token
+    command: kubeadm init phase upload-certs --upload-certs
+    register: kubeadm_cert_token_output
+    when: "'configured_master' in group_names"
+
+  - name: Generate a join token
+    command: kubeadm token create --print-join-command
+    register: kubeadm_join_token_output
+    when: "'configured_master' in group_names"
+
+  when: groups['configured_master'] != groups['master']
