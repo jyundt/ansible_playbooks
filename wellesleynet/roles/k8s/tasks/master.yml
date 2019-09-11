@@ -47,6 +47,17 @@
     immediate: true
   with_items: "{{ k8s_master_ports }}"
 
+# This task exists for an edge case where a master may have previously been
+# defined as a worker
+- name: Close kubernetes worker firewalld ports
+  firewalld:
+    port: "{{ item }}"
+    state: disabled
+    permanent: true
+    immediate: true
+  with_items: "{{ k8s_worker_ports | difference(k8s_master_ports) }}"
+  when: "'worker' not in group_names"
+
 # Ok, this is going to be tricky, we need to find a way to determine if a
 # cluster exists on any of the masters before we run init.
 # If we have one, let's use that as our master master and generate join tokens
@@ -139,16 +150,35 @@
    - k8s_init_cluster | default(False)
 
 # Block of tasks to skip if all master nodes are configured
+# There is a gap in this logic if we are trying to promote a worker to become
+# a "master". The kubeadm join op will fail because the worker is already in
+# the cluster.
+# TODO: fix this logic to kubeadm reset workers prior to promoting to master
 - name: Join unconfigured master nodes to cluster
   block:
-  - name: Generate a certificate token
-    command: kubeadm init phase upload-certs --upload-certs
-    register: kubeadm_cert_token_output
-    when: "'configured_master' in group_names"
-
   - name: Generate a join token
     command: kubeadm token create --print-join-command
     register: kubeadm_join_token_output
-    when: "'configured_master' in group_names"
+    run_once: true
+    delegate_to: "{{ groups['configured_master'] | first }}"
+
+  - name: Generate a certificate token
+    command: kubeadm init phase upload-certs --upload-certs
+    register: kubeadm_cert_token_output
+    run_once: true
+    delegate_to: "{{ groups['configured_master'] | first }}"
+
+# We'll process these serially to avoid any cluster weirdness, but
+# unfortunately serial: can't be set per task. Instead we'll have to loop over
+# our hosts and use delegate_to:
+  - name: Join unconfigured master to cluster
+    command: "{{ master_join_command }}"
+    with_items: "{{ groups['master'] | difference(groups['configured_master']) }}"
+    delegate_to: "{{ item }}"
+    run_once: True
+    vars:
+      join_token: "{{ kubeadm_join_token_output.stdout }}"
+      cert_token: "{{ kubeadm_cert_token_output.stdout | regex_findall('^(\\w+)', '\\1')  | first }}"
+      master_join_command: "{{ join_token }} --control-plane --certificate-key {{ cert_token }}"
 
   when: groups['configured_master'] != groups['master']
