@@ -77,7 +77,7 @@
 
 # Set failed_when: False in case we are on a non init-ed cluster.
 - name: Gather list of nodes in cluster
-  shell: kubectl get nodes --kubeconfig /etc/kubernetes/admin.conf --no-headers
+  command: kubectl get nodes --kubeconfig /etc/kubernetes/admin.conf --no-headers
   changed_when: false
   failed_when: false
   register: kubectl_output
