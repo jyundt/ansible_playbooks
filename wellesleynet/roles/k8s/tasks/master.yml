@@ -154,6 +154,12 @@
 # a "master". The kubeadm join op will fail because the worker is already in
 # the cluster.
 # TODO: fix this logic to kubeadm reset workers prior to promoting to master
+
+# Also note to Future Jacob, if attempting to rejoin a fully reset node i.e.
+# after running kubectl delete node $FOO / kubeadm reset -f, etcd will most
+# likely need a manual cleanup.
+# see https://github.com/kubernetes/kubeadm/issues/1300#issuecomment-464955084
+
 - name: Join unconfigured master nodes to cluster
   block:
   - name: Generate a join token
