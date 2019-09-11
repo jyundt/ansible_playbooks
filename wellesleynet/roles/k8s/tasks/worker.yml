@@ -29,7 +29,7 @@
 
 - name: Derive list of master nodes according to kubectl
   set_fact:
-    kubectl_worker: "{{ kubectl_output.stdout | regex_findall('^(\\w+)\\s+\\w+\\s+worker', '\\1') }}"
+    kubectl_worker: "{{ kubectl_output.stdout | regex_findall('^(\\w+)\\s+\\w+\\s+(?:worker|master)', '\\1') }}"
   when: kubectl_output.rc == 0
 
 # add_host is similar to run_once, it only executes once on one host.
