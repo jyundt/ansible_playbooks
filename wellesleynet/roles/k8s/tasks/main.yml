@@ -60,3 +60,36 @@
 - name: Include kubernetes worker tasks
   include_tasks: worker.yml
   when: "'worker' in group_names"
+
+# We should have a cluster at this point, time to start applying some yaml
+
+# Set some base facts for reuse later
+- name: Set kubernetes config facts
+  set_fact:
+    k8s_master: "{{ groups['master'] | first }}"
+    k8s_config: /etc/kubernetes/admin.conf
+
+# All commands will run from a master, wrap in a block to DRY out
+# delegate_to / run_once
+- block:
+  # Gonna use weave
+  - name: Install pod network add-on
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '00_weave_' + k8s_version + '.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Install metallb load balancer
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '01_metallb.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Configure metallb load balancer
+    k8s:
+      state: present
+      definition: "{{ lookup('template', '02_metallb_config.yml.j2') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  run_once: True
+  delegate_to: "{{ k8s_master }}"

@@ -28,3 +28,4 @@ k8s_worker_ports:
   - 10255/tcp
   - 8472/udp
   - 30000-32767/tcp
+k8s_metallb_ip_range: "192.168.200.0/24"

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    peers:
+    - peer-address: {{ k8s_vrrp_vip }}
+      peer-asn: 64513
+      my-asn: 64512
+    address-pools:
+    - name: default
+      protocol: bgp
+      addresses:
+      - {{ k8s_metallb_ip_range }}
