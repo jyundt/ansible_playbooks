@@ -88,7 +88,7 @@
   - name: Configure metallb load balancer
     k8s:
       state: present
-      definition: "{{ lookup('template', '02_metallb_config.yml.j2') }}"
+      definition: "{{ lookup('file', '02_metallb_config.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
   run_once: True
