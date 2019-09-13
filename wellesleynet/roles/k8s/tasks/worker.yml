@@ -1,23 +1,5 @@
 ---
 # Oh yeah, this couldn't definitely be DRY-ed out from master.
-- name: Open kubernetes worker firewalld ports
-  firewalld:
-    port: "{{ item }}"
-    state: enabled
-    permanent: true
-    immediate: true
-  with_items: "{{ k8s_worker_ports }}"
-
-# This task exists for an edge case where a worker may have previously been
-# defined as a master
-- name: Close kubernetes master firewalld ports
-  firewalld:
-    port: "{{ item }}"
-    state: disabled
-    permanent: true
-    immediate: true
-  with_items: "{{ k8s_master_ports | difference(k8s_worker_ports) }}"
-  when: "'master' not in group_names"
 
 # We need to run this on a master
 - name: Gather list of nodes in cluster

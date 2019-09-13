@@ -15,17 +15,4 @@ k8s_sysctl_file: /etc/sysctl.d/99-k8s.conf
 k8s_sysctl:
   net.bridge.bridge-nf-call-iptables: 1
   net.bridge.bridge-nf-call-ip6tables: 1
-k8s_master_ports:
-  - 6443/tcp
-  - 2379-2380/tcp
-  - 10250/tcp
-  - 10251/tcp
-  - 10252/tcp
-  - 10255/tcp
-  - 8472/udp
-k8s_worker_ports:
-  - 10250/tcp
-  - 10255/tcp
-  - 8472/udp
-  - 30000-32767/tcp
 k8s_metallb_ip_range: "192.168.200.0/24"
