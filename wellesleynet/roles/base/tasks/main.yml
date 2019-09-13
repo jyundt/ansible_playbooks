@@ -47,11 +47,11 @@
   package:
     name: firewalld
 
-- name: "Enable firewalld"
+- name: "Configure firewalld"
   service:
     name: firewalld
-    state: started
-    enabled: True
+    state: "{{ firewalld_state }}"
+    enabled: "{{ firewalld_enabled }}"
 
 - name: "Open firewalld for sshd"
   firewalld:
@@ -59,6 +59,7 @@
     state: enabled
     permanent: True
     immediate: True
+  when: firewalld_enabled
 
 - name: "Install sysstat"
   package:
