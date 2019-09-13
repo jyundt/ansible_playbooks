@@ -60,4 +60,4 @@
       - "'master' in group_names"
       - kubectl_output.stdout | regex_search('node-role.kubernetes.io/master:NoSchedule')
 
-  when: groups['configured_worker'] | default([]) != groups['worker'] | difference(groups['master'])
+  when: groups['configured_worker'] | default([]) | difference(groups['master']) != groups['worker'] | difference(groups['master'])
