@@ -91,5 +91,27 @@
       definition: "{{ lookup('file', '02_metallb_config.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
+  - name: Install ingress-nginx
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '03_ingress-nginx_mandatory.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create ingress-nginx service
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '04_ingress-nginx_service.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  # Wow this is super brittle and breaks the "I can apply all of these files
+  # outside of ansible!" model.
+  # In the event I'm manually rebuilding a cluster (sans ansible), manually
+  # render this template for the cert and create the tls secret
+  - name: Create wildcard cert(s) secret
+    k8s:
+      state: present
+      definition: "{{ lookup('template', '05_ssl_certs.yml.j2') }}"
+      kubeconfig: "{{ k8s_config }}"
+
   run_once: True
   delegate_to: "{{ k8s_master }}"
