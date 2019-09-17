@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: default
+  name: oauth2-proxy
+type: Opaque
+data:
+  oauth_allowed_emails: {{ lookup('file', 'oauth2-proxy-allowed-emails') | b64encode }}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: oauth2-proxy
+  name: oauth2-proxy
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        k8s-app: oauth2-proxy
+    spec:
+      volumes:
+      - name: oauth2-proxy
+        secret:
+          secretName: oauth2-proxy
+      containers:
+      - args:
+        - -provider=google
+        - -upstream=file:///dev/null
+        - -http-address=0.0.0.0:4180
+        - -cookie-httponly=true
+        - -cookie-secure=true
+        - -set-xauthrequest
+        - -authenticated-emails-file=/etc/oauth2-proxy/oauth_allowed_emails
+        env:
+        - name: OAUTH2_PROXY_CLIENT_ID
+          value: {{ vault_k8s_oauth2_proxy_client_id }}
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          value: {{ vault_k8s_oauth2_proxy_client_secret }}
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          value: {{ vault_k8s_oauth2_proxy_cookie_secret }}
+        image: quay.io/pusher/oauth2_proxy:latest
+        imagePullPolicy: Always
+        name: oauth2-proxy
+        ports:
+        - containerPort: 4180
+          protocol: TCP
+        volumeMounts:
+        - name: oauth2-proxy
+          mountPath: /etc/oauth2-proxy
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: oauth2-proxy
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: oauth2-proxy
+  name: oauth2-proxy
+  namespace: default
+spec:
+  ports:
+  - port: 4180
+  selector:
+    k8s-app: oauth2-proxy
