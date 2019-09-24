@@ -103,20 +103,36 @@
       definition: "{{ lookup('file', '04_ingress-nginx_service.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
-  # Wow this is super brittle and breaks the "I can apply all of these files
-  # outside of ansible!" model.
-  # In the event I'm manually rebuilding a cluster (sans ansible), manually
-  # render this template for the cert and create the tls secret
+  # Restore a well known key
+  # Note that this is the only ansible vault encrypted file.
+  # If applying all of these configs outside of k8s, this file must be
+  # manually decrypted first.
+  - name: Install sealed secrets key
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '05_sealed_secrets_key.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Install sealed secrets controller
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '06_sealed_secrets_controller.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  # This could probably be DRY-ed out a bit: the wildcard cert exists as an
+  # ansible vault encrypted file in a couple of different roles _and_ as a
+  # base64 encoded SealedSecret. Whenever this cert is rotated, this
+  # SealedSecret file must be updated as well.
   - name: Create wildcard cert(s) secret
     k8s:
       state: present
-      definition: "{{ lookup('template', '05_ssl_certs.yml.j2') }}"
+      definition: "{{ lookup('file', '07_ssl_certs.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
   - name: Create oauth2-proxy service
     k8s:
       state: present
-      definition: "{{ lookup('template', '06_oauth2-proxy.yml') }}"
+      definition: "{{ lookup('template', '08_oauth2-proxy.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
   run_once: True
