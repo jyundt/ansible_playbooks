@@ -1,0 +1,94 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: oauth2-proxy
+  namespace: default
+spec:
+  encryptedData:
+    oauth_allowed_emails: AgBPI9NSsZv5LxZX1MFUzd7G1SkhwO9xzf0DrG3FxmyGbGOB4bSofLMRVkkoCOFMFHOCYmI1OKHx+8lEispINfijFvsMw4i7mLfjKEd+obx7GHaXYso+Cd/XmYdMdSejSviXKo+/LepjvUUshEGV/XsbAd7rSqgPR96wd8qAEp7EFdOwkU+L2ss04gQcANyiLGTd0Sdxg0STDD6u/c6jVO+iLRuPjFhrmT37drvvJLd1uwkOYq68kN+14m8OB3XPcG0tJLzQYKpefUtHjWc15nPdrKrnJunh1tjcvGEzGbdSasBBqX1MHLHVqY9ROixgkxhYuINu1sj0eH4qsm05oMGqxkxxKscfvVnHQ9oRKxDteIm08OqmCDvnpUNNn+d2Xx10dhjXPzhoZp46CkRuUCBurM/yDUpcMyb+0A6qgYjQ3VqTM/dT5eMjtVYgTCPIyQuiOF1DUO6hs5Y4N1nNmKSBNr8Sma5urE2S3pamtCemFunj9xy3O5OPxtvrlzHcgLhCh3geAkD0V1n7PJZ1d8LzDXDbj2o8rbblS/lsElSoSs7zFRrAl6m6+9sUzwBBaBxaIfswr2zC/6ltmeDXNzf/48bCZUJYKUO4XvmKnbqLZDtCc974j52weW/F2HOt+OCElrDJmhJ3dToF+yBq2oNtDH3GroO3RJdwOirlZA8NokI0K+JwKvtn+lMdCrnQDzdb4V5bu2/JgoKKJGKDlarkM+OQK6w8NYXR9yOqzeDMiXNCZ2stKw==
+    oauth2_proxy_client_id: AgAQPVTEvhGEL4dkO1fdyEgZUwxAAdqr1bOGRKGii+qGN9MAjus7I32ZfbZBvtPRnl+Shegz4tyJR+2QdR/zOy9KBeRQcOijl/4L7o/KOKQmHP9hYJmTV/76A3pvVQsKGlcYss5amwpN+vUkJ/fUM0Ljkpctyjm38slAdPtbiuDwX6MaBLDVPasqyd/0tRvWorEKzW5HRPhxL8J+OWA0Uida3NotFTzJLjo1FDlJWgBqpGxVkmtDHRbyod83i9XKshJh1fdGDhqhOHDzL6CkGlmdSk2yOWgRqXRv2zARKXTZ/PoG3rmDPsU63wem9z6t8AHaAIVTd+74bxyWT4g18KPVcoj5ZOUG5A+rkHJxOC6GVs8/IDpn05kG9SYvaYjssZXRH2gF5fwOi/z7BlA95GBSXMw5VaXxAPbBKZgUg6/aFGiF9Lv8EthWbiuYdyv4qbR56dKFzJkwPH5NIf6h/ySOD0DqngDwi3ZV/s0PuivhlW0DxHki/1MrcmRviyTkR+kMYQGk3hmHjON3ihd0pkdHgFXYuFOdVmYLr47uOmpAoQIlodHHJcjn5sIGlVX0UBA+ceGV2eG/8ma0pCGa2SpR/dwycP/WYUP1OmDgh4abvyZucMu+pzFuzGSKwf8kvWm6MSM02XRuGoOryU5VKQ816DlXEAKkCJFef6QV8zxHJ5TkwvXkb+zSxaoUeJgm9Pt4Vwuo+n9BjG8k6Y9jcXBubgJfmO0D8o2ga/rt4pO6nOjDrpMTpbtDiuP3dWzAy4HHad5aU5dZsnHCxLLa4VltKuMsb/HagJKj
+    oauth2_proxy_client_secret: AgCGGjqmN70Tbfjvup8OtRDpb2dvbHnlPGyINePl1L1DGTa+xtrxIJ4TdnFUpEM7e9JpTQkLw5FxSUZ7rGR5daWJk6yaz/U+da6fHC0KCZSV8/UXIEb1choH6SWGLjETnMGGFLVbYGnWPn01BjiDNiSF+iU9cEWliN6eei3cCQBDm0N1WMO0mh/GbMZ/3gDfz89vGfs7apqaQ+teMZ7gXy2ck+0W6yFJq/VQpnwjrLOvW4K3krbz/5SbLXHoAjplwF/LS1QKo2o/mYAUCRBQVduX7wCBnbMpc8FZDzlAxWJW4lMTH3GlTRlcVjGqJ99aQ+KpTWhamPAI7plNDcOTbhgSudyJDA2TZbJRl9J1iwqpMpADJOwiYoWCF15WoeDuMxp7aRnXEZIhKxPF49xIhWCIyfToBspaXuQ9+UqijJQsS9F3YHjpgZUL881lFaHSeVs/i4hjj7+wusb8gUTamOixG+cwJ75zQai92Tg2lf0gjNFeQ6fMteOsiRPdoRaxQYaXXgA+MxhjcWUjAlnyJoCtYLOM8+CatuR3nRmXBHY7eDP0c4qYuA8GLg9oqRGiBbW0dPXFyJx60nfYKmrrLiQ6bbKbDvF7IVYkljSKXSoV9rJsHO9d6DBzF0AYhCN/NdgcV5H7nnXjXRI1ae822vYn60waEUZbmj04/bSDrJmmuVLtuOSl+W0Jbg/Rn1QLNTNvWz4mQsBlE3fxVKBprN7oQyYsCdA6wZg=
+    oauth2_proxy_cookie_secret: AgDENKLSC/o1qLHl41Ar7W9aL1a1keSTd5fyzOw8RYsOFUfCXP8s6+RMqLWf2tO3I17pEHRBf4VovN7oTRlG0jaAV3dlJdo1hAN8iOlXiiDNfpZyJHOeqpkl63Hqx/HitVcqMHIb8jJUgCzAECKJydP+oQ8lOT5Rf+SIMaUtCDIfGyPFbH6qbouk/+myH+R6pEy9CNfjMSLyQ32RDnwAXWVnuo8v+Yq5dEMk+CqTYqw4qWOvAEZ5AK79x6+RRjXpAfk81WpCnavyrJT+M5xgejqsDW2YpBioatXvyv8siPsswgyd075mof2GupqSvsDSgJXN05iDPqyZFxDiA8WQqFHhy08duBY0CtE0oeKhc5u7dgPJ8l92Vyf0frzluM8d0sV7Wc6NxyYaSuONyVP1MBLbeeJFZwxKIM+VMBGyrzlb8AGSRI3vBKhyBc1W7MefOjuKZ0iaX0l7AlaIyZ6PvZBtgbrr2CjThVKzjzojdbDpBTryvTc/Qj/CASArheHQWa07taCQZnZcFXYX8Wjfx+QETEERU2Zws09s7gf8NWrb9aI/0AdU2jncOTyHdoEgRrDyT+x4cdd4l45xsFboz10Oc2CMD0pV/Tg40NkW5OW/nYWqxhxrNTjZiGDtLJUs/z2KuqlTUhm5oI0vM0QwBytec49EimiqdmMlow6BFpx88EqvEqMvWdx2VQfCuzBlKsYaAs7xea6Frbyau66u7A8k1pMMd8mzPWaVEBU/AxBCTw==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: oauth2-proxy
+      namespace: default
+    type: Opaque
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: oauth2-proxy
+  name: oauth2-proxy
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        k8s-app: oauth2-proxy
+    spec:
+      volumes:
+      - name: oauth2-proxy
+        secret:
+          secretName: oauth2-proxy
+      containers:
+      - args:
+        - -provider=google
+        - -upstream=file:///dev/null
+        - -http-address=0.0.0.0:4180
+        - -cookie-httponly=true
+        - -cookie-secure=true
+        - -set-xauthrequest
+        - -authenticated-emails-file=/etc/oauth2-proxy/oauth_allowed_emails
+        env:
+        - name: OAUTH2_PROXY_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-proxy
+              key: oauth2_proxy_client_id
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-proxy
+              key: oauth2_proxy_client_secret
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-proxy
+              key: oauth2_proxy_cookie_secret
+        image: quay.io/pusher/oauth2_proxy:latest
+        imagePullPolicy: Always
+        name: oauth2-proxy
+        ports:
+        - containerPort: 4180
+          protocol: TCP
+        volumeMounts:
+        - name: oauth2-proxy
+          mountPath: /etc/oauth2-proxy
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: oauth2-proxy
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: oauth2-proxy
+  name: oauth2-proxy
+  namespace: default
+spec:
+  ports:
+  - port: 4180
+  selector:
+    k8s-app: oauth2-proxy
