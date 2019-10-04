@@ -135,5 +135,11 @@
       definition: "{{ lookup('file', '08_oauth2-proxy.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
+  - name: Create rclone cronjob
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'rclone.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
   run_once: True
   delegate_to: "{{ k8s_master }}"
