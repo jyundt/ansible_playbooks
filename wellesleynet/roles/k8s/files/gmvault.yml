@@ -1,6 +1,5 @@
-# I'm not happy with this level of indirection, but in order to avoid leaking
-# sensitive information (like email addresses and names), I've wrapped gmvault
-# information (like email addresses) into (sealed) secrets.
+# I gave up on trying to prevent email name leakage, mountPath doesn't support
+# variable expansion. #dealwithit
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
@@ -9,9 +8,10 @@ metadata:
   namespace: default
 spec:
   encryptedData:
-    user1: AgAoxjOEgsnBPEqsg3X0fQnTjkxjYembScSq9bGPC7hUZ5OTtXW4goZ5YqSrcmd6DHzIIiAtRI0u7841uRO+coNFtklQH7PPKJ7wJOUDW8t1CERB60M3MajBmugybfNvDHkjWcV6/F8Syx7AFUsSXcrNHtWQSejvtrMbl4ff3wodNT2EdS1Z1sOfTysuMzEjkraRhxs3a7D8zV9B0oySclQ6P6SN7VdvFZsOzzUOMpoU2w17MnejtQ5C0lQuC0R6f1dW5TNW4BWTUnlJMIrdRicMh9hGXzVxvgFyW9mC3SxYniBSsF9kf0NFd5/gBqPnV9Z778ccIdl47UgvMLwzy829pWLa7svdtu2ZWELExiPagyATJ5tSs8bJJ/MSakifaldMRdhLYBZxg4h6yxVljXw5t4/vm4WrUgEji5sVTrDVs223UdforXGWfMxuK6PARjAJJL2hwj0mfVKB1HZOteMg/b5e7rmHqiX80GSfv0zAQzfFS8xm9xxB5Dilr8PdmOhPUk8ggt8kwr70nv4Gm1Bg1GF36IgsLTEfWMZgDAMRhm5Db92jadbmqJbYa3N5YKy8Qg1JVoy1nP0TQ0vZjh2XWOzdr6mWnzAa7henGAEy68k/AQqiNHHHWrDggMnFmwlzYtGS0vJNBagsEQlzO87jn/Rcy6ajHyL9Tq2NQ3jInth2nGbGdBmlfDQl41+TOy2C/mlIus87jYHDEQMbbAVc
-    user2: AgCEASySyRc61Sie8lr/y+nXZYbHmgqRCOuXMk2/rj3iKFF70llVjaM7lbcBS6/zBLeUWCFWiNFRhVCRkNl0xhnPonYMgj43V97n42bzvcWqyNQWPzWRAK2ekMer2PBujSRhzr8weX6vx+b6W6ka3zXFvtNF2tUM+q479JWllSviiANNFtsgL6YFkevb5qM69J5ae8lpEYk9smB68RLhUslWEHOkkAxsbgZQK7+Z/Y4wcYHRBwCthB272fzE90CgcxfRXgK8pqYoaBKCPtqZ4/A2R5w8zXaYZm9gv1Y5rxm8dO+sWXpuQdut7IksPdtdFWUVSApfCcQ70VSIlanAwoHGIRIWqSfNq6j20LrGjqiuikCJUGQ/VIIMEkTYxiy9M1au+vYp80GrCjsxFgWV8EICxqRR1DDp/QIJiscx+NoTMdTqJLysqvwwNVaUl+zXdbL4iq3EdjqBdVbwFRgCPdxfGvkRZU/VNOQjx2kBLvbQjuJEf1Bjy+km2sgUNphj1fF1RIghw/Va91hqiAIavZUbSnd57FrUPwy798fzMvE1v0ht5GS/AhmiOq3I1oZGv3lX2doPOGytDlXzLRBdr6WHhO1bE2SnHjNtZVz0+eQg2ZQtNPNjSMgCF2MzSjGCbWECIX7GZR5L8EhS8ATR9LncQrgJ9Ch+cpJ9kRugf+/SOLTn6vxRguyx5fvnD30MAgmVx0rspdfJvipKQ/wcEbXdWLAmEpobuw==
-    user3: AgA1HYcr//UzdTOgdWzalt9i88vBQ7MIGZ8FD75C5ojLa5vJhX1LdP8EtMpPtosI+I03ZlRbYllfLiFtdmCFIXuK2tMa+vQ46fqyik1gAhZjgc2YEo1uN9K4md85AVy26Hvaf8RPIcpepJC7k4HjYf8qkB7ZT4+ibszXhlk7X98ZZTAd721E9xYrDcKytOq1zXB3upekAyc17sjJUdJo2HxVimVYs+IYnTjm9nEwPgEa5WjdXbC75o729iRYpnDqvbtuNBxpKQkClGEXeJ5wBqDCQlp5kw4uzwzNbMc9N4L/5czUET2VVCJLNAd7icLvCdWD6aJeo4N10NCcmroOX1OJhFRrEm9m1nkEX2xV4qDaxWTOf1NUoSigbtMV1N/ZLD1znG0pgPYs2zg8CIkAIaqqQPc8Sbhdy0PCxelG7RolHwD99p+PSnckrTUAY8qztxU65OThDxDGz5BSxTE94A1DK61OxVObt9mDj0jGFJedzy782sGdgmMI2zG66kD5cCGM9ZM/eOvSDV1OQhBCcN+oANxDzZCv6/6S7YmJAgnQ2p4jup3dqYHK9pWXMv8+C8QEtAkPIt2pgu+OLUITOyGkirn5haWdZ7wL5KDILVmwIwu/R0nqJGbwkmHU3JJpkpvot1d5fYaGLE53xQUgTtqoRIQcJ+XYH7fKliQ0Lih4YIarH7N63+hLI1ADXunOOasoCcgjDupSUfY93BJzB6srE8w1e4I=
+    token.sec: AgDCys8AtfM9zAHN+XX7m2nBgfS5d/jg8Z0pOa530nHbOwSXATUsS9vunpKaPFvRyU4oNpwSawfVpsZvHnH5AvaEj58Fp+D3ERWBYcN91nPqVpBGwx/0aFOVGxM9mc7PhbQuEqQCFZjJt2Z4680e/IjXeCrGT5w2JawtM3J8A+Hwqww5ZMGcnD7WAdqtReBWkabnLaA6v+W12DpT+58s1PkagHSyVMbtpl1Qtilw8VYZw+03XI14sfmOZRvuBOnC/3hB2+C9F8j/wqX4dQSCtFZMHFtjWM5zDCb14AmfaK6p+Wazc594SUlcqbUvP7RAHSLjbag8oTqT92g29d9I1SMxeowDKDGyXY2qm6TnlhGAVvaLLFQJHKK9P964a4kZCySOz9bw3r8gc17JbAKLhTBRbaJhxfmBaZZWTMhwrRT+xzllpCsBFMMuruNDyvPhTEELnJ1MhlhpWczvh+2oSfBp4WQ+0tSwfa046UNiihNDMSukTKBYP2+zjFehKkskF7hDz58Qw1utkIhzQYhjzj0xSY6cp+6D/w+74dQDsw4x1DBjxdlzCfeTyECgxDPW/U/PwicoPEqz7posvu0nf4l3zhGrMEzUwL++Ocv4sfq5XkJNj+J2BSvZSUWG+9B7/xX0V0hvz2Wmqtca3yg4BgVoHBT4nKUJTGKqLVCnpPSCBp4qRj8uDZe3WUfuHyFJEhIKmofg6IvS44aL0A4=
+    jyundt-gmail-passwd: AgCg7WMhoGT914WrZyJjgL032M/O6pn8M4AmsCYPBjDJjOCVlZuaJ28i8XTiwZkDrsCyPtSHq6YNVrTcWp72KW5QHdVONrOqzB29PcW3nNFNm2rHbUS0sgz2SdI7I018BLZzgOo7LsMjeCfQbGdbZA+zlVlai2vGv7bwFdQT1qIMMqHF9YrUQi0HYPHV/LO25VJgfAllznAJAI/IVy6lv/5sTFeupjvp4JlmyB5rBGhbgIzSdJkNQMF4rW5n6yWQGPf0W+tVEIpYhPRibQn5oNQ7yduB+O2jilypT/C5aHCojfleUrpIY4t4oLyt5f75Pppe50+qBq6FlZk5axZqFs9RPHTNfglmZ25eafj1L1thOdJyvC0gEnIPUzAm59s5k4q+vg0Q6QDKu2+0tSyQPyLBK0AUjbjVWk/Afhoh4ANu64wPm4gmoTN8xuEDPrWfXia2dSM9iXhSHcjr1thb8huV+dP4Z7sbv2bWRjIPUz6iQLV7Wf7migZiW5SRKLPBlzEAVFUJ0OXaNj8niGEJmKENzJhFUHc4i5nuOt5N73Wpyft23PxMbYxW/G60zwvuAF4TLP1ukyY5EdgalpvA0/lfBEPbXX8jsm1d1fVMrXPYG1/N93zLLMdButXE6CoOBjZ+zVG8bJ5gU3NJgOavu8zs7D6iVNwQrTsfscwqdcFeo7hXYl0ALde2Q2vLL0+8WttRQLm3jwvtvf3FiTWXy4G9
+    jyundt-digitalocean-passwd: AgAwyNPwsMsyk1RJpxQpZTTL8cwZ1/vlmaTOLegHbZ/Pd3BmVJ0LIZEwS/toivWJL9mSDdHuyulVSV9NiBux9Zlq5DN7HzXeAUrH/PcIacA93HM3rcah6XqdxZWTVdpR81CD2HEAWglaUVmKjPe7GNjVm+gXT+zZ/Rnyzo96Nv8vYldNeUAgPHh1Yly0zkSCS/UIqD/dNHWaYLLpLIc3g/jDrwK/HzdlbryuPQPBTjpV+k8wIXI7mU6b5jGXStJso0cnklcyGYTZPS5RWEOM+WrX/vQYI0FJ4raZQCICP2i/ebk52ZuIKFJUHyVm3e38om+lGZATw3MB0NdmfQFQqDcgSQgpY8hYfNRt9x3QQujXeMAmbGkKFnHgqesuV4Pg05tXZwWk52NTGn+ztb2iO2+1ojPXnER3c1dMbWverC2WcIBYMhKbWzamiFffaLR2+XNLolcH6vYQRlMgCFmcuI+rUgB5G7laphXa+lcoFoeQkCxXOZGo8MBk5wtJ7VrDPLXLkXqtEAvyTMiLCUKPlVOOsKOVkl231PjkmeNyJ+77aOes+sbdVRzPlyq9IG7mPmXJHVl30ZbJFGlu9f4YpoGPCfrj0pjw0t83bSqmGaNWF2GWbK9VNBWVaRMZXG3Lzq8NltYbTM+u+gxrB+/Wgp7kd/mKOhRUS1HAIRirvqrzMAJ7Cz1C+kgohd0OMrtENDzs0itkcHTHOlk9PC8p6AUX
+    emily-wolfe-gmail-passwd: AgCMRH5Dsfy0yxkQp89r0Eb+QGXVtaySMOF70Ri0BiH74mIfVf3zdRoslMH4kJIZca+14RyaziVQWP9QJqVesA+Q6sY9CsXnH3WN0I9rymGgflHz4mMKBJ/3eLAtMX73IEUeIM7IdVf5pYClUMpOqqyiltXQe/gVaDbQ3pgDHXx/JNUXdiuFUyMpSRU5ZszDh2rBHoDhj+LH6mVRTGs8+uOplryAumOEcqTFSIP0/3FSI42CQDuOK6h3lp259YK6j8rSfe2DC3E3ao8hy3ySCzTbYrBhuokyHX6eqx4ypx7DZnxu6vNjx9ktKq1hcP4RwErcB4csCSe8gIW/h4rvg2TB4R7/yU6noZF9fUaFFl746KxfImA+U4PhGLonCd6geMT7fPQjAascManHbGspuPVb5PYQr2r2Esl2MpBFOFZ6+7ScqhFQGLW7Zf3BK9/fI6STZQ9CFZI4d2+vxi+9fWNPuJjYptQa3a0XEfPkrPL4U2+6YDG3HbMmhpMiatU696PDB3hC1mm7ApeAimf3pg7yQP5LXPUUykBaLqc8VyODdgy89errdF4m8cln4SO05LRuWO4xdNPHeBP5BsaqMiJQCwxG3gs9Mih8ck8u32km//VR172xNpmnEmH4oSyyZz08rvJ9vTsE2Ew3pDmRrywQAY0jpegXL6Yu7YF2pfO3n9s9pq53EBSjE/BfuIyumV5biix1wvmo5m2GE6eQIAVw
   template:
     metadata:
       creationTimestamp: null
@@ -70,73 +70,88 @@ spec:
       template:
         spec:
           containers:
-          - name: gmvault-user1
+          - name: gmvault-jyundt-gmail
             image: jyundt/gmvault
             args:
             - sync
             - -p
             - -d
-            - "/opt/gmvault/$(GMVAULT_EMAIL_ADDRESS)"
-            - "$(GMVAULT_EMAIL_ADDRESS)"
+            - "/opt/gmvault/data/jyundt@gmail.com"
+            - "jyundt@gmail.com"
             volumeMounts:
-            - name: gmvault
-              mountPath: /opt/gmvault/
+            - name: gmvault-home
+              mountPath: /opt/gmvault
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/token.sec"
+              subPath: token.sec
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/jyundt@gmail.com.passwd"
+              subPath: jyundt-gmail-passwd
+            - name: gmvault-data
+              mountPath: /opt/gmvault/data
             env:
             - name: GMVAULT_DIR
               value: /opt/gmvault
             - name: HOME
               value: /opt/gmvault
-            - name: GMVAULT_EMAIL_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  name: gmvault
-                  key: user1
-          - name: gmvault-user2
+          - name: gmvault-jyundt-digitalocean
             image: jyundt/gmvault
             args:
             - sync
             - -p
             - -d
-            - "/opt/gmvault/$(GMVAULT_EMAIL_ADDRESS)"
-            - "$(GMVAULT_EMAIL_ADDRESS)"
+            - "/opt/gmvault/data/jyundt@digitalocean.com"
+            - "jyundt@digitalocean.com"
             volumeMounts:
-            - name: gmvault
-              mountPath: /opt/gmvault/
+            - name: gmvault-home
+              mountPath: /opt/gmvault
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/token.sec"
+              subPath: token.sec
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/jyundt@digitalocean.com.passwd"
+              subPath: jyundt-digitalocean-passwd
+            - name: gmvault-data
+              mountPath: /opt/gmvault/data
             env:
             - name: GMVAULT_DIR
               value: /opt/gmvault
             - name: HOME
               value: /opt/gmvault
-            - name: GMVAULT_EMAIL_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  name: gmvault
-                  key: user2
-          - name: gmvault-user3
+          - name: gmvault-emily-wolfe-gmail
             image: jyundt/gmvault
             args:
             - sync
             - -p
             - -d
-            - "/opt/gmvault/$(GMVAULT_EMAIL_ADDRESS)"
-            - "$(GMVAULT_EMAIL_ADDRESS)"
+            - "/opt/gmvault/data/emily.wolfe@gmail.com"
+            - "emily.wolfe@gmail.com"
             volumeMounts:
-            - name: gmvault
-              mountPath: /opt/gmvault/
+            - name: gmvault-home
+              mountPath: /opt/gmvault
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/token.sec"
+              subPath: token.sec
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/emily.wolfe@gmail.com.passwd"
+              subPath: emily-wolfe-gmail-passwd
+            - name: gmvault-data
+              mountPath: /opt/gmvault/data
             env:
             - name: GMVAULT_DIR
               value: /opt/gmvault
             - name: HOME
               value: /opt/gmvault
-            - name: GMVAULT_EMAIL_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  name: gmvault
-                  key: user2
           volumes:
-            - name: gmvault
-              persistentVolumeClaim:
-                claimName: gmvault
+          - name: gmvault-home
+            emptyDir:
+              medium: Memory
+          - name: gmvault-secrets
+            secret:
+              secretName: gmvault
+          - name: gmvault-data
+            persistentVolumeClaim:
+              claimName: gmvault
           restartPolicy: OnFailure
           securityContext:
             runAsUser: 2004
