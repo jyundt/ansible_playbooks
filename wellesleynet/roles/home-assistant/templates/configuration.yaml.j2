@@ -33,7 +33,7 @@ map:
 sensor:
   - platform: nut
     name: UPS
-    host: callisto.wellesleynet.com
+    host: callisto.kiski.co
     alias: ups
     username: {{homeassistant_nut_user}}
     password: {{homeassistant_nut_password}}
@@ -43,7 +43,7 @@ sensor:
       - battery.runtime
       - ups.load
   - platform: plex
-    host: zorya.wellesleynet.com
+    host: zorya.kiski.co
     port: 32400
     name: Plex
     token: {{ x_plex_token }}

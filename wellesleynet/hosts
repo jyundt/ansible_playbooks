@@ -1,5 +1,5 @@
 [wireguard]
-nyx.wellesleynet.com ansible_python_interpreter=/usr/bin/python3 timezone=America/New_York
+nyx.kiski.co ansible_python_interpreter=/usr/bin/python3 timezone=America/New_York
 wggb01.wellesleynet.com ansible_host=138.68.141.148
 wgus01.wellesleynet.com ansible_host=159.203.107.147
 wgnl01.wellesleynet.com ansible_host=159.65.206.158
@@ -10,33 +10,33 @@ wgin01.wellesleynet.com ansible_host=159.65.149.232
 mnemosyne.wellesleynet.com
 
 [home-assistant]
-zorya.wellesleynet.com timezone=America/New_York nut_role="client"
+zorya.kiski.co timezone=America/New_York nut_role="client"
 
 [unifi]
 unifi.wellesleynet.com ansible_python_interpreter=/usr/bin/python3
 
 [nuc]
-zorya.wellesleynet.com timezone=America/New_York nut_role="client"
+zorya.kiski.co timezone=America/New_York nut_role="client"
 
 [nut]
-zorya.wellesleynet.com timezone=America/New_York nut_role="client"
+zorya.kiski.co timezone=America/New_York nut_role="client"
 
 #[steam]
 #steam.shametime.com
 
 [freenas_jails]
-pxe-http ansible_ssh_host=pxe-http@callisto.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
-files ansible_ssh_host=files@callisto.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+pxe-http ansible_ssh_host=pxe-http@callisto.kiski.co ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+files ansible_ssh_host=files@callisto.kiski.co ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
 
 [nginx]
-pxe-http ansible_ssh_host=pxe-http@callisto.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
-files ansible_ssh_host=files@callisto.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+pxe-http ansible_ssh_host=pxe-http@callisto.kiski.co ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+files ansible_ssh_host=files@callisto.kiski.co ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
 
 [plex]
-zorya.wellesleynet.com timezone=America/New_York nut_role="client"
+zorya.kiski.co timezone=America/New_York nut_role="client"
 
 [filebrowser]
-files ansible_ssh_host=files@callisto.wellesleynet.com ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
+files ansible_ssh_host=files@callisto.kiski.co ansible_connection=sshjail ansible_python_interpreter=/usr/local/bin/python2.7
 
 [zfs]
 mnemosyne.wellesleynet.com
