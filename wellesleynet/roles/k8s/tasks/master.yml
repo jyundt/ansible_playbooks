@@ -99,7 +99,7 @@
       mode: 0644
 
   - name: Create new cluster on initial master
-    command: kubeadm init --config /root/kubeadm-config.yml --upload-certs
+    command: kubeadm init --config /root/kubeadm-config.yaml --upload-certs
 
   - name: Cleanup kubeadm-config.yaml
     file:
