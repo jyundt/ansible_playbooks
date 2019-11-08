@@ -18,7 +18,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /mnt/data/apps/kubernetes/bitwarden
-    server: callisto.wellesleynet.com
+    server: callisto.kiski.co
   mountOptions:
   - nfsvers=4.1
 ---
@@ -68,19 +68,19 @@ metadata:
 data:
   ACCEPT_EULA: "Y"
   MSSQL_PID: "Express"
-  globalSettings__baseServiceUri__vault: "http://bitwarden.wellesleynet.com"
-  globalSettings__baseServiceUri__api: "http://bitwarden.wellesleynet.com/api"
-  globalSettings__baseServiceUri__identity: "http://bitwarden.wellesleynet.com/identity"
-  globalSettings__baseServiceUri__admin: "http://bitwarden.wellesleynet.com/admin"
-  globalSettings__baseServiceUri__notifications: "http://bitwarden.wellesleynet.com/notifications"
+  globalSettings__baseServiceUri__vault: "http://bitwarden.kiski.co"
+  globalSettings__baseServiceUri__api: "http://bitwarden.kiski.co/api"
+  globalSettings__baseServiceUri__identity: "http://bitwarden.kiski.co/identity"
+  globalSettings__baseServiceUri__admin: "http://bitwarden.kiski.co/admin"
+  globalSettings__baseServiceUri__notifications: "http://bitwarden.kiski.co/notifications"
   globalSettings__attachment__baseDirectory: "/etc/bitwarden/core/attachments"
-  globalSettings__attachment__baseUrl: "http://bitwarden.wellesleynet.com/attachments"
+  globalSettings__attachment__baseUrl: "http://bitwarden.kiski.co/attachments"
   globalSettings__dataProtection__directory: "/etc/bitwarden/core/aspnet-dataprotection"
   globalSettings__logDirectory: "/etc/bitwarden/logs"
   globalSettings__licenseDirectory: "/etc/bitwarden/core/licenses"
   globalSettings__yubico__clientId: "REPLACE"
   globalSettings__yubico__key: "REPLACE"
-  globalSettings__mail__replyToEmail: "no-reply@bitwarden.wellesleynet.com"
+  globalSettings__mail__replyToEmail: "no-reply@bitwarden.kiski.co"
   globalSettings__mail__smtp__host: "smtp.gmail.com"
   globalSettings__mail__smtp__port: "587"
   globalSettings__mail__smtp__ssl: "true"
@@ -309,7 +309,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: bitwarden.wellesleynet.com
+  - host: bitwarden.kiski.co
     http:
       paths:
       - path: /attachments(/|$)(.*)
@@ -349,6 +349,6 @@ spec:
           servicePort: 5000
   tls:
   - hosts:
-    - bitwarden.wellesleynet.com
-    secretName: wellesleynet-wildcard
+    - bitwarden.kiski.co
+    secretName: kiskico-wildcard
 ---
