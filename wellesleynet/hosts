@@ -42,10 +42,10 @@ files ansible_ssh_host=files@callisto.kiski.co ansible_connection=sshjail ansibl
 mnemosyne.wellesleynet.com
 
 [master]
-2jane.kiski.co
+2jane
 
 [worker]
-2jane.kiski.co
+2jane
 
 [k8s:children]
 master
