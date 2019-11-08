@@ -42,14 +42,10 @@ files ansible_ssh_host=files@callisto.kiski.co ansible_connection=sshjail ansibl
 mnemosyne.wellesleynet.com
 
 [master]
-k8s1
-k8s3
-k8s4 ansible_python_interpreter=/usr/bin/python3
+2jane.kiski.co
 
 [worker]
-k8s1
-k8s2
-k8s4 ansible_python_interpreter=/usr/bin/python3
+2jane.kiski.co
 
 [k8s:children]
 master
