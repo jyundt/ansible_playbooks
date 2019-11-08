@@ -41,23 +41,22 @@
     command: " kubectl --kubeconfig /etc/kubernetes/admin.conf label node {{ inventory_hostname }} node-role.kubernetes.io/worker=worker"
     delegate_to: "{{ groups['configured_master'] | first }}"
     when: "'configured_worker' not in group_names"
-
-  # Cleanup taints on hybrid master/worker nodes
-  - name: Check taints for hybrid master/worker
-    command: "kubectl describe node {{ inventory_hostname }} --kubeconfig /etc/kubernetes/admin.conf"
-    delegate_to: "{{ groups['configured_master'] | first }}"
-    register: kubectl_output
-    changed_when: False
-    when:
-      - "'worker' in group_names"
-      - "'master' in group_names"
-
-  - name: Untaint hybrid master/worker nodes
-    command: "kubectl taint node {{ inventory_hostname }} node-role.kubernetes.io/master- --kubeconfig /etc/kubernetes/admin.conf"
-    delegate_to: "{{ groups['configured_master'] | first }}"
-    when:
-      - "'worker' in group_names"
-      - "'master' in group_names"
-      - kubectl_output.stdout | regex_search('node-role.kubernetes.io/master:NoSchedule')
-
   when: groups['configured_worker'] | default([]) | difference(groups['master']) != groups['worker'] | difference(groups['master'])
+
+# Cleanup taints on hybrid master/worker nodes
+- name: Check taints for hybrid master/worker
+  command: "kubectl describe node {{ inventory_hostname }} --kubeconfig /etc/kubernetes/admin.conf"
+  delegate_to: "{{ groups['configured_master'] | first }}"
+  register: kubectl_output
+  changed_when: False
+  when:
+    - "'worker' in group_names"
+    - "'master' in group_names"
+
+- name: Untaint hybrid master/worker nodes
+  command: "kubectl taint node {{ inventory_hostname }} node-role.kubernetes.io/master- --kubeconfig /etc/kubernetes/admin.conf"
+  delegate_to: "{{ groups['configured_master'] | first }}"
+  when:
+    - "'worker' in group_names"
+    - "'master' in group_names"
+    - kubectl_output.stdout | regex_search('node-role.kubernetes.io/master:NoSchedule')
