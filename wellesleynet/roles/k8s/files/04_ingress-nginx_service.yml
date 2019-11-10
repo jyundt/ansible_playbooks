@@ -18,6 +18,22 @@ spec:
       port: 443
       targetPort: 443
       protocol: TCP
+    - name: syncthing
+      port: 22000
+      targetPort: 22000
+      protocol: TCP
+    - name: strelaysrv-data
+      port: 22067
+      targetPort: 22067
+      protocol: TCP
+    - name: strelaysrv-status
+      port: 22070
+      targetPort: 22070
+      protocol: TCP
+    - name: stdiscosrv-replication
+      port: 19200
+      targetPort: 19200
+      protocol: TCP
   selector:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
