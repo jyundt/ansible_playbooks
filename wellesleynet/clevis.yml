@@ -1,0 +1,5 @@
+---
+- name: Install and configure clevis
+  hosts: clevis
+  roles:
+    - clevis

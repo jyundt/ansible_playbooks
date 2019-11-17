@@ -1,0 +1,48 @@
+---
+# Determine if we have any LUKS partitions. If not, skip all of this.
+- name: "Capture partition information"
+  command: lsblk -p --raw -f
+  register: lsblk_out
+  changed_when: False
+
+- block:
+  # clevis-luks-bind requires the existing LUKs password.
+  # Fail if we haven't defined that
+  - name: "Verify luks_password is set"
+    assert:
+      that:
+        - luks_password is defined
+      fail_msg: "luks_password variable is not set!"
+      success_msg: "luks_password variable is set."
+
+  - name: "Include OS specific vars"
+    include_vars: "../vars/{{ ansible_distribution }}.yml"
+
+  - name: "Install clevis packages"
+    package:
+      name: "{{ clevis_packages }}"
+      update_cache: yes
+
+  # We assume that an "initialized" disk has been enrolled with our
+  # tang server. Non-initialized disks throw RC == 72 with luksmeta
+  - name: "Identify enrolled LUKS partitions(s)"
+    command: "luksmeta test -d {{ item }}"
+    with_items: "{{ luks_partitions }}"
+    register: luksmeta_out
+    failed_when: luksmeta_out.rc not in [0,72]
+    changed_when: false
+    vars:
+      luks_partitions: "{{ lsblk_out.stdout | regex_findall('(.+) crypto_LUKS', '\\1') }}"
+
+  - name: "Enroll LUKs partition(s)"
+    command:
+      cmd: "clevis bind luks -f -d {{ item.item }} tang '{{ tang_info | to_json }}'"
+      stdin: "{{ luks_password }}"
+    with_items: "{{ luksmeta_out.results }}"
+    vars:
+      backslash: \\
+    when: item.rc == 72
+    loop_control:
+      label: "{{ item.item }}"
+    notify: "Update dracut"
+  when: "'crypto_LUKS' in lsblk_out.stdout"
