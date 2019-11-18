@@ -159,5 +159,11 @@
       definition: "{{ lookup('file', 'syncthing.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
+  - name: Create tang deployment
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'tang.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
   run_once: True
   delegate_to: "{{ k8s_master }}"
