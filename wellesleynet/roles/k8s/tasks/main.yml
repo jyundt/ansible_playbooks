@@ -78,30 +78,45 @@
       state: present
       definition: "{{ lookup('file', '00_weave.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Install metallb load balancer
     k8s:
       state: present
       definition: "{{ lookup('file', '01_metallb.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Configure metallb load balancer
     k8s:
       state: present
       definition: "{{ lookup('file', '02_metallb_config.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Install ingress-nginx
     k8s:
       state: present
       definition: "{{ lookup('file', '03_ingress-nginx_mandatory.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Create ingress-nginx service
     k8s:
       state: present
       definition: "{{ lookup('file', '04_ingress-nginx_service.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   # Restore a well known key
   # Note that this is the only ansible vault encrypted file.
@@ -112,12 +127,18 @@
       state: present
       definition: "{{ lookup('file', '05_sealed_secrets_key.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Install sealed secrets controller
     k8s:
       state: present
       definition: "{{ lookup('file', '06_sealed_secrets_controller.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   # This could probably be DRY-ed out a bit: the wildcard cert exists as an
   # ansible vault encrypted file in a couple of different roles _and_ as a
@@ -128,42 +149,63 @@
       state: present
       definition: "{{ lookup('file', '07_ssl_certs.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Create oauth2-proxy service
     k8s:
       state: present
       definition: "{{ lookup('file', '08_oauth2-proxy.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Create rclone cronjob
     k8s:
       state: present
       definition: "{{ lookup('file', 'rclone.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Create gmvault cronjob
     k8s:
       state: present
       definition: "{{ lookup('file', 'gmvault.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Create bitwarden statefulset
     k8s:
       state: present
       definition: "{{ lookup('file', 'bitwarden.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Create syncthing faux-daemon statefulset
     k8s:
       state: present
       definition: "{{ lookup('file', 'syncthing.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   - name: Create tang deployment
     k8s:
       state: present
       definition: "{{ lookup('file', 'tang.yml') }}"
       kubeconfig: "{{ k8s_config }}"
+      wait: true
+      append_hash: false
+      apply: true
 
   run_once: True
   delegate_to: "{{ k8s_master }}"
