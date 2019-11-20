@@ -165,5 +165,11 @@
       definition: "{{ lookup('file', 'tang.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
+  - name: Create home-assistant statefulset
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'home-assistant.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
   run_once: True
   delegate_to: "{{ k8s_master }}"

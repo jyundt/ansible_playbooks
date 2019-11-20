@@ -1,0 +1,436 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: home-assistant
+  namespace: default
+spec:
+  encryptedData:
+    auth_provider.homeassistant: AgBZ3WfAt6w5hfrpCjyJkrj7TQ3siBEli/5m9D9eejtIGyQydAoUX1jV+RU2qCK9FLYpxUNwth3jnr7FqN9DctTP0W7PawzBGnya7tZe7cY4q4SNXRcmH6awPRz0xucl/fW99A2QK1HcMLsh6n4HjXkwYf4uQhmrURm4njPDRQHeblZOCLQfar2hfg7gTwBYTe5yGK4pauV1ol3ND+DPIZGU3n3ma1jX7YSqkiC1KYK5Sl916ci+baNfVhIq8VADuovehLdTBjiPzd81WE4kN/io9gKK1Z1aEjIdfSDlK4aS6NMmWWyz7HGg1n6AJpJtSrbM8t/Vymd6faRbeRShc3icUu1tSJM0fiFrecM8UMwLMYq/Z/7IvxKdvPt362LZHFKJKrao1ZMLDJUQ0kZY+ER3A97xyeSOeKDVGbrW05fwjyHRhUmSN2nu0tI+kfL3vwwfJItwrk6QODYoMgZfEzh9JB+M1UJ16zHobnZR5frZ0jOtXv0guAaTdv2Jku6Dc3D0d8+seWv2yIEoDXTVJ63j0rqlZ8z5VyxHcmHuTkzIvdu72b0DGLzxPpFtIH8h7gxGKlm9HgFMslZ3G4SuLy5uQjvtYP2Yx7ASF1aibJqZ3NWCLubb0G/nHfLxQXEKvsE098R4WgiWsZoyq4gsWuJ86NlY4t05Rc0fr1gTVCYGrV+pDYl8LO0cft+DPJi+mXiXuuN6NBAQJwz0wLWg8gEHFJsqccXKQrxzY6IlhXssBnyi2HLQd1PSxMy1VtN6wvi2NNxGJj47NSIPIiIAloSVS8SAyvF5gpGPh2I3WozvvpTGW0jMyhNWK9FSRP/vYIkDgbkToaPVBdyDu7Y9B6/4G7iKobUuGWbELMweDpngGjn6FRpz/F/8+qQPP8lpYIkUbSTzHkCfht8Ecw266zHhWpu/U4LwgamSQ9s/PV7UTJfgkqNF7h4xAOSKBPBFBdy0V27g3chaKrW35B+uKQYLbg1ENZI0aaeSpFO0ivx7iduXQded/17oQmYkq44wkpRKi+YXog/jH+0n9OTDJLuSFbFRqMbJXvl99vMci1KOzR49EflymdWoCH4zJpRd0LkJce4hL0ngmusu0aMJOT/YVxGOkifRj1QQ2oPg+fTNNRuYCEBpoigq/JaVMmjCoVg6YFr+Tu+XHFK1AejSpd/H8SRtqh/uERCSpqwMQYN59bmxSYjkMEZhPaxw6avfN6TxyvBrUdaeHY3MxBePodBfJHT/+mo3Oo8uHoBFc0w1Y2G3a7vOGvjygCZVjE1kglpLatxvYL1th2MH4mRoSX1Yd0wKGMbtHlEBG+ynERbXvSk0MuIoRtNwd1+/XdoYIuLJkvasEVQafM4vOalglupuVARBaXtr65t8agu+QExwHE1Y59y5MkDUnbTUMhX6J75TYxQO2ORijzev34uQsEwZ8WEUZH2oWg==
+    secrets.yaml: AgCok/mRFBJJbCb6cLp5VQw792MYXkLRciJipBDThZxhur2sNbzkfbLyAP9nlQF5xf444EsBQ1KPvL9p7oMbFVj6cF7a7c4Ap2ZeuByT5x6oKGQFB0VQogItW2c5XgW8aGXUSFVuooia6luPDGkyz9csKlIRlqjp9Y1vUd3BAixfkuwmmNW0YelV3f5waQ0ibrzPnW1G6yRRLAMK+XeC6nLvPNTkJEzvZPgW+lnzYmfj+gigvdv2iXQ4xnQMYJ6QA7qyQp50OFQ2nSyrrifi1Z8VSGyvwcFayXuAqcvLAIfC+bq6SGQCqTeu2lRXylrRrAqdO3iajf339qtafSPU7wp2y5vkEMTI2cSFMNwcj8qZojpUwfozryVvErBZh4F3G3aG7bHTfxs6Spu+55hVR/aybG6nPoS8CuPLtDNjxifCNoDa2vhVuoy6tkaAIk1+r1DJnLdacsuMyYKjJCrSKYZrV/pgxyXnQ0dUXplNl293PAHENhpstDUReenkySqfBU2WiSXmHJrmZ2nb2WwIywqzSxEKSLGpucZO4u+Z2vX0A90RvVCU21BYhsHqTUbgD3XikpawOnJzUmsL3nK45JgaJ5c0IjnAm4JfkUEib5INBdyOUhej4Kobt+z7C8/1B18HCH+U5MxzMRGxT+npMvlCq7J/rPz8QNBSLj8o9fjURCI4+iUnBEROR/3jhXKkyx3xdOwyRoXHOsuHeipjlEVa0liGKFm9rR+Qf6k5CcJtuXcWpspxAFzfbTKJWjysRyQGnIVOzMq8InRDOC2NUQuaO8pmvM+rJQnjyC6Hpu9E9PZwrr991HNLVi8GYM2MvEOr6T7T2Q1upZltuh5oUtEV4eAhDsJH8lvv0wjfdGshNu7xbAYLa3dK1tA8l4Ue7AiEXn1C5qIX+5HUSTVNgO39WG4YHNAsuxPPBVf4aLEqm9Etk/ilxinXAW9205jwlya95R5IfsdTKnxe3Ac1BvPUuiR6EiaO/1pX3MGu86K3hVTKc5ZODXh3HNphN0I9Lh4V8cuny5FKukRFNyWprLgP5+nubOHc7+WtYNQkdTqd4xexAB3uX7bbHRFnPym13w8Htji+hvp3ulcd4FzGDmQDRBALv/9L1xnU9QndOo3zXUYMYlcejB8pa9fxro/AdX921cbW3vADaamKfeCv8GQpcjAIr9rhrYEjm1q9epcjkB7CCri70z/e+Pm5AvoNiE3rkNZwTTpM+cNTa91oi3aDwryLfMdKq9INoE0Q4J1Gjfl8Zhnznz52ce55EbwnfPK5IE2cduy0sR/3zMPQN7dhV6KzchmRA17oKxXKR8j38ZhplC2nKP8VbJTqkFIK5CbpjP/OgLXvCaxSkfdCkZJqVpwrAs4uBZvVtg==
+  template:
+    metadata:
+      name: home-assistant
+      namespace: default
+    type: Opaque
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: home-assistant
+  namespace: default
+  labels:
+    name: home-assistant
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/apps/kubernetes/home-assistant
+    server: callisto.kiski.co
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: home-assistant
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: home-assistant
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: home-assistant
+# home-assistant is dumb and doesn't make "external" config management easy.
+# the container assumes that the application directory ("/config"), is RW
+# and will use this directory for storing all types of stuff outside of the DB.
+# Due to the RW requirement, all configmaps or secrets must be mounted using
+# subpath. Unfortunately we can't simply drop a Projected Volume into /config.
+# (another annoying tidbit, there isn't an easy way to skip onboard or
+# precreate users.)
+data:
+  known_devices.yaml: |
+    mia2:
+      hide_if_away: false
+      icon:
+      mac: !secret mia2_mac
+      name: Jacob
+      picture:
+      track: true
+      vendor: unknown
+      gravatar: !secret mia2_gravatar
+    lila:
+      hide_if_away: false
+      icon:
+      mac: !secret lila_mac
+      name: Emily
+      picture:
+      track: true
+      vendor: Apple, Inc.
+      gravatar: !secret lila_gravatar
+  # this onboarding file is generated after the manual onboarding has been
+  # completed. I had to manually generate this and then copy it out of the
+  # container.
+  # Note that it's also very specific to 0.93.2
+  onboarding: |
+    {
+        "data": {
+            "done": [
+                "user",
+                "integration"
+            ]
+        },
+        "key": "onboarding",
+        "version": 2
+    }
+  configuration.yaml: |
+    homeassistant:
+      name: Home
+      latitude: !secret latitude
+      longitude: !secret longitude
+      elevation: 30
+      unit_system: imperial
+      time_zone: America/New_York
+      customize:
+        switch.leviton_dzpa11lw_plugin_appliance_module_switch:
+          friendly_name: Christmas Tree
+          icon: mdi:pine-tree
+        switch.leviton_dzpa11lw_plugin_appliance_module_switch_2:
+          friendly_name: Nightstand Light
+          icon: mdi:weather-night
+        light.linear_lb60z1_dimmable_led_light_bulb_level:
+          friendly_name: Norpoc Light
+      customize_domain:
+        zwave:
+          hidden: true
+      customize_glob:
+        "sensor.hank*":
+          hidden: true
+        "binary_sensor.hank_unknown*":
+          hidden: true
+      auth_providers:
+        - type: homeassistant
+    frontend:
+    config:
+    discovery:
+      ignore:
+        - plex_mediaserver
+        - google_cast
+    history:
+    logbook:
+    map:
+    sensor:
+      - platform: nut
+        name: UPS
+        host: callisto.kiski.co
+        alias: ups
+        username: monuser
+        password: !secret ups_password
+        resources:
+          - ups.status
+          - battery.charge
+          - battery.runtime
+          - ups.load
+      - platform: plex
+        host: zorya.kiski.co
+        port: 32400
+        name: Plex
+        token: !secret plex_token
+    group:
+      living_room:
+        name: Living Room
+        entities:
+          - light.linear_lb60z1_dimmable_led_light_bulb_level
+          - light.living_room_floor_lamp
+          - binary_sensor.apartment_door_sensor
+          - media_player.double_r_diner
+          - switch.leviton_dzpa11lw_plugin_appliance_module_switch
+      bedroom:
+        name: Bedroom
+        entities:
+          - switch.leviton_dzpa11lw_plugin_appliance_module_switch_2
+      office:
+        name: Office
+        entities:
+          - light.office_sphere
+          - sensor.ups_status_data
+          - sensor.ups_battery_charge
+          - sensor.ups_battery_runtime
+          - sensor.ups_load
+          - sensor.plex
+    automation:
+      - alias: 'Turn off all lights when nobody is home'
+        hide_entity: true
+        trigger:
+          platform: state
+          entity_id: group.all_devices
+          to: 'not_home'
+        action:
+          - service: switch.turn_off
+            entity_id: group.all_switches
+          - service: light.turn_off
+            entity_id: group.all_lights
+      - alias: 'Turn on all lights when Emily arrives home'
+        hide_entity: true
+        trigger:
+          platform: state
+          from: not_home
+          to: home
+          entity_id: device_tracker.lila
+        action:
+          - service: switch.turn_on
+            entity_id: group.living_room
+          - service: light.turn_on
+            entity_id: group.living_room
+      - alias: 'Turn on all lights when Jacob arrives home'
+        hide_entity: true
+        trigger:
+          platform: state
+          from: not_home
+          to: home
+          entity_id: device_tracker.mia2
+        action:
+          - service: switch.turn_on
+            entity_id: group.living_room
+          - service: light.turn_on
+            entity_id: group.living_room
+      - alias: 'Notify about presence detection'
+        hide_entity: true
+        trigger:
+          platform: state
+          entity_id: device_tracker.mia2, device_tracker.lila
+        action:
+          service: notify.all
+          data_template:
+            message: "{{trigger.to_state.attributes.friendly_name}} changed state from {{trigger.from_state.state}} to {{trigger.to_state.state}}"
+        condition:
+          - condition: template
+            value_template: "{{ trigger.to_state.state != trigger.from_state.state }}"
+      - alias: 'Notify about UPS state change'
+        hide_entity: true
+        trigger:
+          platform: state
+          entity_id: sensor.ups_status_data
+        action:
+          service: notify.all
+          data_template:
+            message: "UPS changed state from {{trigger.from_state.attributes.state}} to {{trigger.to_state.attributes.state}}"
+      - alias: 'Apartment door opened when nobody home'
+        hide_entity: true
+        trigger:
+          platform: state
+          entity_id: binary_sensor.apartment_door_sensor
+          to: 'on'
+        condition:
+          - condition: state
+            entity_id: group.all_devices
+            state: 'not_home'
+        action:
+          - service: notify.all
+            data_template:
+              message: "Apartment door opened when nobody is home."
+          - service: switch.turn_on
+            entity_id: group.living_room
+          - service: light.turn_on
+            entity_id: group.living_room
+    zwave:
+      usb_path: /dev/ttyUSB0
+      network_key: !secret zwave_network_key
+    device_tracker:
+      - platform: unifi
+        username: homeassistant
+        password: !secret unifi_password
+        host: unifi.wellesleynet.com
+        new_device_defaults:
+          track_new_devices: False
+    lifx:
+      light:
+        - broadcast: 192.168.67.148
+        - broadcast: 192.168.67.153
+    scene:
+      platform: lifx_cloud
+      token: !secret lifx_cloud_token
+    notify:
+      - name: gmail
+        platform: smtp
+        sender: jyundt@gmail.com
+        recipient: jyundt@gmail.com
+        server: smtp.gmail.com
+        sender_name: "home-assistant"
+        username: jyundt@gmail.com
+        password: !secret gmail_smtp_password
+      - name: all
+        platform: group
+        services:
+          - service: gmail
+    alert:
+      ups_on_battery:
+        name: UPS running on battery power
+        entity_id: sensor.ups_status_data
+        state: "OB"
+        repeat: 5
+        can_acknowledge: true
+        skip_first: true
+        notifiers:
+          - all
+      ups_low_battery:
+        name: UPS battery critically low
+        entity_id: sensor.ups_status_data
+        state: "LB"
+        repeat: 5
+        can_acknowledge: true
+        skip_first: true
+        notifiers:
+          - all
+      apartment_door_open:
+        name: Apartment door open for >5 minutes
+        done_message: Apartment door has been closed
+        entity_id: binary_sensor.apartment_door_sensor
+        repeat: 5
+        can_acknowledge: true
+        skip_first: true
+        notifiers:
+          - all
+    binary_sensor:
+      - platform: template
+        sensors:
+          apartment_door_sensor:
+            device_class: door
+            friendly_name: 'Apartment Door'
+            value_template: "{{ is_state('sensor.hank_unknown_type0201_id0008_access_control', '22') }}"
+    recorder:
+      purge_interval: 0
+      db_url: sqlite:////db/home-assistant.db
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: home-assistant
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-assistant
+  serviceName: "home-assistant"
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+    spec:
+      containers:
+      # More recent versions of home-assistant are awful. They require the
+      # WebUI to configure integrations (Uniif) and are extremely hostile to
+      # using yaml + SCM for configuration. e.g. everything in json under
+      # "/config/.storage".
+      - image: homeassistant/home-assistant:0.93.2
+        imagePullPolicy: Always
+        name: home-assistant
+        ports:
+        - containerPort: 8123
+        livenessProbe:
+          tcpSocket:
+            port: 8123
+        volumeMounts:
+        - name: home-assistant-config
+          mountPath: /config/configuration.yaml
+          subPath: configuration.yaml
+        - name: home-assistant-secrets
+          mountPath: /config/secrets.yaml
+          subPath: secrets.yaml
+        - name: home-assistant-config
+          mountPath: /config/known_devices.yaml
+          subPath: known_devices.yaml
+        - name: home-assistant-config
+          mountPath: /config/.storage/onboarding
+          subPath: onboarding
+        - name: home-assistant-secrets
+          mountPath: /config/.storage/auth_provider.homeassistant
+          subPath: auth_provider.homeassistant
+        - name: home-assistant-data
+          mountPath: /db
+        - name: home-assistant-usb0
+          mountPath: /dev/ttyUSB0
+        - name: home-assistant-usb1
+          mountPath: /dev/ttyUSB1
+      volumes:
+      - name: home-assistant-config
+        configMap:
+          name: home-assistant
+      - name: home-assistant-secrets
+        secret:
+          secretName: home-assistant
+      - name: home-assistant-data
+        persistentVolumeClaim:
+          claimName: home-assistant
+      - name: home-assistant-usb0
+        hostPath:
+          path: /dev/ttyUSB0
+      - name: home-assistant-usb1
+        hostPath:
+          path: /dev/ttyUSB1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: home-assistant
+spec:
+  selector:
+    app: home-assistant
+  ports:
+  - name: home-assistant
+    port: 8123
+    protocol: TCP
+    targetPort: 8123
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: home-assistant
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: https://$host/oauth2/auth
+    nginx.ingress.kubernetes.io/auth-signin: https://$host/oauth2/start?rd=$escaped_request_uri
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+  - host: avcad.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: home-assistant
+          servicePort: 8123
+  tls:
+  - hosts:
+    - avcad.kiski.co
+    secretName: kiskico-wildcard
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: home-assistant-oauth2
+  namespace: default
+spec:
+  tls:
+  - hosts:
+    - avcad.kiski.co
+    secretName: kiskico-wildcard
+  rules:
+  - host: avcad.kiski.co
+    http:
+      paths:
+      - path: /oauth2
+        backend:
+          serviceName: oauth2-proxy
+          servicePort: 4180
