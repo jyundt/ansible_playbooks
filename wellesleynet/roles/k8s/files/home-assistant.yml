@@ -364,6 +364,10 @@ spec:
           mountPath: /dev/ttyUSB0
         - name: home-assistant-usb1
           mountPath: /dev/ttyUSB1
+        securityContext:
+          privileged: true
+      nodeSelector:
+        has_zwave_dongle: "true"
       volumes:
       - name: home-assistant-config
         configMap:
@@ -377,9 +381,11 @@ spec:
       - name: home-assistant-usb0
         hostPath:
           path: /dev/ttyUSB0
+          type: CharDevice
       - name: home-assistant-usb1
         hostPath:
           path: /dev/ttyUSB1
+          type: CharDevice
 ---
 apiVersion: v1
 kind: Service

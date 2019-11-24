@@ -75,5 +75,5 @@
 
 # Our zwave/zigbee dongle has a USB ID of 10c4:8a2a
 - name: Apply zwave dongle label
-  command: "kubectl label nodes {{ inventory_hostname }} has_zwave_dongle=1 --kubeconfig /etc/kubernetes/admin.conf"
+  command: "kubectl label nodes {{ inventory_hostname }} has_zwave_dongle=true --kubeconfig /etc/kubernetes/admin.conf"
   when: "'10c4:8a2a' in lsusb_out.stdout"
