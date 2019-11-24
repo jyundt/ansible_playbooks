@@ -73,7 +73,7 @@ spec:
         spec:
           containers:
           - name: rclone-jyundt-gmail
-            image: rclone/rclone:1.52.0
+            image: rclone/rclone:1.50.2
             args:
             - sync
             - "jyundt_gmail_gdrive:/"
@@ -107,7 +107,7 @@ spec:
                   name: rclone
                   key: RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_CLIENT_ID
           - name: rclone-jyundt-digitalocean
-            image: rclone/rclone:1.49.4
+            image: rclone/rclone:1.50.2
             args:
             - sync
             - "jyundt_digitalocean_gdrive:/"
