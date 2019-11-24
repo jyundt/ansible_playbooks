@@ -60,3 +60,20 @@
     - "'worker' in group_names"
     - "'master' in group_names"
     - kubectl_output.stdout | regex_search('node-role.kubernetes.io/master:NoSchedule')
+
+# We need usbutils to identify our zwave/zigbee dongle
+- name: Install usbutils
+  package:
+    name: usbutils
+    state: present
+
+# USB information used to determine which labels to apply to workers
+- name: Capture USB information
+  command: lsusb
+  register: lsusb_out
+  changed_when: False
+
+# Our zwave/zigbee dongle has a USB ID of 10c4:8a2a
+- name: Apply zwave dongle label
+  command: "kubectl label nodes {{ inventory_hostname }} has_zwave_dongle=1 --kubeconfig /etc/kubernetes/admin.conf"
+  when: "'10c4:8a2a' in lsusb_out.stdout"
