@@ -1,0 +1,136 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-config
+  namespace: default
+  labels:
+    name: plex-config
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/apps/kubernetes/plex
+    server: callisto.kiski.co
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-config
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: plex-config
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-video
+  namespace: default
+  labels:
+    name: plex-video
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/video
+    server: callisto.kiski.co
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-video
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: plex-video
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: plex
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plex
+  serviceName: "plex"
+  template:
+    metadata:
+      labels:
+        app: plex
+    spec:
+      containers:
+      - image: plexinc/pms-docker:1.18.2.2058-e67a4e892
+        imagePullPolicy: Always
+        name: plex
+        ports:
+        - containerPort: 32400
+        volumeMounts:
+        - name: plex-config
+          mountPath: /config
+        - name: plex-video
+          mountPath: /data
+        - name: plex-transcode
+          mountPath: /transcode
+        env:
+        - name: CHANGE_CONFIG_DIR_OWNERSHIP
+          value: 'false'
+        - name: PLEX_UID
+          value: '2004'
+        - name: PLEX_GID
+          value: '2000'
+        - name: TZ
+          value: 'America/New_York'
+        resources:
+          limits:
+            gpu.intel.com/i915: 1
+      volumes:
+      - name: plex-config
+        persistentVolumeClaim:
+          claimName: plex-config
+      - name: plex-video
+        persistentVolumeClaim:
+          claimName: plex-video
+      - name: plex-transcode
+        emptyDir:
+          medium: Memory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: plex
+spec:
+  selector:
+    app: plex
+  ports:
+  - name: plex
+    port: 32400
+    protocol: TCP
+    targetPort: 32400

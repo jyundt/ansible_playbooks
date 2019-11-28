@@ -39,6 +39,7 @@ data:
   22067: "default/syncthing:22067"
   22070: "default/syncthing:22070"
   19200: "default/syncthing:19200"
+  32400: "default/plex:32400"
 
 ---
 kind: ConfigMap
