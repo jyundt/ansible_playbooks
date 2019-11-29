@@ -1,7 +1,6 @@
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
   name: oauth2-proxy
   namespace: default
 spec:
@@ -12,7 +11,6 @@ spec:
     oauth2_proxy_cookie_secret: AgAao+nMsRJH5CPEJGwId6ko3sm/uGN6Vi0tzww9Q0UOZOVQKO55EKYNTkP62NFsGiM2g1xM5Ml+0hjJrB0R940d5eAaQ9eNhKPp23d0fKJTi8GTZBpZIMI4IMG2IO3ovnVc/xQX+YHm0iYWXvRRdNFTHxVYZGxQb2y6OOvvyfqb0+s6YEyDc8vmFz4iav+idMIslU4iA3jo4KdvH06EJQsNlUt7om8V6P/dM7O1q+Y+CKgAmQXH8TBzdRBCzUd12poWOnm5cIK2mIYP3GzOlO0xpnG6Ec59tnVxT0m+Aw10dnpLABBoxypHGSeNro6BUX5RANDDpjTaj9i7og25UoqR3aU7q8QEVLg+BRzXJBIXqD86mlkEtJR/5f7GCHj5E+uLyEn/38h52Dgy8lbpGcWDPkjzNfnii4MsWBmP1EOoQWbAbmvwbwDZLnWaICFM2u+ok8Mg9JDSZHzBxtxaG0q1GYC91K6QejlhiLV/JH6tqSEtTZeBzsHXSstsdaI1BjUiS6FXixyY5rD0QEtNRqrVvz4nGZ1e3/xFC3gpZb80jATx3Qu6iIlMlanwTDL2ql40TEJhf70EhHOTS/Ufk9LlOG+0KzIyOUJkin5vfwdADdOnnqEFKm2/MhxOFOSs4piJx8vjm9985dSnUGCWKnBWUt1OSHuAIumSXyLfHTiNfH00sqzJ9RIS3xPEMIQYmEPrVPNxAFDbJRTaTpf7PKzUvpsm3huR+X8GKpBcHEeNoQ==
   template:
     metadata:
-      creationTimestamp: null
       name: oauth2-proxy
       namespace: default
     type: Opaque

@@ -3,7 +3,6 @@
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
   name: gmvault
   namespace: default
 spec:
@@ -14,7 +13,6 @@ spec:
     emily-wolfe-gmail-passwd: AgCMRH5Dsfy0yxkQp89r0Eb+QGXVtaySMOF70Ri0BiH74mIfVf3zdRoslMH4kJIZca+14RyaziVQWP9QJqVesA+Q6sY9CsXnH3WN0I9rymGgflHz4mMKBJ/3eLAtMX73IEUeIM7IdVf5pYClUMpOqqyiltXQe/gVaDbQ3pgDHXx/JNUXdiuFUyMpSRU5ZszDh2rBHoDhj+LH6mVRTGs8+uOplryAumOEcqTFSIP0/3FSI42CQDuOK6h3lp259YK6j8rSfe2DC3E3ao8hy3ySCzTbYrBhuokyHX6eqx4ypx7DZnxu6vNjx9ktKq1hcP4RwErcB4csCSe8gIW/h4rvg2TB4R7/yU6noZF9fUaFFl746KxfImA+U4PhGLonCd6geMT7fPQjAascManHbGspuPVb5PYQr2r2Esl2MpBFOFZ6+7ScqhFQGLW7Zf3BK9/fI6STZQ9CFZI4d2+vxi+9fWNPuJjYptQa3a0XEfPkrPL4U2+6YDG3HbMmhpMiatU696PDB3hC1mm7ApeAimf3pg7yQP5LXPUUykBaLqc8VyODdgy89errdF4m8cln4SO05LRuWO4xdNPHeBP5BsaqMiJQCwxG3gs9Mih8ck8u32km//VR172xNpmnEmH4oSyyZz08rvJ9vTsE2Ew3pDmRrywQAY0jpegXL6Yu7YF2pfO3n9s9pq53EBSjE/BfuIyumV5biix1wvmo5m2GE6eQIAVw
   template:
     metadata:
-      creationTimestamp: null
       name: gmvault
       namespace: default
     type: Opaque

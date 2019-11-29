@@ -1,7 +1,6 @@
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
   name: rclone
   namespace: default
 spec:
@@ -16,7 +15,6 @@ spec:
     RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_TYPE: AgBfaVEqbJDi1xAfm6theDEd94vPg0HV6Ecl1fJVgF45QXF4U7uXlvsbbODvTrIFBLLVsBkJrNBOlFaLwVf+/hN4hGuIkvkkAdsR2La0ZbOnjfwEZn91NT4eB2Ri3g3gdMhiCoMrKD/1uQu4tfRwALUQDmTfipsMUH60I9O3lUhhV7w0cQaFfER/uVspJoyGlKYFeS4kYwMPLVKTBoMCcXnWGjsKTIx0u0p1HK3JKbwn/z/JdbwO9fpGzkwGvS+cCVl/ewF3CmQ1msdeYAD/NQmvhcpvaoQPmzrbD4efYAJLZQ220ZqgmsmV6W3kAgMD9/Pbs2UdGJcZIXBtG81/BRyaPba1F0NPcNAfPHrz+POA+6y0h1qbx5q73NUHISUveovRPf+pmV1D6rkD3SAUHI1GQA2iYPeXE56fIeYGt3MQpI6A29la1ZHf5o58f25lx/N3XsCx+gJDUYu+yGEG3HUnRX5Q6U0rM085sNTGQBurs7beDLw+PjIa/mO2Ivi+D6vkZsGRZqbpi+U4hG2ir7OSTjdklnSQ/HJVTr0bIdQsDIjrq7gYA+z4zfBrCp35gIVyUui9rwx4ATKxh+sUJJLnNJ7u67VM/4twaWG275pukh4eG0dPpn0zgJX2O65gruFGT3ekPBb7FeHfpG2vvmxSCGkuNlPn9DJypVlmFuOZnSrdTxSmO1oveRaN72i6/ycW2t1/Kg==
   template:
     metadata:
-      creationTimestamp: null
       name: rclone
       namespace: default
     type: Opaque

@@ -1,7 +1,6 @@
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
   name: syncthing
   namespace: default
 spec:
@@ -17,7 +16,6 @@ spec:
     syncthing-key.pem: AgAdfpLHGli9QJb01XqL0RzuDgYPepVvpN/JawtPYNtqXkWCOwEehUeMWBVmnjx5CJ8Qg7cZCFOhhNx//VZsCC9smym3HVl8zCx9w5ZkOxGGcJvFJNzXvt39fEAOXrAbEDy9dDl5n4U0X2fAmCAhyceZJ0wCPlVxzjKDaN5RtejiSvthPbJFE2B2X59umrZ0oUyY5u6/tWsSb7nRsENnhdZcAJMJPVGewn0I6SxVlMq5kyzKSCd5Af7z/iUhs4L5Bd7WKfbf8PMA+ULSlh+SrSq0JSzex1r4C6+87c+ALKMdVroVvcSq1hMLQ6vP2xIEN+sRBY45OYYKpN7sTF7ZBDZx0vqV9l6gKt62ablvkH7ujT06eUYJqEJwsdkEgF2W44GpT+zBm7YfP9RptqKh0JCF3jjmauf4M/beqgPLA9990WRmCWDMEOrSnm1UfKdQzoCsdAOBvSRWnUTe+ppv2g1oQfhhTbF+JoucwBB19lT4sda8ntMmzZoe+CNS2WwczfSPkfG/JVvmaY64kx9vpXwvtmS5RDhu0yYisu9nqOZca8y6FYnPO+qZ4BnSnwyKTkp5+JkHbOILtNRN51MrYTA2SU//cWEiH8MC26LP3OPgUwmZqbTtvOO+ANmtS7Inp03Ic5H94EqcCRNU3LP/7YdC569NZB+6GWA8oVtOSNZJBncp11eskbzPZYORO2+ty+ydV8YMqDjJy2L3KUqqqWRuZFyp7GYG10JwZ5PRolamLPSC7ohBk7i7R92httZpf+e1iYTNBtmpRlVFe/WgQTclEdBVaerBhfYV8P8Su8K5S+HhKOoBM0XI1LEG9QICS9Nfbxt9ST0nGki6TsfGfORd6s0lEIIyryv/mXbW067krODZlPfqGEGOh+fWj6V+xlOqoupv7IrlwXqEpzECoGZReih7ST8jU3M6f4ypBbooxqkWmPAfDZsQGjSq5CcPgkEq87b+3yEehsOmdBWLv8VUP61UbAfDZ0FSdjUTqJKHi18NIpeeJFBUwY37xUfdusDFodQqGGHD2HL1LDV7XW1cxEiIzGg+2eYEqHA0WRFWxH9vODolHY3z2d/mZAJc4zc=
   template:
     metadata:
-      creationTimestamp: null
       name: syncthing
       namespace: default
     type: Opaque

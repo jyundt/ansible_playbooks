@@ -40,7 +40,6 @@ spec:
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
   name: bitwarden
   namespace: default
 spec:
@@ -55,7 +54,6 @@ spec:
     globalSettings__sqlServer__connectionString: AgBMYTbNorjNKr9c4G/fYgfKZcQVTdWL6bSwazl5TOdtO13ADEXxljUnM/IgstW82e1+mLScqyTwixEkrWAS4Nt1Sf6uHCZqh6FEnQxkX/oDs1vD3icjhCTWPepad1M4AOx2EK61JAcRAkJSFNvwhylJNNbfa9hnvWpBfDo5sZskVZJbuHGgB2wdJt9MtSgKu49MK1XRof4Vi0KVqb7SFCsb2kWqQPKamDiCiNJZ9ogg8zYXsD32Fc96pjnniFT8tQ1PyGy0saXQus+RXLXlG+uQfXVEm4swwdRxbDVJQMXtnBTtigYGMzjWKpv5L13lXsIB1hwISGNgZ4OXCW02i/gYBeXxqBPQERuXlFuaor0yzm36J7EH52fUeYhZ2I6nvfOUUFenA20DIKA5kWE4NxfwXrGsY0wDMgpZnivN+l+mEUR0X8TtxUNYH0waXkKqrbozigPe+c788A8g+58KHJ3KtlAGy81Pj6CUpLXVl067bZUpwz0ZHCZHXBOl4+scc8I6MdU/jmMagBHw0PqNvFz1uew5gyoSmVNX1tp8HoYmkeC9CNlZzyF1v+kOdCcr1WRf+C7o5VYgzdPZ1QJeM0Mz1uE1CHem9MlaiDE96js81qE3km1M2VT4cMReppBs86xrkndXBuFi31t+najXhGrC7HZKTp898XishvGTBA7deFeoL+j+6ntQuU8gqvuw9qicN29wZtV1ZHpNpSuwqQ+H2EaQuQH1LVCBOhDquWCrXlrbgGKAYBlshbo5z80omywF2O08VHVhRTooRui6hm3lPu8SbYe+cMUbisHcGFIuRLrKOrqQOATZQUCX7BfsCQ6HCO3c3AllH0cFEc899rWNSxdpN/Jt8trmrKre2yDJQ+0LQT2Rm5IKP/Cvv7cxQWEXktBkfa97KxWlfEN69PRM7yCa6uBNywbRXRu1RQhbkNOLSkA2lhXJwemFGOUtKO1gjC4IT/42J+zfwmQtOrItZzFR2JeAtir72PyZJPgViw==
   template:
     metadata:
-      creationTimestamp: null
       name: bitwarden
       namespace: default
     type: Opaque
