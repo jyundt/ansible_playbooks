@@ -238,7 +238,6 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: syncthing
-  annotations:
   namespace: default
 spec:
   rules:
