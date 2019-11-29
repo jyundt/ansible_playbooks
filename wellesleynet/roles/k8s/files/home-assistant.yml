@@ -52,6 +52,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: home-assistant
+  namespace: default
 # home-assistant is dumb and doesn't make "external" config management easy.
 # the container assumes that the application directory ("/config"), is RW
 # and will use this directory for storing all types of stuff outside of the DB.
