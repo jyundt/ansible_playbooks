@@ -1,0 +1,156 @@
+# I gave up on trying to prevent email name leakage, mountPath doesn't support
+# variable expansion. #dealwithit
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: gmvault
+  namespace: default
+spec:
+  encryptedData:
+    token.sec: AgDCys8AtfM9zAHN+XX7m2nBgfS5d/jg8Z0pOa530nHbOwSXATUsS9vunpKaPFvRyU4oNpwSawfVpsZvHnH5AvaEj58Fp+D3ERWBYcN91nPqVpBGwx/0aFOVGxM9mc7PhbQuEqQCFZjJt2Z4680e/IjXeCrGT5w2JawtM3J8A+Hwqww5ZMGcnD7WAdqtReBWkabnLaA6v+W12DpT+58s1PkagHSyVMbtpl1Qtilw8VYZw+03XI14sfmOZRvuBOnC/3hB2+C9F8j/wqX4dQSCtFZMHFtjWM5zDCb14AmfaK6p+Wazc594SUlcqbUvP7RAHSLjbag8oTqT92g29d9I1SMxeowDKDGyXY2qm6TnlhGAVvaLLFQJHKK9P964a4kZCySOz9bw3r8gc17JbAKLhTBRbaJhxfmBaZZWTMhwrRT+xzllpCsBFMMuruNDyvPhTEELnJ1MhlhpWczvh+2oSfBp4WQ+0tSwfa046UNiihNDMSukTKBYP2+zjFehKkskF7hDz58Qw1utkIhzQYhjzj0xSY6cp+6D/w+74dQDsw4x1DBjxdlzCfeTyECgxDPW/U/PwicoPEqz7posvu0nf4l3zhGrMEzUwL++Ocv4sfq5XkJNj+J2BSvZSUWG+9B7/xX0V0hvz2Wmqtca3yg4BgVoHBT4nKUJTGKqLVCnpPSCBp4qRj8uDZe3WUfuHyFJEhIKmofg6IvS44aL0A4=
+    jyundt-gmail-passwd: AgCg7WMhoGT914WrZyJjgL032M/O6pn8M4AmsCYPBjDJjOCVlZuaJ28i8XTiwZkDrsCyPtSHq6YNVrTcWp72KW5QHdVONrOqzB29PcW3nNFNm2rHbUS0sgz2SdI7I018BLZzgOo7LsMjeCfQbGdbZA+zlVlai2vGv7bwFdQT1qIMMqHF9YrUQi0HYPHV/LO25VJgfAllznAJAI/IVy6lv/5sTFeupjvp4JlmyB5rBGhbgIzSdJkNQMF4rW5n6yWQGPf0W+tVEIpYhPRibQn5oNQ7yduB+O2jilypT/C5aHCojfleUrpIY4t4oLyt5f75Pppe50+qBq6FlZk5axZqFs9RPHTNfglmZ25eafj1L1thOdJyvC0gEnIPUzAm59s5k4q+vg0Q6QDKu2+0tSyQPyLBK0AUjbjVWk/Afhoh4ANu64wPm4gmoTN8xuEDPrWfXia2dSM9iXhSHcjr1thb8huV+dP4Z7sbv2bWRjIPUz6iQLV7Wf7migZiW5SRKLPBlzEAVFUJ0OXaNj8niGEJmKENzJhFUHc4i5nuOt5N73Wpyft23PxMbYxW/G60zwvuAF4TLP1ukyY5EdgalpvA0/lfBEPbXX8jsm1d1fVMrXPYG1/N93zLLMdButXE6CoOBjZ+zVG8bJ5gU3NJgOavu8zs7D6iVNwQrTsfscwqdcFeo7hXYl0ALde2Q2vLL0+8WttRQLm3jwvtvf3FiTWXy4G9
+    jyundt-digitalocean-passwd: AgAwyNPwsMsyk1RJpxQpZTTL8cwZ1/vlmaTOLegHbZ/Pd3BmVJ0LIZEwS/toivWJL9mSDdHuyulVSV9NiBux9Zlq5DN7HzXeAUrH/PcIacA93HM3rcah6XqdxZWTVdpR81CD2HEAWglaUVmKjPe7GNjVm+gXT+zZ/Rnyzo96Nv8vYldNeUAgPHh1Yly0zkSCS/UIqD/dNHWaYLLpLIc3g/jDrwK/HzdlbryuPQPBTjpV+k8wIXI7mU6b5jGXStJso0cnklcyGYTZPS5RWEOM+WrX/vQYI0FJ4raZQCICP2i/ebk52ZuIKFJUHyVm3e38om+lGZATw3MB0NdmfQFQqDcgSQgpY8hYfNRt9x3QQujXeMAmbGkKFnHgqesuV4Pg05tXZwWk52NTGn+ztb2iO2+1ojPXnER3c1dMbWverC2WcIBYMhKbWzamiFffaLR2+XNLolcH6vYQRlMgCFmcuI+rUgB5G7laphXa+lcoFoeQkCxXOZGo8MBk5wtJ7VrDPLXLkXqtEAvyTMiLCUKPlVOOsKOVkl231PjkmeNyJ+77aOes+sbdVRzPlyq9IG7mPmXJHVl30ZbJFGlu9f4YpoGPCfrj0pjw0t83bSqmGaNWF2GWbK9VNBWVaRMZXG3Lzq8NltYbTM+u+gxrB+/Wgp7kd/mKOhRUS1HAIRirvqrzMAJ7Cz1C+kgohd0OMrtENDzs0itkcHTHOlk9PC8p6AUX
+    emily-wolfe-gmail-passwd: AgCMRH5Dsfy0yxkQp89r0Eb+QGXVtaySMOF70Ri0BiH74mIfVf3zdRoslMH4kJIZca+14RyaziVQWP9QJqVesA+Q6sY9CsXnH3WN0I9rymGgflHz4mMKBJ/3eLAtMX73IEUeIM7IdVf5pYClUMpOqqyiltXQe/gVaDbQ3pgDHXx/JNUXdiuFUyMpSRU5ZszDh2rBHoDhj+LH6mVRTGs8+uOplryAumOEcqTFSIP0/3FSI42CQDuOK6h3lp259YK6j8rSfe2DC3E3ao8hy3ySCzTbYrBhuokyHX6eqx4ypx7DZnxu6vNjx9ktKq1hcP4RwErcB4csCSe8gIW/h4rvg2TB4R7/yU6noZF9fUaFFl746KxfImA+U4PhGLonCd6geMT7fPQjAascManHbGspuPVb5PYQr2r2Esl2MpBFOFZ6+7ScqhFQGLW7Zf3BK9/fI6STZQ9CFZI4d2+vxi+9fWNPuJjYptQa3a0XEfPkrPL4U2+6YDG3HbMmhpMiatU696PDB3hC1mm7ApeAimf3pg7yQP5LXPUUykBaLqc8VyODdgy89errdF4m8cln4SO05LRuWO4xdNPHeBP5BsaqMiJQCwxG3gs9Mih8ck8u32km//VR172xNpmnEmH4oSyyZz08rvJ9vTsE2Ew3pDmRrywQAY0jpegXL6Yu7YF2pfO3n9s9pq53EBSjE/BfuIyumV5biix1wvmo5m2GE6eQIAVw
+  template:
+    metadata:
+      name: gmvault
+      namespace: default
+    type: Opaque
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gmvault
+  namespace: default
+  labels:
+    name: gmvault
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/backups/mail/gmail
+    server: callisto.kiski.co
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gmvault
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: gmvault
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: gmvault
+  namespace: default
+spec:
+  schedule: "00 4 * * * "
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 7
+  failedJobsHistoryLimit: 7
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: gmvault-jyundt-gmail
+            image: jyundt/gmvault
+            args:
+            - sync
+            - -p
+            - -d
+            - "/opt/gmvault/data/jyundt@gmail.com"
+            - "jyundt@gmail.com"
+            volumeMounts:
+            - name: gmvault-home
+              mountPath: /opt/gmvault
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/token.sec"
+              subPath: token.sec
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/jyundt@gmail.com.passwd"
+              subPath: jyundt-gmail-passwd
+            - name: gmvault-data
+              mountPath: /opt/gmvault/data
+            env:
+            - name: GMVAULT_DIR
+              value: /opt/gmvault
+            - name: HOME
+              value: /opt/gmvault
+          - name: gmvault-jyundt-digitalocean
+            image: jyundt/gmvault
+            args:
+            - sync
+            - -p
+            - -d
+            - "/opt/gmvault/data/jyundt@digitalocean.com"
+            - "jyundt@digitalocean.com"
+            volumeMounts:
+            - name: gmvault-home
+              mountPath: /opt/gmvault
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/token.sec"
+              subPath: token.sec
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/jyundt@digitalocean.com.passwd"
+              subPath: jyundt-digitalocean-passwd
+            - name: gmvault-data
+              mountPath: /opt/gmvault/data
+            env:
+            - name: GMVAULT_DIR
+              value: /opt/gmvault
+            - name: HOME
+              value: /opt/gmvault
+          - name: gmvault-emily-wolfe-gmail
+            image: jyundt/gmvault
+            args:
+            - sync
+            - -p
+            - -d
+            - "/opt/gmvault/data/emily.wolfe@gmail.com"
+            - "emily.wolfe@gmail.com"
+            volumeMounts:
+            - name: gmvault-home
+              mountPath: /opt/gmvault
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/token.sec"
+              subPath: token.sec
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/emily.wolfe@gmail.com.passwd"
+              subPath: emily-wolfe-gmail-passwd
+            - name: gmvault-data
+              mountPath: /opt/gmvault/data
+            env:
+            - name: GMVAULT_DIR
+              value: /opt/gmvault
+            - name: HOME
+              value: /opt/gmvault
+          volumes:
+          - name: gmvault-home
+            emptyDir:
+              medium: Memory
+          - name: gmvault-secrets
+            secret:
+              secretName: gmvault
+          - name: gmvault-data
+            persistentVolumeClaim:
+              claimName: gmvault
+          restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 2004
+            runAsGroup: 2000

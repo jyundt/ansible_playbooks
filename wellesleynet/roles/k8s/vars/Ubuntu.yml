@@ -1,0 +1,6 @@
+---
+k8s_packages:
+  - kubeadm={{ k8s_version }}-00
+  - kubectl={{ k8s_version }}-00
+  - kubelet={{ k8s_version }}-00
+  - nfs-common

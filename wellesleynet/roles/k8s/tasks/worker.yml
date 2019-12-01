@@ -1,0 +1,79 @@
+---
+# Oh yeah, this couldn't definitely be DRY-ed out from master.
+
+# We need to run this on a master
+- name: Gather list of nodes in cluster
+  command: kubectl get nodes --kubeconfig /etc/kubernetes/admin.conf --no-headers
+  delegate_to: "{{ groups['configured_master'] | first }}"
+  changed_when: false
+  failed_when: false
+  register: kubectl_output
+
+- name: Derive list of master nodes according to kubectl
+  set_fact:
+    kubectl_worker: "{{ kubectl_output.stdout | regex_findall('^(\\w+)\\s+\\w+\\s+(?:worker|master)', '\\1') }}"
+  when: kubectl_output.rc == 0
+
+# add_host is similar to run_once, it only executes once on one host.
+# Because of that, we'll loop through hosts in the worker group
+- name: Build list of configured worker nodes
+  add_host:
+    name: "{{ item }}"
+    groups: configured_worker
+  when: item in hostvars[item]['kubectl_worker'] | default([])
+  with_items: "{{ groups['worker'] }}"
+  changed_when: False
+
+# Block of tasks to skip if all worker nodes are configured
+- name: Join unconfigured worker nodes to cluster
+  block:
+  - name: Generate a join token
+    command: kubeadm token create --print-join-command
+    register: kubeadm_join_token_output
+    run_once: true
+    delegate_to: "{{ groups['configured_master'] | first }}"
+
+  - name: Join unconfigured worker to cluster
+    command: "{{ kubeadm_join_token_output.stdout }}"
+    when: "'configured_worker' not in group_names"
+
+  - name: Apply worker label
+    command: " kubectl --kubeconfig /etc/kubernetes/admin.conf label node {{ inventory_hostname }} node-role.kubernetes.io/worker=worker"
+    delegate_to: "{{ groups['configured_master'] | first }}"
+    when: "'configured_worker' not in group_names"
+  when: groups['configured_worker'] | default([]) | difference(groups['master']) != groups['worker'] | difference(groups['master'])
+
+# Cleanup taints on hybrid master/worker nodes
+- name: Check taints for hybrid master/worker
+  command: "kubectl describe node {{ inventory_hostname }} --kubeconfig /etc/kubernetes/admin.conf"
+  delegate_to: "{{ groups['configured_master'] | first }}"
+  register: kubectl_output
+  changed_when: False
+  when:
+    - "'worker' in group_names"
+    - "'master' in group_names"
+
+- name: Untaint hybrid master/worker nodes
+  command: "kubectl taint node {{ inventory_hostname }} node-role.kubernetes.io/master- --kubeconfig /etc/kubernetes/admin.conf"
+  delegate_to: "{{ groups['configured_master'] | first }}"
+  when:
+    - "'worker' in group_names"
+    - "'master' in group_names"
+    - kubectl_output.stdout | regex_search('node-role.kubernetes.io/master:NoSchedule')
+
+# We need usbutils to identify our zwave/zigbee dongle
+- name: Install usbutils
+  package:
+    name: usbutils
+    state: present
+
+# USB information used to determine which labels to apply to workers
+- name: Capture USB information
+  command: lsusb
+  register: lsusb_out
+  changed_when: False
+
+# Our zwave/zigbee dongle has a USB ID of 10c4:8a2a
+- name: Apply zwave dongle label
+  command: "kubectl label nodes {{ inventory_hostname }} has_zwave_dongle=true --kubeconfig /etc/kubernetes/admin.conf"
+  when: "'10c4:8a2a' in lsusb_out.stdout"

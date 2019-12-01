@@ -1,0 +1,145 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: rclone
+  namespace: default
+spec:
+  encryptedData:
+    RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_CLIENT_ID: AgCU6j9U/QwKnL2/5GPEYDbUFYEf/GFreqPcfsXxgrMVnEVPGMwsc7wMlnny5Qfbf1IyKS80mJm38v+y/emgIsK7vBWBR/1lijfLQAEVGxLSCTVTq1eOVucPEB4TF0dqDowD/YX1JbuOMx7PFlvJzc1sftKYInNPhc6B6jP3CxuKHPNLvlOZVf2N9kTecNF5ydeqvS4r6O6nBLY/3YGl7PMvnRU8SmYVPrk+p3sD82FvFsCFfq3Xa3pHZPrm05F61E1Rnt2P63YHPV9Oy+wWWsJ4GW/Z7ARbAT6Bc/oAL3ZKHemUo1o7XfEoSWS9ZSuuXZS32fCgP7QfedRSbAuHa7xsOPb/3zzX5h2MEFNSJlpeF1qIKZSB77aX07Gq8MudO3ct6FBq1eVt6AJLvYK9nIK/NMNSZfqu4p57sfOjSlPDQt6Go4cRKfUSMiAKrFAShepJVb/VgX0NHnPfXw98ATNxRNLhzCFVJCVPGGFDaaNfOl+OuC1v015FbEem7/QFznix2nAtXUArc8HdRhQrYzQjs7HATByztbVGFeqn+D99NEzV/To+Fof9NEvM3O9X0Ax4mLOJPTlhDoVMTfNI9JFcf6OeF8R52HDKOAyJVkLbo55JOf4G7sOvVnhxvAxDgdxpIN5OqHJiB3eiDpC8f4dtKcINOztOSKCuvPNhtudMsw2866fmUsE4ziPBYEPb7llaDEqroubgztu+7vPLLBbl4iJeJKkAkZhiEDOCw4WXT/j09JMlMZtILQhI28tIKmKc3RZ77bDvF42aw1mko5NTTrqxTKKyD5I=
+    RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_CLIENT_SECRET: AgAA9hKN0yATMcNn1BKlmM8Z5vE+efUXIj0+BfJG5UiZkERRshcnmNOaLnRS/LI+GaE3gBurYU2+bczhWID31fcQ42e2rGrzJ+B34h87OQW6LYa1t8HrV5rvvdfC5uqNeWCIW547a5vdn47s00FVx0k6/imxKIE1Q9zjQiu+t4Kmfm/4ncV50JIMKSP+reNHSyyvUbz802aclnTOhayZYANlE36uOn95MalTELzhmXDjWlAAhimW0cIsH1FycReij1WlVGBEHF+bh4MPV5Cfl9Q0f2ALH0YhV00HK9SVNVVieqBJRjHRVlDlGOIcVILHE8fFN4dW8sZxUR5On14iK12MUXW8DifkzE/tui+YTk7PBoVed/U1od/8YX/xqxs6OQmalE0IUWvCNpVBm/85ubrvlo4AcnLGTrhU6oMJzNBdJdtnSb2WsIvL2XAeeftBXQg9pA2pRQESlXLrloh6Dg8xQQpfHA1tGeO3S79SviHfrvytOYvqldQ1XVv8Mt2Px6nwI7f+xKPjraOgf6dQOPRFyXbRWICUEPJknI96+RniZQkplbPNme5gJTo4fma1I6A8k8ytfu0cG9OVIAZD1rR6L/g3LZWGqiuNF/9pcUV8i8zZsm8MHZgKo0zlZGrsjzUecOJOpDSX1ZoA/2nU3AR7qik4++nQSXJNjbmzWqFgHAPbQkJq3VQv5ESc/IyjhDipMkfCq9mCv6mRbVNV6gtDQ9tqJtx6kwY=
+    RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_TOKEN: AgCAFVR+wX2zF7zDsNLCEzTqmpBlTqFZZDxOb69ZQqkyQ1PP/rfLACOlmPHHOjJiaW4+UsS628ojLO/m+KPsNy2P3mOXCvFyUZAf2MMl0x9zPwlP7PcqrvgUbTplj1nZ7oWFDcMLwlebPOqbG0kXSgdPNoFXp060sKeG/Ja2TlnSohE8h/RCDISt/CqCZKMwjSfpD6GM1L44CNKtr9P74VDOPQoPJT9QT6Wc6H++UugO/3hfowDOmBrWvBEBKQxcGENtYk25A6a3x+ClB6/zeRRweU00ksh4vyQ4Uvf7mVq8rr1/cNYM3a0nvigcHAsOxwPyn5PgpNppT1c3942G54/hJzaBINpy+Cz4V7gvOxkVg8DGqV4fpqDJLIH+IEOt+Kq18W/ARBxoO2SGcnay0UQcykEa++JaiaqN426IcZYEqimu4p8oFAp2vZO45XBKxUmq9ZITP+fn4BhEPlQ50mPfk5sEAXAwibNMxX9vroAYTEjlqzuIpOglI/GKGeJiJRAQzK+At2DoshSZZxs6tJm2bvIv+XldeJEsQHpUGVwJ549kDCB3/pNPSIM0tjYLavfUJv8WZgQULSCWyPjE9dt+xsHDHbiRjd6eUaEIG65SZkSCdb8yVpSSf9O4uevrpWgNFehBjdc1V8ndHWyQa9Onj7uV6i6YHGUDYOKNuL20hgAo3fOIwezdpeCc3xJkwQ0dUNLwpak/3FM60lfxxoNkRuBMTieuyjor9y2wYjHIrjVH9JJOkkQZxEtYG2QMIy/ROlS+KmtRKQAuDWVoFHuOpezjqRoEGTVAKd9vDZo/H5tFZTzmqx3RDyyGVV95hIg+KiS38h/z5EY9uw4XZ8x+slsW6HQ/DipgbP5m98oqKtDVzQrOOOdt0niZUx+/9noUXtp5CdZd9yJM0ZPTnMjvcaJ02/X0Iv7Sr4ihUuNil1/xxIYMkbLLWThYKJGxVQf+HibGTxY9DHrAN3TZZYW2pz+mUD59D7wZZqF6VU1YszwcHtQfJEPB7yRqugvr64tSn5CEUyJH3KcYffnZ7nT+uz2bbpJDNDK9k89C/znkww7bnk7lJ1jwyyo2fPwXfQ==
+    RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_TYPE: AgBMhG2gx3ZhXfntzpDXx0jtxzu2NdB4izDH3JQS44hzhsbpSOo1wcUsZCcq6emakxSwyM4b0NdXz2PuMH3cqQmD498caPyvyx7X/8A2CS0hNg12eNF4JtDq8czOOQrsy1IEVXohsdG2Oj4uw8dAe7HuFHvC7UY+nO99WRd4NpsFYEFXGVAkNv3lyAtBxqxMBeDbQd5Soc7E+vddzpPBQEfd9B0kHR5mKvpBrSqdV+HsIpn7lKXtCCDoKrJhCRwgmx1U9FLO2xpSCe3bVmTDSJcaS8cF3xwN0WYQHUOTeRhU1g2Gkh3Mh9klbEQ9EeyoTfru405Ra79Uz29jRyb6TWm2co+o0JtorqIb2c833cHN0duWByG6HKX0QI/zpraFd6UFGhmQNnfpKBLPawC/hVF7HT/NtDPyw1pjqu50oZU69tUVbgCNecASBxyAMlY69Ixl6v7jW3Dd3xUv6aikR4pMPHCprDqBRR3SdIQYuZyz7sXehKUIPVpJtBh1ue51IYujEuOKGBPrkdxN4ZoNkw2vRdsjPklkuI6rQdyc1NaniyFgzoc4qah6LAL/FC1GGVhYQAw+OsWe9WejOAogRRZOVU8VFY7i7addVHdyihCpvA5GFKIGwLIRb1u1nuDiZy35k2hoEXt26xRg2nsPn8wmML34QO3BJdbnFjnBq7jO775SSfQ5D2Te2D5CDUuvrL7Czg4WZg==
+    RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_CLIENT_ID: AgCdUHvkT4aNZA+VjoiAVjSNXJilvEdLWrsfSvCWIbF1WjpCXAZb5QPWK8iTaihHxVe6mz7qWMpR7Wt+VlMJ9vbPMP5gHOG7HIMtexsFRje6lV/eqqkGLjbS5UiV2EIGrOAh3AxT2bOJrJ5P3l5ACc++TFdiF97+WieaJdgzh5WyaBPu9oA45c2gDFzXQtak419vtI7ZBGkHjlGkS2klzMisXNRqEpyBcasC4kWhZgw7kK4pMxpxYV+kGHgTTkKdDtQY1H6vHhW2NvSCczjUlEqFgP4mj9DHkDk6Qoe1nKx5vA4P521YvdKwUGVX3IaF5ocC2XP2os4crXZa9CBuJvuOImB0HJE94eGzDrI8F2utku+jsZBq0loUeH8FndXgWBUaLJ5cZbtXAQwh2Lxj6xS6W2Jq+TgW+CFX8lrfxhXNVvzbPQCvtvoZuYnRYbvYIT2CUDF/1GdX1dU7yc66HGTdPL8dshpdUPWPnQ2byBgs+xcIY08Z7UchgGecKO8kHGLjXTp/aHtoD1vSX88kVWNwrcsja7BxthFtb6q+Uo6rb82EApnmoFzt4bTq98St8WcmSy/yFA4YMR4Ngf0292/NLMvyOas3tQMlsJaCSwzlotsjctemAIYMu3ghOG6nV2CzYtWSNEc2ec70J9aMxLNi3BEbL5cHPiaLN3mMUVmcCEEM0GeYkcYW8pHh6biJLbuur1saAlgRDJ11ceeZp4XahW7RKg1GWbiTS62P72tk4wVXCYOxft1AlTLDPINpAMKxJSfUGYNXMG5yVeDZpuX+FqDDuRdGjYM=
+    RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_CLIENT_SECRET: AgBRXOf3t95f/JDy1pUE6XuTrLyDDp7HRXY9gBx6/6JtUWEiUFOWCyC0l4DA4G0P8YIMrhYGuiyJlE1ev69SGsdwPH0hmCNAhHFg1rP0bLaFGJB1GbZLmaJ4AnFu5yBlOHRzsQhgoo+RFDpgxtrcfrZopEjHqakXqgXH6iJ6gzCjiTrbTXsw2tZNgpA75WpxtPGsflA7rXpk2RL2tRcci13ATQzf39GfWoh8QW1KOH/JryCAD0AohLUc02741hs7ZymujEPCd9yR0oiYZ6JNtjpKatC1K9PacZ0+bculZe6WtfPMIklW9fHatXFIlwocIErCMixVs6GusserNd8MhZlMq7kjDzBng1gSLQhRfbRYlFSONuP2SrpWcUmpBrZPSttreuRTA++nD5iecWj+s9iHrsC77Qz459psLb3EBTGvWQfvIuljTiGt38u5IYw5TJsa9Ld5m//7HAzzDKIQEbdfdfCycymyVPdzQQMiKGFZkHQX++azqwk4DiFLYHlbSULuP1dpsF+YuDJmzlyF7aPgXOjgAYtWPs2OC+FpsOSOqDfysnM5S8PCOGafwfiBv9GKSTRxvS8zj2FC3k4blS934vJyfJpmiSR4NuxNcSJODqNEs88E6WcY+VOmTRSBpKEHaBuo3PWhvJR0SEf5oL4AYA5Ww0MONu9sqz296i5zuwXTXCkStL1EjuhKraVSE05DrfphvUDiw8DLoFRsOFH/7MhYeigTv6w=
+    RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_TOKEN: AgComKyZ5mANOO2dC4ojQxbZ0eHwbNU0Tke6dDHBPazqlDCyIDDf3kFd9WH6tQiTFb0yrKNAVFHtqLSnGCqU1oJEw0psyGBS2oGHdsvj0NT1KSnEQYrNS+d7b4Jv8OQVepyYyvNHc+15qkhS4x5/k/XtaIDsTFOatIF3pM/FCqRD3sMrYtpeNeYLIeaaN2QM9mXe9L/hW2KryEjZCiZTPp8y1AFdHp/8d2gIgx+WGzCHMqXPKBVDgk2ex5Rb90v9tKRSRI7Hcd3XB62nDo2uGzPk1u+zc6NBQjT2YOVVzyL7R48/kLfCRe5+F/6RQPJn4MKANdIRd69lJOakY6Ju8C+bbi8vcMlcHlmomglHt9TfG3ujXxoKbyk6d0/GS5WgmfJkURL/gQt7JeMVuz4FP7xNbNO1A12MxkbTwIPnYmk+oCjtgKdIL0sMmerooLCqGakL+sHeFKWOQu6yBlrGNjp61xLxcIeNJGsvkG6C/NhfzOjsCuurVZ7mxzshPl2Q5G+CIQSWInFDwyT2867SOo5K2MeRuYXLZZ7uN+Dr4wiX6+vo4Fm9CvBBQ6g2hpqSAIIb1uflUmuWQrtK38UeNUqrxwuD5QV+ILWjeZY5LuorSS5JRJjeS6/czTk11dIzL6hP431utuFT04fbx2zgXFamEuczijWL13kDD2ChvLSNou1lNj1WSqc0ZtLDV/HI9b6wl3p5/50UcKNmjKoVtzlN/faRf4t1iD0Vr4GtwtYSFtf7y3SAHLUEWIkz59UtfyMZXMW7n46LQXDzc6vxR2cBopraTo7eigdD7MAsfx0SfcV4kiguSM+RBgyfbllIBr1acmWoGZKqozRBu8QlZMnJB9/l2pEu+0AToIhqo0IRyuKA8C1hlWqJm7lLthwwl5CrIJsq1SAtd7i0yPRw6k3lrmlA3TmkL5tMttyeFtH9UQvvdOJdfamkwmCyBNbOLA3tbpShYgFEsFcIDIUA+EkWJrjE9Rccnlf1zfqdjqD9jxfzFrW86NM8vjSyDUXdcCs/Ju/6i3RL6grnGhLRxYu0wbp7Usjubq+oz5qTA4Smrx5zgy2odtFdKEaQ20+Y
+    RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_TYPE: AgBfaVEqbJDi1xAfm6theDEd94vPg0HV6Ecl1fJVgF45QXF4U7uXlvsbbODvTrIFBLLVsBkJrNBOlFaLwVf+/hN4hGuIkvkkAdsR2La0ZbOnjfwEZn91NT4eB2Ri3g3gdMhiCoMrKD/1uQu4tfRwALUQDmTfipsMUH60I9O3lUhhV7w0cQaFfER/uVspJoyGlKYFeS4kYwMPLVKTBoMCcXnWGjsKTIx0u0p1HK3JKbwn/z/JdbwO9fpGzkwGvS+cCVl/ewF3CmQ1msdeYAD/NQmvhcpvaoQPmzrbD4efYAJLZQ220ZqgmsmV6W3kAgMD9/Pbs2UdGJcZIXBtG81/BRyaPba1F0NPcNAfPHrz+POA+6y0h1qbx5q73NUHISUveovRPf+pmV1D6rkD3SAUHI1GQA2iYPeXE56fIeYGt3MQpI6A29la1ZHf5o58f25lx/N3XsCx+gJDUYu+yGEG3HUnRX5Q6U0rM085sNTGQBurs7beDLw+PjIa/mO2Ivi+D6vkZsGRZqbpi+U4hG2ir7OSTjdklnSQ/HJVTr0bIdQsDIjrq7gYA+z4zfBrCp35gIVyUui9rwx4ATKxh+sUJJLnNJ7u67VM/4twaWG275pukh4eG0dPpn0zgJX2O65gruFGT3ekPBb7FeHfpG2vvmxSCGkuNlPn9DJypVlmFuOZnSrdTxSmO1oveRaN72i6/ycW2t1/Kg==
+  template:
+    metadata:
+      name: rclone
+      namespace: default
+    type: Opaque
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rclone
+  namespace: default
+  labels:
+    name: rclone
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/backups/cloud
+    server: callisto.kiski.co
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rclone
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: rclone
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: rclone
+  namespace: default
+spec:
+  schedule: "00 5 * * * "
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 7
+  failedJobsHistoryLimit: 7
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: rclone-jyundt-gmail
+            image: rclone/rclone:1.50.2
+            args:
+            - sync
+            - "jyundt_gmail_gdrive:/"
+            - "/mnt/rclone/jyundt_gmail_gdrive"
+            volumeMounts:
+            - name: rclone
+              mountPath: /mnt/rclone
+            env:
+            - name: RCLONE_DRIVE_CHUNK_SIZE
+              value: "256M"
+            - name: RCLONE_DRIVE_ALTERNATE_EXPORT
+              value: "True"
+            - name: RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: rclone
+                  key: RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_CLIENT_SECRET
+            - name: RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: rclone
+                  key: RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_TYPE
+            - name: RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: rclone
+                  key: RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_TOKEN
+            - name: RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: rclone
+                  key: RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_CLIENT_ID
+          - name: rclone-jyundt-digitalocean
+            image: rclone/rclone:1.50.2
+            args:
+            - sync
+            - "jyundt_digitalocean_gdrive:/"
+            - "/mnt/rclone/jyundt_digitalocean_gdrive"
+            volumeMounts:
+            - name: rclone
+              mountPath: /mnt/rclone
+            env:
+            - name: RCLONE_DRIVE_CHUNK_SIZE
+              value: "256M"
+            - name: RCLONE_DRIVE_ALTERNATE_EXPORT
+              value: "True"
+            - name: RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: rclone
+                  key: RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_CLIENT_SECRET
+            - name: RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: rclone
+                  key: RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_TYPE
+            - name: RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: rclone
+                  key: RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_TOKEN
+            - name: RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: rclone
+                  key: RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_CLIENT_ID
+          volumes:
+            - name: rclone
+              persistentVolumeClaim:
+                claimName: rclone
+          restartPolicy: OnFailure

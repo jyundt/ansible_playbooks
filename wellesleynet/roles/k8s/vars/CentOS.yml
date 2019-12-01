@@ -1,0 +1,7 @@
+---
+k8s_packages:
+  - kubeadm-{{ k8s_version }}
+  - kubectl-{{ k8s_version }}
+  - kubelet-{{ k8s_version }}
+  - nfs-utils
+  - python2-openshift

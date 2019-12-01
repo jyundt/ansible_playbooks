@@ -1,0 +1,18 @@
+---
+k8s_rpm_keys:
+  - https://packages.cloud.google.com/yum/doc/yum-key.gpg
+  - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+k8s_apt_key: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+k8s_vrrp_vip: 192.168.67.200
+# The VIP should point to this k8s DNS entry
+k8s_api_address: k8s.kiski.co
+k8s_api_port: 6443
+k8s_kmod_deps:
+  - overlay
+  - br_netfilter
+k8s_version: 1.16.3
+k8s_sysctl_file: /etc/sysctl.d/99-k8s.conf
+k8s_sysctl:
+  net.bridge.bridge-nf-call-iptables: 1
+  net.bridge.bridge-nf-call-ip6tables: 1
+k8s_metallb_ip_range: "192.168.200.0/24"

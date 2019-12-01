@@ -1,0 +1,26 @@
+---
+# There are two?
+- name: Add kubernetes rpm GPG keys
+  rpm_key:
+    state: present
+    key: "{{ item }}"
+  with_items: "{{ k8s_rpm_keys }}"
+
+- name: Add kubernetes yum repo
+  yum_repository:
+    name: "kubernetes"
+    file: "kubernetes"
+    description: "Kubernetes"
+    baseurl: "https://packages.cloud.google.com/yum/repos/kubernetes-el{{ ansible_distribution_major_version }}-{{ ansible_architecture }}"
+    gpgcheck: true
+    repo_gpgcheck: true
+    enabled: true
+    gpgkey: "{{ k8s_rpm_keys | join(' ') }}"
+
+- name: Install kubernetes packages
+  yum:
+    name: "{{ k8s_packages }}"
+    update_cache: yes
+    allow_downgrade: yes
+    state: present
+  notify: Restart kubelet

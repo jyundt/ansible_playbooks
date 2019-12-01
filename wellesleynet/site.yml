@@ -11,3 +11,4 @@
 - import_playbook: filebrowser.yml
 - import_playbook: zfs.yml
 - import_playbook: clevis.yml
+- import_playbook: k8s.yml

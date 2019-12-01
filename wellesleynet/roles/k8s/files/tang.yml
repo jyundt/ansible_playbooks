@@ -1,0 +1,76 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: tang
+  namespace: default
+spec:
+  encryptedData:
+    exc.jwk: AgBqHaliD5apj0CqpES1DmSMCu/APznblhno4iudZdUMcjPeyHEpQROc0T1KA6f1n0AyrNKp8OloYhJ4n6X/szvA0nfk7O+OgkuOJO+SB8pxAnjksxUCqpakzgwhbK0NeDIS8VZji0l7hYG6+usgjK8DcH5LPHIctkxMLlEpPfDya+A7pBDEfaZgcSgyVuQfjXV1epI9BlAqo0WouY7FhC/g1OjQe44H5CUe7yXSDgIRQ37CqWao9nE1isoXnZT1ErJrzSed1iNx9k/D64zqIpn5eURKo4rvtltugBXongPdFB9zXuBVXFISo1SoINNOKl7+SzHf7CRN+CGMiclGrLu9Pf10U54PLTojvXfbr+c8vkEu3V1ZWy7K5A6PAbCEYvqT1kGNzd5dYt2EuE/l78m57R2TeG/K7ZjJFRAuOB0PKfgexpnii+Lhx4g0oo8BeBQF5ZVB/H3XxUKWvM8LE6U1wnaH4dkXUY5ifVVQKYy7sWQnmT4QNeJevjG2bxE23ivoFUR5K2rl2VBvQUfIK2MiW8vwkQpGRjNqrFt/6lkiMA/hbFI9j18n+mDPIj54xEwbZejlzUNLb4BfwLeriNxg+yt+IVpQ2K7GFYkRXjY0CWjjLqo6Pm95c2jDffZHRVDlF5wFEeDpU1vJNqMuuyFkOGSuJiNXA4z8atddmXKVj7wzcC2zZ7KBhexS5uAb+yy2oFUHBet5C3x+OG6pqaHqxujEonjyZRjFIsK/GpGWviddQnteyvZ5eGTArcM6Iuebjv/h99qKssARsz7rh0GZYBGjEX+O5zqd/QF3qSjbuCuktFVIyP49zG5fZ26lHhnqATmhqBInUCcjSS/q0rtB4qgpeSxz+cz6/MPizPSr481Gg7GSzMD32qBp6H4741KzM2nCoFudHFfG7/W0b/+FcyyYBgnDilvcI0PaCjdACbcliZMjH8peRQJFKrxo5p02tL+F/B/g7evT6/c6KXz39NvaexYt2biRIcdQdsV2UG/SyK2y5NKUUyvZLbyQtZrznU2gKhgudCkQe8KQlfmsZVdQElEm/Pj6PKnZV8HkPqnTlgP2Jo8BuIVdoZ6qmC69Fu70cyCw+kMb/SnUxw1TtA3dHJ0fY3KjgCnqzKR7Z/0EEcozWYQZiLHQzuk1UWm8qq4WnM+B6L2fmVWn
+    sig.jwk: AgAck0bN20ES7BvmQOUIuQVOJyo7F0dH+owirprRFcxvO/RGpq3r8/eoGIwwTLTCfTx/Lcsw4q9+4zLyH4hM9okHTf4AVSNBaJtTkRIvxeoy5q4CzB9tymDnoWssC2uWxSzYMSkoCPrMeczOrVXdjp4Qiw+ltO0IHHOaqQZOhHZG91b+X4iU5sV++0wXV8HFx4UVckFl4BJfeJtWAWTQIFThdm9nB2xydBz9lMPCkgJF44z1zsnwtliRY7Hnmvxq2NIaWb6H/TrQAxW4MleeRz1UM0lBiOrPLZdfXsgvb97vj5OuIGkazDl2ntPpa5EYSdpyceLAv2r3HfT5ZIHTd6+OaKdUc97deoDb688g3i1flnVxVUr8Xu3xtJHFTa/Ay3yjyawqgtuDYD3M9aD0zEenPnGSaWniggE2mk9nUVvAQFByoSWD4Rp2l30MEtEA6qEmrX8rmhjJW3yaTo655EFca4a8icFMqYTsCVCHjTPiJS/+A7w4UCHo5Sj/zEsLxjNeZVyAzySoYn7ru3KFQ7lPcAkJ7j7Oro0MMtguSTcW9Hw9UyOCsEVl5s5NDH3mqN+dvKmTWD22Jn0gF2/Suj1tosQNLuRBvvWFZ1RpQTn34pmhJs1zJyG8lVjdeJXuJvJZn9CDBA7V3ddRxK76ewqw7bZ10XKeWZD1dJcrmjux5wx19dxfjBTZgEidFgWrkxsmSFuZHejKX4udOhMefIsLGM//PTy1AMIgDw09anAgKMdPpQ1KQZy+JzWb/b3BE0cRsqvvrWBQm4kCK2o7joomY+zcK4NQDv1SpfpqRKXmwM5qR0Ebn4A1PAm27sz3dC/1dFo/F/gdyIv+NSTkiX8cR+xD3SA1DqG+FpoEB9/SU5qPAT6urMivnRHSNw5SbYwKBdjqzRtlBAC61s5t0z4JBtQl80mSxfXJOkcrDCwGvFHrfzWAI7UFwT+MYYoDE/m4CRs3d3EgddJjr/IZbldtjaK20Yv9m1yaIwZjyvGPUnP1YtVj0wNjEI5pBN10wOADZVqUuMRzEIEu9nh7m0G1NoN8L44K1rIgS8t0nlcV9VqlYu5CZRzA+3pizH618sqvGasvHmlNBuK9KaVt5mc0pe1+VaEo7IhQIgzblqzFjqf+Kino18aTVQ0Tj8ZFJjPgS0RnlFNgpDXMEoEosDRZNXo=
+  template:
+    metadata:
+      name: tang
+      namespace: default
+    type: Opaque
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tang
+  name: tang
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tang
+  template:
+    metadata:
+      labels:
+        app: tang
+    spec:
+      containers:
+      # I didn't fork this, and I don't want to risk running :latest
+      - image: docker.io/malaiwah/tang@sha256:6c0f8d11ad4568d9dfb2602221da31920006fe9b7d07a5ed1570b391e96bae26
+        imagePullPolicy: Always
+        name: tang
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: tang
+          mountPath: /var/db/tang
+          readOnly: true
+      volumes:
+      - name: tang
+        secret:
+          secretName: tang
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tang
+  namespace: default
+  labels:
+    app: tang
+spec:
+  selector:
+    app: tang
+  ports:
+  - protocol: TCP
+    port: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: tang
+  namespace: default
+spec:
+  rules:
+  - host: tang.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: tang
+          servicePort: 80

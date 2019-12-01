@@ -1,0 +1,163 @@
+---
+# Get VRRP / keepalived installed
+# (We'll use VRRP for our k8s VIP.)
+# Yes, I recognize that k8s _could_ manage this, but I'd prefer to keep it
+# simple and external to k8s.
+
+# Worth noting, Keepalive strongly recommends using the same keepalived
+# version for all nodes participating in the some VRRP vip.
+# I'm going to #yolo a bit with the package module and hope that I don't
+# forget about this and mix distros.
+
+- name: Install keepalived
+  package:
+    name: keepalived
+    state: present
+    update_cache: True
+  notify: "Restart keepalived"
+
+- name: Copy keepalived config
+  template:
+    dest: "/etc/keepalived/keepalived.conf"
+    src: "keepalived.conf.j2"
+    owner: root
+    group: root
+    mode: 0644
+  notify: "Restart keepalived"
+
+- name: Start/enable keepalived
+  service:
+    name: keepalived
+    enabled: True
+    state: started
+
+# Ok, this is going to be tricky, we need to find a way to determine if a
+# cluster exists on any of the masters before we run init.
+# If we have one, let's use that as our master master and generate join tokens
+# from that node.
+# If we don't have any nodes in a cluster, let's assume we do _not_ have an
+# existing cluster, pick a new master master node and bootstrap from that.
+
+# There are probably better ways to determine if a prior cluster exists, I'm
+# going to list nodes in the cluster and compare to our inventory. If either
+# the kubectl command fails or we aren't listed as a master, then join the
+# cluster. If there are _zero_ nodes in the cluster, select one node to be the
+# "master master" and run kubeadm init on it. After that, join the remaining
+# master nodes.
+# There are probably a gazillion better ways to check for cluter health,
+# like looking at /etc/kubernetes/pki, /etc/kubernetes/admin.conf, etc. but
+# I'm lazy and this works for now™.
+
+# Set failed_when: False in case we are on a non init-ed cluster.
+- name: Gather list of nodes in cluster
+  command: kubectl get nodes --kubeconfig /etc/kubernetes/admin.conf --no-headers
+  changed_when: false
+  failed_when: false
+  register: kubectl_output
+
+- name: Derive list of master nodes according to kubectl
+  set_fact:
+    kubectl_master: "{{ kubectl_output.stdout | regex_findall('^(\\w+)\\s+\\w+\\s+master', '\\1') }}"
+  when: kubectl_output.rc == 0
+
+# add_host is similar to run_once, it only executes once on one host.
+# Because of that, we'll loop through hosts in the master group
+- name: Build list of configured master nodes
+  add_host:
+    name: "{{ item }}"
+    groups: configured_master
+  when:
+    - hostvars[item]['kubectl_output']['rc'] == 0
+    - item in hostvars[item]['kubectl_master'] | default([])
+  with_items: "{{ groups['master'] }}"
+  changed_when: False
+
+# Only init a (seemingly) unconfigured cluster if we manually set an extra
+# run time variable: k8s_init_cluster
+# (This is probably unnecessary, but I want to avoid an oops where some k8s
+# service is down and the cluster is accidentaly re init-ed)
+
+- name: Ensure we really want to init an unconfigured cluster
+  assert:
+    that:
+      - k8s_init_cluster | default(False)
+    fail_msg: "Error, unconfigured cluster detected and k8s_init_cluster not set to True"
+    success_msg: "k8s_init_cluster detected for unconfigured cluster"
+  when: "'configured_master' not in groups"
+  run_once: True
+
+
+# Logic to init a cluster, let's wrap in a block
+- name: init an unconfigured kubernetes cluster
+  block:
+  - name: Copy kubeadm-config.yaml
+    template:
+      dest: /root/kubeadm-config.yaml
+      src: kubeadm-config.yaml.j2
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: Create new cluster on initial master
+    command: kubeadm init --config /root/kubeadm-config.yaml --upload-certs
+
+  - name: Cleanup kubeadm-config.yaml
+    file:
+      name: /root/kubeadm-config.yaml
+      state: absent
+
+  # Weird observation, we need this task at the end of the block, otherwise
+  # the conditional to check for 'configured_master in groups' will start to
+  # pass and anything after add_host will be skipped.
+  # I assumed the when: in this block was only evaluated once, but it looks
+  # like maybe it is evaluated on every task in the block(?)
+  - name: Add unconfigured host as a configured master
+    add_host:
+      name: "{{ inventory_hostname }}"
+      groups: configured_master
+    changed_when: False
+
+  run_once: True
+  when:
+   - "'configured_master' not in groups"
+   - k8s_init_cluster | default(False)
+
+# Block of tasks to skip if all master nodes are configured
+# There is a gap in this logic if we are trying to promote a worker to become
+# a "master". The kubeadm join op will fail because the worker is already in
+# the cluster.
+# TODO: fix this logic to kubeadm reset workers prior to promoting to master
+
+# Also note to Future Jacob, if attempting to rejoin a fully reset node i.e.
+# after running kubectl delete node $FOO / kubeadm reset -f, etcd will most
+# likely need a manual cleanup.
+# see https://github.com/kubernetes/kubeadm/issues/1300#issuecomment-464955084
+
+- name: Join unconfigured master nodes to cluster
+  block:
+  - name: Generate a join token
+    command: kubeadm token create --print-join-command
+    register: kubeadm_join_token_output
+    run_once: true
+    delegate_to: "{{ groups['configured_master'] | first }}"
+
+  - name: Generate a certificate token
+    command: kubeadm init phase upload-certs --upload-certs
+    register: kubeadm_cert_token_output
+    run_once: true
+    delegate_to: "{{ groups['configured_master'] | first }}"
+
+# We'll process these serially to avoid any cluster weirdness, but
+# unfortunately serial: can't be set per task. Instead we'll have to loop over
+# our hosts and use delegate_to:
+  - name: Join unconfigured master to cluster
+    command: "{{ master_join_command }}"
+    with_items: "{{ groups['master'] | difference(groups['configured_master']) }}"
+    delegate_to: "{{ item }}"
+    run_once: True
+    vars:
+      join_token: "{{ kubeadm_join_token_output.stdout }}"
+      cert_token: "{{ kubeadm_cert_token_output.stdout | regex_findall('^(\\w+)', '\\1')  | first }}"
+      master_join_command: "{{ join_token }} --control-plane --certificate-key {{ cert_token }}"
+
+  when: groups['configured_master'] != groups['master']

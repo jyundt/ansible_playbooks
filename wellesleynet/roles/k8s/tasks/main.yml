@@ -1,0 +1,187 @@
+---
+- name: Include OS specific vars
+  include_vars: "{{ ansible_distribution }}.yml"
+
+# preflight stuff
+
+- name: Deactivate swap
+  command: swapoff -a
+  when: ansible_swaptotal_mb > 0
+
+# CentOS fstype = swap
+# Ubuntu fstype = none
+- name: Disable swap
+  mount:
+    state: absent
+    fstype: swap
+    path: "{{ item }}"
+  with_items:
+    - swap
+    - none
+
+- name: Load kmod deps for k8s
+  modprobe:
+    name: "{{ item }}"
+  with_items: "{{ k8s_kmod_deps }}"
+
+- name: Configure kubernetes sysctl settings
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_file: "{{ k8s_sysctl_file }}"
+    sysctl_set: yes
+  with_dict: "{{ k8s_sysctl }}"
+
+- name: Include OS specific tasks
+  include_tasks: "{{ ansible_distribution }}.yml"
+
+- name: Start/enable kubelet
+  service:
+    name: kubelet
+    state: started
+    enabled: yes
+
+# Sanity check to make sure we either have 1 or 3 masters
+# We either want one master or 3 nodes (HA)
+- name: Check for correct number of master nodes
+  assert:
+    that: (master_count == '1' or master_count == '3')
+    fail_msg: "Invalid number of master nodes in inventory. Should be 1 or 3"
+    success_msg: "Correct number of master nodes defined in ansible inventory"
+  run_once: True
+  vars:
+    master_count: "{{ groups['master'] | length }}"
+
+- name: Include kubernetes master tasks
+  include_tasks: master.yml
+  when: "'master' in group_names"
+
+- name: Include kubernetes worker tasks
+  include_tasks: worker.yml
+  when: "'worker' in group_names"
+
+# We should have a cluster at this point, time to start applying some yaml
+
+# Set some base facts for reuse later
+- name: Set kubernetes config facts
+  set_fact:
+    k8s_master: "{{ groups['master'] | first }}"
+    k8s_config: /etc/kubernetes/admin.conf
+
+# All commands will run from a master, wrap in a block to DRY out
+# delegate_to / run_once
+- block:
+  # Gonna use weave
+  - name: Install pod network add-on
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '00_weave.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Install metallb load balancer
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '01_metallb.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Configure metallb load balancer
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '02_metallb_config.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Install ingress-nginx
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '03_ingress-nginx_mandatory.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create ingress-nginx service
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '04_ingress-nginx_service.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  # Restore a well known key
+  # Note that this is the only ansible vault encrypted file.
+  # If applying all of these configs outside of k8s, this file must be
+  # manually decrypted first.
+  - name: Install sealed secrets key
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '05_sealed_secrets_key.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Install sealed secrets controller
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '06_sealed_secrets_controller.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  # This could probably be DRY-ed out a bit: the wildcard cert exists as an
+  # ansible vault encrypted file in a couple of different roles _and_ as a
+  # base64 encoded SealedSecret. Whenever this cert is rotated, this
+  # SealedSecret file must be updated as well.
+  - name: Create wildcard cert(s) secret
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '07_ssl_certs.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create oauth2-proxy service
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '08_oauth2-proxy.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create Intel GPU plugin
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '09_intel_gpu_plugin.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create rclone cronjob
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'rclone.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create gmvault cronjob
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'gmvault.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create bitwarden statefulset
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'bitwarden.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create syncthing faux-daemon statefulset
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'syncthing.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create tang deployment
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'tang.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create home-assistant statefulset
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'home-assistant.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create plex statefulset
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'plex.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  run_once: True
+  delegate_to: "{{ k8s_master }}"

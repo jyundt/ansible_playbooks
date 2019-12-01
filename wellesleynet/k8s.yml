@@ -1,0 +1,6 @@
+---
+- name: Deploy kubernetes packages and services
+  hosts: k8s
+  roles:
+    - docker
+    - k8s
