@@ -1,3 +1,8 @@
+[clevis]
+1jane
+2jane
+3jane
+
 [wireguard]
 nyx.kiski.co ansible_python_interpreter=/usr/bin/python3 timezone=America/New_York
 wggb01.wellesleynet.com ansible_host=138.68.141.148
