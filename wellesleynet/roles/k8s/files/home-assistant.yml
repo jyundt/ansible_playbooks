@@ -104,13 +104,13 @@ data:
       unit_system: imperial
       time_zone: America/New_York
       customize:
-        switch.leviton_dzpa11lw_plugin_appliance_module_switch:
+        switch.leviton_dzpa1_1lw_plug_in_appliance_module_switch:
           friendly_name: Christmas Tree
           icon: mdi:pine-tree
-        switch.leviton_dzpa11lw_plugin_appliance_module_switch_2:
+        switch.leviton_dzpa1_1lw_plug_in_appliance_module_switch_2:
           friendly_name: Nightstand Light
           icon: mdi:weather-night
-        light.linear_lb60z1_dimmable_led_light_bulb_level:
+        light.linear_nortek_security_control_llc_lb60z_1_dimmable_led_light_bulb_level:
           friendly_name: Norpoc Light
       customize_domain:
         zwave:
@@ -152,15 +152,15 @@ data:
       living_room:
         name: Living Room
         entities:
-          - light.linear_lb60z1_dimmable_led_light_bulb_level
+          - light.linear_nortek_security_control_llc_lb60z_1_dimmable_led_light_bulb_level
           - light.living_room_floor_lamp
           - binary_sensor.apartment_door_sensor
           - media_player.double_r_diner
-          - switch.leviton_dzpa11lw_plugin_appliance_module_switch
+          - switch.leviton_dzpa1_1lw_plug_in_appliance_module_switch
       bedroom:
         name: Bedroom
         entities:
-          - switch.leviton_dzpa11lw_plugin_appliance_module_switch_2
+          - switch.leviton_dzpa1_1lw_plug_in_appliance_module_switch_2
       office:
         name: Office
         entities:
