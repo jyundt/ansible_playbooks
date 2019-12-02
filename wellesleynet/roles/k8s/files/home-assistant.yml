@@ -408,10 +408,8 @@ metadata:
   name: home-assistant
   namespace: default
   annotations:
-   # Temporarily disabling oauth for this and only using built-in HA auth.
-   # For some reason this was really tripping up iOS.
-   #nginx.ingress.kubernetes.io/auth-url: https://$host/oauth2/auth
-   #nginx.ingress.kubernetes.io/auth-signin: https://$host/oauth2/start?rd=$escaped_request_uri
+    nginx.ingress.kubernetes.io/auth-url: https://$host/oauth2/auth
+    nginx.ingress.kubernetes.io/auth-signin: https://$host/oauth2/start?rd=$escaped_request_uri
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
 spec:
   rules:
