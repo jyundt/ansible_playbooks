@@ -1,0 +1,127 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tautulli
+  namespace: default
+  labels:
+    name: tautulli
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/apps/kubernetes/tautulli
+    server: callisto.kiski.co
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tautulli
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: tautulli
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tautulli
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tautulli
+  serviceName: "tautulli"
+  template:
+    metadata:
+      labels:
+        app: tautulli
+    spec:
+      containers:
+      - image: linuxserver/tautulli:v2.1.38-ls31
+        imagePullPolicy: Always
+        name: tautulli
+        ports:
+        - containerPort: 8181
+        volumeMounts:
+        - name: tautulli
+          mountPath: /config
+        env:
+        - name: PUID
+          value: '2004'
+        - name: GUID
+          value: '2000'
+        - name: TZ
+          value: 'America/New_York'
+      volumes:
+      - name: tautulli
+        persistentVolumeClaim:
+          claimName: tautulli
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: tautulli
+spec:
+  selector:
+    app: tautulli
+  ports:
+  - name: tautulli
+    port: 8181
+    protocol: TCP
+    targetPort: 8181
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: tautulli
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: https://$host/oauth2/auth
+    nginx.ingress.kubernetes.io/auth-signin: https://$host/oauth2/start?rd=$escaped_request_uri
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+  - host: tautulli.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: tautulli
+          servicePort: 8181
+  tls:
+  - hosts:
+    - tautulli.kiski.co
+    secretName: kiskico-wildcard
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: tautulli-oauth2
+  namespace: default
+spec:
+  tls:
+  - hosts:
+    - tautulli.kiski.co
+    secretName: kiskico-wildcard
+  rules:
+  - host: tautulli.kiski.co
+    http:
+      paths:
+      - path: /oauth2
+        backend:
+          serviceName: oauth2-proxy
+          servicePort: 4180
