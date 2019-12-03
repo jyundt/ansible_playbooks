@@ -53,6 +53,7 @@ mnemosyne.wellesleynet.com
 
 [worker]
 1jane
+2jane
 3jane
 
 [k8s:children]
