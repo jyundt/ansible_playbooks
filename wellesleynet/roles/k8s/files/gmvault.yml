@@ -7,10 +7,11 @@ metadata:
   namespace: default
 spec:
   encryptedData:
-    token.sec: AgDCys8AtfM9zAHN+XX7m2nBgfS5d/jg8Z0pOa530nHbOwSXATUsS9vunpKaPFvRyU4oNpwSawfVpsZvHnH5AvaEj58Fp+D3ERWBYcN91nPqVpBGwx/0aFOVGxM9mc7PhbQuEqQCFZjJt2Z4680e/IjXeCrGT5w2JawtM3J8A+Hwqww5ZMGcnD7WAdqtReBWkabnLaA6v+W12DpT+58s1PkagHSyVMbtpl1Qtilw8VYZw+03XI14sfmOZRvuBOnC/3hB2+C9F8j/wqX4dQSCtFZMHFtjWM5zDCb14AmfaK6p+Wazc594SUlcqbUvP7RAHSLjbag8oTqT92g29d9I1SMxeowDKDGyXY2qm6TnlhGAVvaLLFQJHKK9P964a4kZCySOz9bw3r8gc17JbAKLhTBRbaJhxfmBaZZWTMhwrRT+xzllpCsBFMMuruNDyvPhTEELnJ1MhlhpWczvh+2oSfBp4WQ+0tSwfa046UNiihNDMSukTKBYP2+zjFehKkskF7hDz58Qw1utkIhzQYhjzj0xSY6cp+6D/w+74dQDsw4x1DBjxdlzCfeTyECgxDPW/U/PwicoPEqz7posvu0nf4l3zhGrMEzUwL++Ocv4sfq5XkJNj+J2BSvZSUWG+9B7/xX0V0hvz2Wmqtca3yg4BgVoHBT4nKUJTGKqLVCnpPSCBp4qRj8uDZe3WUfuHyFJEhIKmofg6IvS44aL0A4=
-    jyundt-gmail-passwd: AgCg7WMhoGT914WrZyJjgL032M/O6pn8M4AmsCYPBjDJjOCVlZuaJ28i8XTiwZkDrsCyPtSHq6YNVrTcWp72KW5QHdVONrOqzB29PcW3nNFNm2rHbUS0sgz2SdI7I018BLZzgOo7LsMjeCfQbGdbZA+zlVlai2vGv7bwFdQT1qIMMqHF9YrUQi0HYPHV/LO25VJgfAllznAJAI/IVy6lv/5sTFeupjvp4JlmyB5rBGhbgIzSdJkNQMF4rW5n6yWQGPf0W+tVEIpYhPRibQn5oNQ7yduB+O2jilypT/C5aHCojfleUrpIY4t4oLyt5f75Pppe50+qBq6FlZk5axZqFs9RPHTNfglmZ25eafj1L1thOdJyvC0gEnIPUzAm59s5k4q+vg0Q6QDKu2+0tSyQPyLBK0AUjbjVWk/Afhoh4ANu64wPm4gmoTN8xuEDPrWfXia2dSM9iXhSHcjr1thb8huV+dP4Z7sbv2bWRjIPUz6iQLV7Wf7migZiW5SRKLPBlzEAVFUJ0OXaNj8niGEJmKENzJhFUHc4i5nuOt5N73Wpyft23PxMbYxW/G60zwvuAF4TLP1ukyY5EdgalpvA0/lfBEPbXX8jsm1d1fVMrXPYG1/N93zLLMdButXE6CoOBjZ+zVG8bJ5gU3NJgOavu8zs7D6iVNwQrTsfscwqdcFeo7hXYl0ALde2Q2vLL0+8WttRQLm3jwvtvf3FiTWXy4G9
-    jyundt-digitalocean-passwd: AgAwyNPwsMsyk1RJpxQpZTTL8cwZ1/vlmaTOLegHbZ/Pd3BmVJ0LIZEwS/toivWJL9mSDdHuyulVSV9NiBux9Zlq5DN7HzXeAUrH/PcIacA93HM3rcah6XqdxZWTVdpR81CD2HEAWglaUVmKjPe7GNjVm+gXT+zZ/Rnyzo96Nv8vYldNeUAgPHh1Yly0zkSCS/UIqD/dNHWaYLLpLIc3g/jDrwK/HzdlbryuPQPBTjpV+k8wIXI7mU6b5jGXStJso0cnklcyGYTZPS5RWEOM+WrX/vQYI0FJ4raZQCICP2i/ebk52ZuIKFJUHyVm3e38om+lGZATw3MB0NdmfQFQqDcgSQgpY8hYfNRt9x3QQujXeMAmbGkKFnHgqesuV4Pg05tXZwWk52NTGn+ztb2iO2+1ojPXnER3c1dMbWverC2WcIBYMhKbWzamiFffaLR2+XNLolcH6vYQRlMgCFmcuI+rUgB5G7laphXa+lcoFoeQkCxXOZGo8MBk5wtJ7VrDPLXLkXqtEAvyTMiLCUKPlVOOsKOVkl231PjkmeNyJ+77aOes+sbdVRzPlyq9IG7mPmXJHVl30ZbJFGlu9f4YpoGPCfrj0pjw0t83bSqmGaNWF2GWbK9VNBWVaRMZXG3Lzq8NltYbTM+u+gxrB+/Wgp7kd/mKOhRUS1HAIRirvqrzMAJ7Cz1C+kgohd0OMrtENDzs0itkcHTHOlk9PC8p6AUX
-    emily-wolfe-gmail-passwd: AgCMRH5Dsfy0yxkQp89r0Eb+QGXVtaySMOF70Ri0BiH74mIfVf3zdRoslMH4kJIZca+14RyaziVQWP9QJqVesA+Q6sY9CsXnH3WN0I9rymGgflHz4mMKBJ/3eLAtMX73IEUeIM7IdVf5pYClUMpOqqyiltXQe/gVaDbQ3pgDHXx/JNUXdiuFUyMpSRU5ZszDh2rBHoDhj+LH6mVRTGs8+uOplryAumOEcqTFSIP0/3FSI42CQDuOK6h3lp259YK6j8rSfe2DC3E3ao8hy3ySCzTbYrBhuokyHX6eqx4ypx7DZnxu6vNjx9ktKq1hcP4RwErcB4csCSe8gIW/h4rvg2TB4R7/yU6noZF9fUaFFl746KxfImA+U4PhGLonCd6geMT7fPQjAascManHbGspuPVb5PYQr2r2Esl2MpBFOFZ6+7ScqhFQGLW7Zf3BK9/fI6STZQ9CFZI4d2+vxi+9fWNPuJjYptQa3a0XEfPkrPL4U2+6YDG3HbMmhpMiatU696PDB3hC1mm7ApeAimf3pg7yQP5LXPUUykBaLqc8VyODdgy89errdF4m8cln4SO05LRuWO4xdNPHeBP5BsaqMiJQCwxG3gs9Mih8ck8u32km//VR172xNpmnEmH4oSyyZz08rvJ9vTsE2Ew3pDmRrywQAY0jpegXL6Yu7YF2pfO3n9s9pq53EBSjE/BfuIyumV5biix1wvmo5m2GE6eQIAVw
+    emily-packet-passwd: AgA3fUdhsRbBca+Dg5Fdx/xgxxkVKpwnbqxAQ4XdSPiVHGImQpcfscfIdPGltNQrTSs/j6+JBAc6rVs2ynFjbg281xp4dqcwCAhJFK5vPjUDAZRQS013bcpMK/iQwFxsA+QCs9cUL7ZjY7nNpdGshJyhO3wQ0PrBcDlZTN+GbcPGcBS3JdbuM+uR4jEp6fFCp8zG/cZ01XvXfCWwU/mQ7w7AQuEZFuws3XAUQQ2426GsBRlMSNqY3te5JgXdWGcpjsf2qZasrOvWD0a8dOtyDZnej7qhRD7l0QTt1sJ+IrRROO7rBZ8oGD+69J//opyLBIhqp9wCV8H7URT6kADizj2Wg/frGA8uRCEPKP/kJnVaOOai559pS+Q008z1sxjB97TURVwnOvvl6axU83GKRGv2pAr31nmQV0UO+ECmWqYpRVaa8AdpCQNUKqkSha51UAewwnljt+6ehouJ0IEBjo67eD6cESmo6bHRLXLNErWkcPjt9aBXC1VS7cBPrm48MLai3dYwTP2MJV4h3ftqMSWe7i/5m5riVwcmNVEw/S281CEn3vfCkHReZ4xfOmdqjd5i+DVkiwYHtMxCh31wR0rH1V8dEhu19mK7q66pkz9UioTPmsRep4lIJx762idXRApP6iF68IjHyZJG9yUEyqvkzVOem43ZJAa1iWxD/J3XmvNV9RQ1unwDQTgzSVYVu5JTXkQTAyjtT+0kZhKqMr6Z
+    emily-wolfe-gmail-passwd: AgA8Z+Ftcsy2Dqi1qT+xnuWXzdl2GI0hJo9RhUoOdnCKRccY/jutWIa7g2ZVMdm39RB+hFSM1W+OV0mViGvhtIsDmDQGL6n3TYBG7JAdl46fvAzfJcO5QWvTPYuNhxxfK7ZA+0t3hoWJxDRA/L1FjZuEsRPdwueArZU6hC/VoVZdlY4gMlOCOOfGlRt4FhOFL6JJWmaa+1g+ouNE1Vc61VIrwrb2BxcsQ4EB0ZEvEWGXwoCNJakbMV28rzgEO2zx9HSW41UotUrO96nldDeImvFqgoHTErfZrIDRGH0H1yi5v6qkR4fUI08hZPCZUaTY2fi3qxNCoy4oAcMX4MKMLsutpPxZ7SsrTF0e1o4gkVyx1VwPemhEimxj7BqCEkFWrv1kwOR8/TWGKrhzdd04eQQ2HGQSxcbc3GdsI1wqya/KaaMavwMVlMVfO2PYE9i7Lmr9U25l8pfIkEQl38EHm451xUaCQe2cHfMsfzHYiLekLnzjeFdC6As+ouuewbLrq99VzDYaYT1vK1ygXKvvTe0EaoRvVwe7uRJ0lOU8QYavXcNA9HTTbyx4VxURu0UtVM7m54Xnv/JFx155TSstKUKoN0kk08mVdUur/pJ/FM7n6so7YHrBNx4kw7HfUksQWF48JdEUV6B8jxt4YIB68uhFmJd16tM7EcDByiMHqBdbDhLt3Y7VNuluv5zUNGYj5Z0MFO3cKJo6u9hM762At9WP
+    jyundt-digitalocean-passwd: AgAK2kxzZfWe/2GvYu4xYasUOz81phbAXB90RqmIf9OjIu2X6o0l69n2+sRtdMqYRvsx0u6vn/BqvPhPaz0WqjkjX6wIjJLLDrYur0PPlWM9YCwqMFf270r29iDzvTjK785eTVK6zdveACiGgV24lIuaL3dsPWBPP4ehxF53w7xLEPPZnmC+QV9+czqLqQi2AOCzXGggzbdvHjX3JpysrVBmOIamBXFJejmxnX4vEGDmwnYTK91niP985HU5fDz53f6yjSHNmfGSYloZWssVEH3W8kIAT/0k8aMZYkIp9Uc/TOEgoCClMrLsJAlS/YLg3/mAr8ebX2yMknQM/k93cyZASsA+M2z4vrDSDHZItw3Lf6t5iAPONWa6sSgl9DQx1NkgYCvJdJwOcNPrjXMkzlBUmTpntF3F6BOYfWAP6hyxBNwzuzl/4pvg6/89vX3JOeT9aQZm0g8ZLG4lattCYYN5DyCP45pb8R2N28WVcvooXKP3LQ6KfpZzNAMlzPpxk7jR8m1aK6yPc2jMxh/IpAOfJl5dmJVTj+gdtxexVToyh/+joE06ZMBT05z36BRLEYPI5ZS0wXkDll/uKn3dAqHgH+Tx34u/Vmcn02zQxkQgAZ73dxU8Un7JZ2hzcd6r+EdYpSzuqh3GFsQ3QljaAc4ncsrdKrLO0yDbNoFn1s13imx3sbT2aAYs/Z3pNqzI8O9xHxqvIWHevOJ7aXWUH0/N
+    jyundt-gmail-passwd: AgCuOgWxDy957EdWcwHs0rt4a/ZBPEbUfzqhgw5WMfM5XYtvqnNXnVeHDZxxCJEdI9tqfYhpbDJ7dTkThbFy0UX77v4q7FDH8eQJI3Gy9whf77v6jKOvXcL1P3LP7I2TA9PLqdsFgYXQdeG7lM3bMaeMyc4PGJbI1CPvBAUDLKeYkRjlrd6vAA3o1UmA9RaX+9L7A8TnD8F8oQZcXX8cfHkqOMBK6mWOy7T5cADL/28cqVyBnxB7YfJ5QQpIExlHTCUmzsIgYvLernNuBr7lopWhg0XRw648gJLEMF8qhm4Gy7sFqAiIet8bJx5mBOdCTeGmMKjSzBZ58zKVP7qRleTYi4zicWKQONqO9ox/Fqx/5bLhcr6j8GUheA3vVRDsq5vLKa6EOXJYN8DRQoHXkJgxK5bTfmBD5+/79EM9TSp6lX/7NwaNSMieHUApyo3+KsihvsAp7WK0wUipFWGuMYiTxUFCvX4oC+2HtFDY3Cm5QCJNezdmd8coMym8S8uS9pR3MSgfwUb/h5Pn4iqJTscUCP9AFS0TzvHK/PMXaCbSvAsZrK1bjlQyebogRv2Nl814/i5j0B3KfgWtYm18wusD4b8guAY1fbqUZz0NO1tnniHdhtrKhwT6gwc0jxeb8Oq/D3XlP3eiYVJPyHrUwb6ekoICQpp4jUmRQIvH6s110KWljRmbGCP5cPDltSJbDwEkhjzGcHzCJ0yHJppvKzpe
+    token.sec: AgAz5vSwE7ThYUvCnFCPWwySJltWLKp8PEc87Jz5PMHVfFDwWNKMmRB+p228lAydy8vstmvMlEbumI+SVrv2h66BfyAhVYd8EokiGepbRab0Xtm2LluJTshhGNhnEale0Rv76kLjuGM58e90Oy29vFDYpApXbssvJ6TLX0ItV2zNjob+VMzA7ftTsd0LHnJcD9hnUE0nYwetRJmVMKQY5cR8UkMhNjaFIavdOnOiH3YXCJ6CUmny3E4uHVwN91eJ60D9lggMCEIkMh+4zaT0p3g/RqmlqJ7/MawgENWqcY8ApV7FUNSGb/8ecx9zJpJ0x8mgZHRqaya4mXN4BY58VUrUSXEyzXxSQ82FIvnDRhowUY4cvj7p0CJxXCKiVaJJKDECLmtEcMyBo79DnbtE2zxoSBhZjLBAsKc/uodAQ4Dn0fwFIJQ7aIvmCiTa+aLv2khn/715a/W1etSiDkcvn0yqYwfcYGzu+Sb/AGZAEJ8Bfu+KktYeZGQgRf9H+6HtieHBvEVCY9oPUpRYAkEW1+IN17olO+kyz2AjT3KRD5KjaPsLTmASUeSDYzkKa4MRlhwfkVryAdZGWyUkTd1WZEsa9H5TW8r7iIiYZIrU5UP4/zGwBfLai4Yg7LfIC6yw87OVrLVXQYH94GwfLQEMbibCRT8zNhB25I1TgDoUqLEyCVd/dBcOuVenOeMBzzNijijKsEahvmLQ8O3IU30=
   template:
     metadata:
       name: gmvault
@@ -133,6 +134,30 @@ spec:
             - name: gmvault-secrets
               mountPath: "/opt/gmvault/emily.wolfe@gmail.com.passwd"
               subPath: emily-wolfe-gmail-passwd
+            - name: gmvault-data
+              mountPath: /opt/gmvault/data
+            env:
+            - name: GMVAULT_DIR
+              value: /opt/gmvault
+            - name: HOME
+              value: /opt/gmvault
+          - name: gmvault-emily-packet
+            image: jyundt/gmvault
+            args:
+            - sync
+            - -p
+            - -d
+            - "/opt/gmvault/data/emily@packet.com"
+            - "emily@packet.com"
+            volumeMounts:
+            - name: gmvault-home
+              mountPath: /opt/gmvault
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/token.sec"
+              subPath: token.sec
+            - name: gmvault-secrets
+              mountPath: "/opt/gmvault/emily@packet.com.passwd"
+              subPath: emily-packet-passwd
             - name: gmvault-data
               mountPath: /opt/gmvault/data
             env:
