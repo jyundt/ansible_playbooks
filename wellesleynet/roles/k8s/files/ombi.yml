@@ -1,0 +1,106 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ombi
+  namespace: default
+  labels:
+    name: ombi
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/apps/kubernetes/ombi
+    server: callisto.kiski.co
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ombi
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: ombi
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ombi
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ombi
+  serviceName: "ombi"
+  template:
+    metadata:
+      labels:
+        app: ombi
+    spec:
+      containers:
+      - image: linuxserver/ombi:v3.0.4892-ls40
+        imagePullPolicy: Always
+        name: ombi
+        ports:
+        - containerPort: 3579
+        volumeMounts:
+        - name: ombi
+          mountPath: /config
+        env:
+        - name: PUID
+          value: '2004'
+        - name: GUID
+          value: '2000'
+        - name: TZ
+          value: 'America/New_York'
+      volumes:
+      - name: ombi
+        persistentVolumeClaim:
+          claimName: ombi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: ombi
+spec:
+  selector:
+    app: ombi
+  ports:
+  - name: ombi
+    port: 3579
+    protocol: TCP
+    targetPort: 3579
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ombi
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+  - host: ombi.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: ombi
+          servicePort: 3579
+  tls:
+  - hosts:
+    - ombi.kiski.co
+    secretName: kiskico-wildcard
