@@ -44,6 +44,7 @@ spec:
         - -http-address=0.0.0.0:4180
         - -cookie-httponly=true
         - -cookie-secure=true
+        - -cookie-domain=.kiski.co
         - -set-xauthrequest
         - -authenticated-emails-file=/etc/oauth2-proxy/oauth_allowed_emails
         env:
