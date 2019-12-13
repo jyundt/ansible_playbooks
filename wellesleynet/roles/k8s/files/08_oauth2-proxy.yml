@@ -63,7 +63,7 @@ spec:
             secretKeyRef:
               name: oauth2-proxy
               key: oauth2_proxy_cookie_secret
-        image: quay.io/pusher/oauth2_proxy:v4.0.0
+        image: quay.io/pusher/oauth2_proxy:v4.1.0
         imagePullPolicy: Always
         name: oauth2-proxy
         ports:
