@@ -29,7 +29,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /mnt/data/apps/kubernetes/home-assistant
-    server: callisto.kiski.co
+    server: callisto.wellesleynet.com
   mountOptions:
   - nfsvers=4.1
 ---
@@ -134,7 +134,7 @@ data:
     sensor:
       - platform: nut
         name: UPS
-        host: callisto.kiski.co
+        host: callisto.wellesleynet.com
         alias: ups
         username: monuser
         password: !secret ups_password

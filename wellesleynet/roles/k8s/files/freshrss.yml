@@ -15,7 +15,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /mnt/data/apps/kubernetes/freshrss
-    server: callisto.kiski.co
+    server: callisto.wellesleynet.com
   mountOptions:
   - nfsvers=4.1
 ---

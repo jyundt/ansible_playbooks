@@ -35,7 +35,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /mnt/data/backups/mail/gmail
-    server: callisto.kiski.co
+    server: callisto.wellesleynet.com
   mountOptions:
   - nfsvers=4.1
 ---

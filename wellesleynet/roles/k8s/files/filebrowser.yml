@@ -15,7 +15,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /mnt/data/apps/kubernetes/filebrowser
-    server: callisto.kiski.co
+    server: callisto.wellesleynet.com
   mountOptions:
   - nfsvers=4.1
 ---
@@ -50,7 +50,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /mnt/data/docs
-    server: callisto.kiski.co
+    server: callisto.wellesleynet.com
   mountOptions:
   - nfsvers=4.1
 ---
