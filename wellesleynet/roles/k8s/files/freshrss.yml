@@ -1,0 +1,129 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: freshrss
+  namespace: default
+  labels:
+    name: freshrss
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/apps/kubernetes/freshrss
+    server: callisto.kiski.co
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: freshrss
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: freshrss
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: freshrss
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freshrss
+  serviceName: "freshrss"
+  template:
+    metadata:
+      labels:
+        app: freshrss
+    spec:
+      containers:
+      - image: freshrss/freshrss:1.15.3-alpine
+        imagePullPolicy: Always
+        name: freshrss
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: freshrss
+          mountPath: /var/www/FreshRSS/data
+        env:
+        - name: CRON_MIN
+          value: 'CRON_MIN=13,43'
+        - name: PUID
+          value: '2004'
+        - name: GUID
+          value: '2000'
+        - name: TZ
+          value: 'America/New_York'
+      volumes:
+      - name: freshrss
+        persistentVolumeClaim:
+          claimName: freshrss
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: freshrss
+spec:
+  selector:
+    app: freshrss
+  ports:
+  - name: freshrss
+    port: 80
+    protocol: TCP
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: freshrss
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: https://$host/oauth2/auth
+    nginx.ingress.kubernetes.io/auth-signin: https://$host/oauth2/start?rd=$escaped_request_uri
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+  - host: freshrss.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: freshrss
+          servicePort: 80
+  tls:
+  - hosts:
+    - freshrss.kiski.co
+    secretName: kiskico-wildcard
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: freshrss-oauth2
+  namespace: default
+spec:
+  tls:
+  - hosts:
+    - freshrss.kiski.co
+    secretName: kiskico-wildcard
+  rules:
+  - host: freshrss.kiski.co
+    http:
+      paths:
+      - path: /oauth2
+        backend:
+          serviceName: oauth2-proxy
+          servicePort: 4180
