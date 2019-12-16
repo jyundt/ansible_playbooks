@@ -91,8 +91,8 @@ metadata:
   name: tautulli
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/auth-url: https://$host/oauth2/auth
-    nginx.ingress.kubernetes.io/auth-signin: https://$host/oauth2/start?rd=$escaped_request_uri
+    nginx.ingress.kubernetes.io/auth-url: "https://login.kiski.co/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://login.kiski.co/oauth2/start?rd=https://$host$request_uri"
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
 spec:
   rules:
@@ -106,22 +106,3 @@ spec:
   - hosts:
     - tautulli.kiski.co
     secretName: kiskico-wildcard
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: tautulli-oauth2
-  namespace: default
-spec:
-  tls:
-  - hosts:
-    - tautulli.kiski.co
-    secretName: kiskico-wildcard
-  rules:
-  - host: tautulli.kiski.co
-    http:
-      paths:
-      - path: /oauth2
-        backend:
-          serviceName: oauth2-proxy
-          servicePort: 4180

@@ -20,18 +20,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    k8s-app: oauth2-proxy
+    app: oauth2-proxy
   name: oauth2-proxy
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      k8s-app: oauth2-proxy
+      app: oauth2-proxy
   template:
     metadata:
       labels:
-        k8s-app: oauth2-proxy
+        app: oauth2-proxy
     spec:
       volumes:
       - name: oauth2-proxy
@@ -45,6 +45,7 @@ spec:
         - -cookie-httponly=true
         - -cookie-secure=true
         - -cookie-domain=.kiski.co
+        - -whitelist-domain=.kiski.co
         - -set-xauthrequest
         - -authenticated-emails-file=/etc/oauth2-proxy/oauth_allowed_emails
         env:
@@ -83,11 +84,30 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    k8s-app: oauth2-proxy
+    app: oauth2-proxy
   name: oauth2-proxy
   namespace: default
 spec:
   ports:
   - port: 4180
   selector:
-    k8s-app: oauth2-proxy
+    app: oauth2-proxy
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: oauth2-proxy
+  namespace: default
+spec:
+  tls:
+  - hosts:
+    - login.kiski.co
+    secretName: kiskico-wildcard
+  rules:
+  - host: login.kiski.co
+    http:
+      paths:
+      - path: /oauth2
+        backend:
+          serviceName: oauth2-proxy
+          servicePort: 4180
