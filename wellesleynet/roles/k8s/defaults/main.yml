@@ -15,4 +15,5 @@ k8s_sysctl_file: /etc/sysctl.d/99-k8s.conf
 k8s_sysctl:
   net.bridge.bridge-nf-call-iptables: 1
   net.bridge.bridge-nf-call-ip6tables: 1
+  kernel.sysrq: 1
 k8s_metallb_ip_range: "192.168.200.0/24"
