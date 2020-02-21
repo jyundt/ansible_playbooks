@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/part-of: ingress-nginx
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.200.1
+  loadBalancerIP: 192.168.167.1
   externalTrafficPolicy: Local
   ports:
     - name: http
