@@ -173,6 +173,9 @@ items:
                     fieldRef:
                       apiVersion: v1
                       fieldPath: spec.nodeName
+                # Added to get local IPs reporting correctly
+                - name: NO_MASQ_LOCAL
+                  value: '1'
               image: 'docker.io/weaveworks/weave-kube:2.6.0'
               readinessProbe:
                 httpGet:
