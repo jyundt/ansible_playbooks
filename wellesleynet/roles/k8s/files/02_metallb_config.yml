@@ -14,4 +14,4 @@ data:
       protocol: bgp
       avoid-buggy-ips: true
       addresses:
-      - 192.168.200.0/24
+      - 192.168.167.0/24
