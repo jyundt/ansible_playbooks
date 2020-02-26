@@ -141,6 +141,12 @@
       definition: "{{ lookup('file', '09_intel_gpu_plugin.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
+  - name: Create authelia statefulset
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '10_authelia.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
   - name: Create rclone cronjob
     k8s:
       state: present
