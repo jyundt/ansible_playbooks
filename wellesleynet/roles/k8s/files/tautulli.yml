@@ -91,8 +91,8 @@ metadata:
   name: tautulli
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/auth-url: "https://login.kiski.co/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "https://login.kiski.co/oauth2/start?rd=https://$host$request_uri"
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
 spec:
   rules:
