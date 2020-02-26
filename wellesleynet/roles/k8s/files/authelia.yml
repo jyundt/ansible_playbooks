@@ -1,0 +1,169 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: authelia
+  namespace: default
+spec:
+  encryptedData:
+    AUTHELIA_JWT_SECRET: AgCEKmFNNR5IjQri0fe8swwCkKaCp43CX+Yop0z4wtYZV2dPRD1kZGYfhfr0UTiQZfMOU2jMkVI17/8zST3p2ZdBjMt6tBK/z7IYsUTNAOIVs3JtPRj+90ABIZ93trQoy9DPFn4aa0op+76LOMSdyn1oB3/HYgjAu3GKksz+AnYu1F5SPDQsQWwR9WoTwkRyuRB8naGHF1Oyrvf8fahqPAB/MieXThqrnFyTx1cqApf/UIHJU5RsjLjaaFPo903Rp7TJFcoQGIGU/j+L5Go+wZUehdGZlylV2nnrU8IghI1xkY01jCfy5BHg1dSIUleUTy4mRGxKNoagS4hSt+pxNNCxYDxe2sJEo7QhTcNJAVbjc3UfIxBbIQd3+FoJ6d4SUFc/B/+OxLmN8nLqVIhTk++lvDrh3UDyN9d/etfEYOKICX4ZEBnGX2EDfUUnZ7g1hiNnaokruC1aA6hsARVMlO768xF1MiedE/5AFORPbu1FEZI7zj/QC9l29KZV7b1bj6IJfZoVNgwSV0Wd+WkK3Fz6ER29cJykB/Kv1vyGNAEJLpVk62M2YyOsbXZVr1CbTy+5Bcu/5d0k+uuFzZuxr2uZKe+tUt48uGiDERQs7ple6gltdlLtZ6I3JVQGf4IYZxysgfVjQMfHGHAQ2HgnfO5SwSCR/RngVqH/Zs580l6tgmyjTgsdtM6jjNGDUKxg5ehbt+OVwyxndyLG2ITSYlWzxxt20FKkpBdNsrGLOh1n
+    AUTHELIA_NOTIFIER_SMTP_PASSWORD: AgAS1v/ZSh0vmVQxYI9KbiMs+tI0XLuFIwTo8mi6G0ato5WZfg+DkrMoNOoRiob+hgBNolumh3Z/wF3SAP25e8iQbMxMF032FlAH6OfV0sgS0JjJ0lVzigCK30MSSUF3/PqRzPrEkQ4fwNxuz1pyiMTCJUUqD8UxANbOYB9Efi/G1IQRVMT90uRGSisS87Mg+htyv1MVcWiuEpEWarrL+VAaTTjW3gpRJ29uNXAs2i/OQOMxJm4G2J+D0df6z31MEUizAfbfBZjSdolt/hJ0nUNMUyy3wM1814fUqpAgpKmAqDnk9x7efbfY28ERB2gPC/upkNcORdLWneY7KfqfLLpc74iVYLos+wlr5ojP4jj5FoGbp2+ft4Wj5Q9HJwo2Jfa5jeHpg+4dB83miRcrN0MumRZfiJCiiLrJoDMwmQvekKU0s5D0VAUJ3BEpHR51CdOtslI3Mw7brE4X1T/61xHEOtxuJ+9EGw6weuXA1asdrIZ6Ltm8hksyv7mxY+FzSdBACdx822RwAULmVAmxi4diVh/AUitQAFS4UuwcfMdbk7Wib46rwmAOjhnFGeEMEwLLFUuZ1eh7ESv/3yEi/KhP0NiV1PVlw0Ij4Ccy09k9D7R5xYRFsGGmPMyEqcMi0Ystd7TAjc3cAgpmLQzgqSlO3RogliPpvUTdFYFpK8HRIEiuy2J+yobWp1JyWG2o43E3Q0LQm1gbBNaj8bBdfPYJ
+    AUTHELIA_SESSION_SECRET: AgAG0L51JXqfdm/kWHf5v0jisSpwvfTnmq79u0uP4zJqDfUqgQiriq84CyZhg9aqPYo2hlbnSeYzVvSAwZ4kHml15FoRZReGXPK9yZnAlqz4nreqMxqStPsn7xS77j27jIOwYnf6pSIX3GKLW/INiIFqrVrGpY6koBNfsa7yCmLYsid+afsw0yxlFj0wDGIZ/MbEE8PCECpGs14AelTJxjpchhhPP4VzfFT8qMbK2pUbNQ/Rx6/sGMf6MaerzFkcCIU02OFK28cEKp9H9uX+xvtHi5q1oWEwSSL6uQiePiUF5GzxoIxQXzrWB9kXb5DbbJqfV77+RfEhT8NP9CSPJh70b89oktoVep999e81dPztPmDXmsELX4TL1+0uGRe8FeHAWrnQpzTZInLepI99xGuDrZf/UQhciR0QL0T6bU8R3hxbFubfwov+ojC7TVYiYyeVwe5wk4MFnDxh+d4SyJToA/5QZfnGmMKYR3PSMz0P+Bw3pBp1v+KKMrsApgapxhjruBsU7/wGZ8uky4o3u5dOD9xbhaLVCqkgyGSs3XgWxxf0flk/S+QHLt1dHoXMJiSLyJdvo1DiQdCo7GX7f+pTxBc1SNGBsVt/6DxzGHdy+JJRkh5V9KcbuIm9y8vszIrG4wU/8EjGU2nXZPkWPXu64m1aGAa8xTa5IS6BBifXZAw4MaUPOpM7hdOGIMh4Ib7OEZ91JI2MOb+wJJ/Rt7Pt4HnKNzNfhoJjsji/dupMZQ==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: authelia
+      namespace: default
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: authelia
+  namespace: default
+  labels:
+    name: authelia
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/apps/kubernetes/authelia
+    server: callisto.wellesleynet.com
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: authelia
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: authelia
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: authelia
+  namespace: default
+data:
+  configuration.yml: |
+    port: 80
+    logs_level: info
+    totp:
+      issuer: authelia.kiski.co
+    authentication_backend:
+      file:
+        path: /data/users.yml
+    session:
+      domain: kiski.co
+      expiriation: 3600
+      inactivity: 300
+    access_control:
+      default_policy: two_factor
+    storage:
+      local:
+        path: /data/db.sqlite3
+    notifier:
+      smtp:
+        host: smtp.gmail.com
+        port: 587
+        sender: jyundt@gmail.com
+        username: jyundt@gmail.com
+        disable_require_tls: true
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: authelia
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authelia
+  serviceName: "authelia"
+  template:
+    metadata:
+      labels:
+        app: authelia
+    spec:
+      containers:
+      - image: authelia/authelia:4.4.0
+        imagePullPolicy: Always
+        name: authelia
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: authelia-config
+          mountPath: /etc/authelia
+        - name: authelia-data
+          mountPath: /data
+        env:
+        - name: AUTHELIA_JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: authelia
+              key: AUTHELIA_JWT_SECRET
+        - name: AUTHELIA_SESSION_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: authelia
+              key: AUTHELIA_SESSION_SECRET
+        - name: AUTHELIA_NOTIFIER_SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: authelia
+              key: AUTHELIA_NOTIFIER_SMTP_PASSWORD
+      volumes:
+      - name: authelia-config
+        configMap:
+          name: authelia
+      - name: authelia-data
+        persistentVolumeClaim:
+          claimName: authelia
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: authelia
+spec:
+  selector:
+    app: authelia
+  ports:
+  - name: authelia
+    port: 80
+    protocol: TCP
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: authelia
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+  - host: authelia.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: authelia
+          servicePort: 80
+  tls:
+  - hosts:
+    - authelia.kiski.co
+    secretName: kiskico-wildcard
