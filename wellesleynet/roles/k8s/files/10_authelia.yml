@@ -68,7 +68,7 @@ data:
         path: /data/users.yml
     session:
       domain: kiski.co
-      expiriation: 3600
+      expiriation: 604800
       inactivity: 300
     access_control:
       default_policy: two_factor
