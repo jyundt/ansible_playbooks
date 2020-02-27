@@ -1,0 +1,124 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: callisto
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: callisto.wellesleynet.com
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: io
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: io.wellesleynet.com
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: callisto-bmc
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: callisto-bmc.wellesleynet.com
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: io-bmc
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: io-bmc.wellesleynet.com
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: callisto
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+spec:
+  rules:
+  - host: callisto.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: callisto
+          servicePort: 443
+  tls:
+  - hosts:
+    - callisto.kiski.co
+    secretName: kiskico-wildcard
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: io
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+spec:
+  rules:
+  - host: io.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: io
+          servicePort: 443
+  tls:
+  - hosts:
+    - io.kiski.co
+    secretName: kiskico-wildcard
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: callisto-bmc
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+spec:
+  rules:
+  - host: callisto-bmc.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: callisto-bmc
+          servicePort: 443
+  tls:
+  - hosts:
+    - callisto-bmc.kiski.co
+    secretName: kiskico-wildcard
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: io-bmc
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+spec:
+  rules:
+  - host: io-bmc.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: io-bmc
+          servicePort: 443
+  tls:
+  - hosts:
+    - io-bmc.kiski.co
+    secretName: kiskico-wildcard
