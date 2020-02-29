@@ -1,0 +1,197 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: joplin
+  namespace: default
+spec:
+  encryptedData:
+    auth.conf: AgCAieqOrPysKylXOUXzcPDQv5F0i6aWV/1h+geqH+9iUX7mEpD4diVlj9eiPyUVqvDWowWKBSl7djac6Sx9NnEECvdWrWTW5pXh/Q8Pq9YA/wuyZyCt0thKuXXYE3JoNR7tdcnocrIDF5EEH0CzakhvVjxJ7mUSxwIughHg31+e5W5ZzUPTfXU+VPcm5RFWESMtVacsrmnQBnigtMlMYI9+buivGhGajZF1lmKxOVTFzlplx73UA/fhSY8JK/pMsyqSYb0c25dqg2Jwqr8Sjgl2Crp4Ol48yjyBghP63tLrDiUs0a6Ra1Ooe9mUKN8Sz2ml3QfqvAorcApjJcZCTJ99Fq2hV/BrUJ4XhiuxZpRbM2HvARv36WgTndL9BpLBBoJAhZwyljyEY//R43TmIEr1Y1D6RWE/E/z2NKhK5BG4PHF2voSoORyQ7fnrwc2Cudqgy6m5JT8PdJm3bu4KqUctZRQmDon988QYzRZPcu/YnPRds5klr+Eqjqp7uLv+8ApLMO+fOWR9TG1V0neXBDyK4KlqPbx8N/tvW/l9My07IsJ3eaPCbrtUy7qloVFbpgJqdbCzsYyAZSnd+QSswIEeM7laEAqQaHJy9VBNXHUbq3gI8S9AIO7mAucaIc8kKXs83s5gJX9XlJzkW9oxhWcVBjYj0BWh41t2HHMhy153Se9Dxm2SYxyvJZ3sHHXu547UJ1PN9SB3xj9T4mhyxhccpMfmOd19nZ4oOrSAsxwzKQhO04x1SD4Ox0Fju6U=
+  template:
+    metadata:
+      creationTimestamp: null
+      name: joplin
+      namespace: default
+    type: Opaque
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: joplin
+  namespace: default
+data:
+  httpd.conf: |
+    ServerRoot "/usr/local/apache2"
+    Listen 80
+    LoadModule mpm_event_module modules/mod_mpm_event.so
+    LoadModule authn_file_module modules/mod_authn_file.so
+    LoadModule authn_core_module modules/mod_authn_core.so
+    LoadModule authz_host_module modules/mod_authz_host.so
+    LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
+    LoadModule authz_user_module modules/mod_authz_user.so
+    LoadModule authz_core_module modules/mod_authz_core.so
+    LoadModule access_compat_module modules/mod_access_compat.so
+    LoadModule auth_basic_module modules/mod_auth_basic.so
+    LoadModule reqtimeout_module modules/mod_reqtimeout.so
+    LoadModule filter_module modules/mod_filter.so
+    #LoadModule mime_module modules/mod_mime.so
+    LoadModule log_config_module modules/mod_log_config.so
+    LoadModule env_module modules/mod_env.so
+    LoadModule headers_module modules/mod_headers.so
+    LoadModule setenvif_module modules/mod_setenvif.so
+    LoadModule version_module modules/mod_version.so
+    LoadModule unixd_module modules/mod_unixd.so
+    LoadModule dav_module modules/mod_dav.so
+    LoadModule status_module modules/mod_status.so
+    LoadModule autoindex_module modules/mod_autoindex.so
+    LoadModule dav_fs_module modules/mod_dav_fs.so
+    LoadModule dav_lock_module modules/mod_dav_lock.so
+    LoadModule dir_module modules/mod_dir.so
+    LoadModule alias_module modules/mod_alias.so
+    <IfModule unixd_module>
+    User daemon
+    Group daemon
+    </IfModule>
+    <Directory />
+        AllowOverride none
+        Require all denied
+    </Directory>
+    DavLockDB /tmp/DavLock
+    DocumentRoot "/usr/local/apache2/htdocs"
+    <Directory "/usr/local/apache2/htdocs">
+        DAV On
+        DirectoryIndex disabled
+        #AllowMethods HEAD GET POST CONNECT PUT DELETE OPTIONS PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK TRACE
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        AuthName "joplin"
+        AuthType Basic
+        AuthuserFile /usr/local/apache2/conf/auth.conf
+        Require valid-user
+    </Directory>
+    <Files ".ht*">
+        Require all denied
+    </Files>
+    ErrorLog /proc/self/fd/2
+    LogLevel warn
+    <IfModule log_config_module>
+        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+        LogFormat "%h %l %u %t \"%r\" %>s %b" common
+        <IfModule logio_module>
+          LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+        </IfModule>
+        CustomLog /proc/self/fd/1 common
+    </IfModule>
+    <IfModule headers_module>
+        RequestHeader unset Proxy early
+    </IfModule>
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: joplin
+  namespace: default
+  labels:
+    name: joplin
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/apps/kubernetes/joplin
+    server: callisto.wellesleynet.com
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: joplin
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: joplin
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: joplin
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: joplin
+  serviceName: "joplin"
+  template:
+    metadata:
+      labels:
+        app: joplin
+    spec:
+      containers:
+      - image: httpd:2.4.41-alpine
+        imagePullPolicy: Always
+        name: joplin
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: joplin-data
+          mountPath: /usr/local/apache2/htdocs
+        - name: joplin-conf
+          mountPath: /usr/local/apache2/conf
+      volumes:
+      - name: joplin-data
+        persistentVolumeClaim:
+          claimName: joplin
+      - name: joplin-conf
+        projected:
+          sources:
+          - secret:
+              name: joplin
+          - configMap:
+              name: joplin
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: joplin
+spec:
+  selector:
+    app: joplin
+  ports:
+  - name: joplin
+    port: 80
+    protocol: TCP
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: joplin
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+  - host: joplin.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: joplin
+          servicePort: 80
+  tls:
+  - hosts:
+    - joplin.kiski.co
+    secretName: kiskico-wildcard
