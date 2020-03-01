@@ -7,10 +7,11 @@ metadata:
   namespace: default
 spec:
   encryptedData:
-    AUTHELIA_DUO_API_SECRET_KEY: AgBGWLEjvE2/eSfKUTdafXxyox1J2q8WP/ePox2Hdmbxx9YMQDowNGOBLUT2PLvNAT/Nsjs8f830VU+G876nNSjORkr8OCNVIG2Sb3nuymEAA/03GQ7iOKoLEnmCpgHHdRCuwxn0vdG+DMhOZ4apVmrtqgSrZ59x5l3pjaQ+2WKyFIAUiERzf96sLLi5UtFUTikM20NMJDYvjO+oKzvY6SJ++wQJqFJUpbhqq5qykZv7eiUrV6xPSPg7Mi45ATi1059nViGqokT/IEGqDAPQV+xrcZZY1XZEyV8MmEYKpUT20T6rbpHo+y8QsSiisEyxT5uNj1pQ9iQaSbWzZSrmAgBj7CxhOqlu+y/kmC+Ulx7eXxC0qGeu1P2v2n3lezDpwv+mbhVgLdv2L2YmVrxKh7/isI+ruTKxs33QSgEWfNyj25cAUHAN9wotDrwIMBEYKT/7Xb3eYFu3UeB9FRK8tpTR17RKoTYT5xDrjm2xA/mw6xEfFY0VKnBQnkDCenC4YgnVhay9fk0bMWf7p3wWCMOIo9XWRO0ASeHzEM78qztFHbxf6gBHtUzAjZI3iDF5VwzL2IX3wKyx13M9dDlKVqAAKR+TG80Ykqfbtzhk26uOlYkCcZ6f83OfTfdmgK8J5i5d4oY9zjtY5R0GB4CR011J/e/vNvCJkWQPIXrv0b8UMvXkOCKFm2v4Wq27X5nHLy9j3DtKxyt2jsg5CF5swUdRWvZzjy8LOpSNz64z1c/4S2QQ59dfJJ6y
-    AUTHELIA_JWT_SECRET: AgAKcfGWRAF351m2zsfrUP6BMMtjTaEJVcbjS9+zVsB6XMBzid8eREJwj4FGINA1XK90EW7QQx5KDBDpH1trKftOsIraATCQowg0hHHIWJTIQua/vNpa3mzzWlH3WluGFRJtwXSetKLoJzsZPITJTYqVGZhOGCNCq/cc/h5gJ5BCAxoQ7ISUS5uJd0/gmQMv60a3hVvLw4ITs1yWY2g8phxLxyf5i96J+GWt4urt8sFXjKLN0/e4JRDlObmMxVeCEKXRiDg45wOAFmNuHNCnad9i2gWmPlIVfyEbl+F5QdySURORGzZyVLv2+NhaYrTHqF6z5ZGvpFLAt7gm2dSOoZX5NBjGtGysBsxPgf6AXXR1CiIFqrGBOFbql0/g2EKsd+4muqnjuMn2QkO4bwjO0i6KqKM8qErGvIQiEjiaaEgRHgj/80m99HJVanTbPzrOlaP/sOofH+i/vS8D2YTZnld2HNZvauiKu2fDQfwdAEf2cWeLoB95b8c0FH2PdK+wDwrcW10FMec3pQ7jJ87dUrYkUm2/d4+I37gnVlM0uEq6GxIdcNVEKrs7LapYUVIKaAsSat3MxOO2MfOxNWNYMa6WXfAfY1tShXhJg/NCcfZU27bj6jrZypdG1nd6dhfhoCYifHjOnyoghqqhDKbsFh9mXHWQejXmnbNhfiL6ipTpI5LYmGPda0BvaCzYzS2NXlFpcQrfONNTy2q3OrABsJzY+Zqqgqv+32fbnzBvBgjC
-    AUTHELIA_NOTIFIER_SMTP_PASSWORD: AgCJEgf+51gMKeHGoE39KmRpK0Xm/3LLG2PrtuAy8Hyo5AMA/bNA4y4v4NECz3lurgRw0MBqZffXSujbDXs3CEAo48Mqug2qOX3jXgtkPQMJazMcVJuGFWNKau10wDGwTRmzt9ycoH25mrY5vg/awlwkllmvs+MdLBZTNTRe8HcG/NzJ+dr7wMl1/ao7zhxTkG/M8hlpeKSd4vfdVLUWN2uz/dWcooz0YIdzcD98acMuIa8pzdO3mX/yz8gFcoHbmUDByvJhKqmcSxpNw25X3x2e5kNLnNUAMGt8DugKAdlgMss2599PCU+2S5VADGmlUtR8laHFgJTOUIjovU9wyAKN4I6nX3HR+bicHJA1m0UUqfBHcKb12TRYioWeI6/glLxHn/Edaa9eBJDl0NCD1hFNjq6X5fETG7nKMGtqk08gQoFYve/Z0JarC3sqm39hKri8qrGu2I69L8XQk0KO+Qm7lwMZgu7jiMRx/2C7GcwJixUGpRi/EO2+RkaDtxuSb0dGfWwmy9iR1V1YvpKMDIiSsXhF0ZeuYSQldMl88hmSMZMwjVg0H00NM8cbwVDQMlmgBKI2raIUYXbjQj7RHEGnxPCEskk3tTwztJ9Aodx/xcX3o2LVY2exvMc3PWIGKbPy6lC+dp/Ltf5po7nlLzrEgfh9Ve1vbqtfHPc/veFxaYGWR46AeY17Hj9W6sO+Kwo0/mjHBl7EIIpB007RmPyy
-    AUTHELIA_SESSION_SECRET: AgAJ7WimCJ3wOG9u5U2/9AoI22foQ01y5yS8yylwaMIH6C6iyJ3HoyiJkp/PyWQDBXoIXoN+ALL+Y/dz/xkDAMwvC90THFAXKuXpf64YTQY8OeUOXOtWc6av14bzM41jbgHtcwuR1IqIilPRoffbWc8W92yd616SHpsKwefQSHA96YLxmWqA1DR7y9CiQ5nhgp6rslyjr1IVyjoyNSpNMW/oUOG21tySJkhkJRAQreT15AhjiVzaeBqMR/Yo4wFBzN8sDSLpL7D7SP9zv0kMDJ6NFhfKri9FPcHqLnmHMvbrNY7o27NF2EJKuUT7WbY9qAHTU4RNPYQXbosoR1nPK2LIf7AZIJLaNLqO1mBiEVljhUXmgCXeeZYeNjjWR9OT+xQ0csoXTB1J8knrUuux/rx2ZQeywP1kyJJRw9hZlKWETx24TyUfvXBc+CSknUeelqL6zG9DT/kzUwUgllcsVSOGWXmDFdcSIrpYpwnmlDfoNSNnAdA5/pq1F76z7sriBLpyrm4EmWaRWPre8B1OERQNx/I2YLml6cFxgHQLgC3ufOQmiR6pHkLk5wdLSmkn0ezcB9/MW7IJWjWZMPCHNZkk4wHQqoqTNfEzt8iSHffhp4mNocpeLXUFGoivWjy9+fONINuYN/LhfodHNK5yHrjoSlowAkaAv8lDC/Jak22V6D1gkHpUfX3MsweibTYMwImXbeB+0Zc6KeHHJy6mDaCcilIYxxuUlJ8SmUr8QUQPOQ==
+    AUTHELIA_DUO_API_SECRET_KEY: AgCf6/B3oi361tG9kUUryOt9vF6MFT6ixiuZGMnLmT/tcxw02UlsgcFFvlmc/AALppvMaWFsXhKER38Xtrem7akdPm0PIloyz5MucWNTW694JtOwXkF+lg7xjWNZ3MZ2frllZADMKJYns3WGIhWqvqwqDWviJK4yyFt68vxyuc6sR4Ez6arOd5eyFFG0EZiKLH1l2NAX/bqhO/+9HPnChObaHUjcEl5E2sObs339pzQHQMwhueZ7qJpmkBQu7ek+WuoCyAOtk23nu3Np5vwjZgxxetoBj22d/MH5Xv9AKZdR/gHOV/yPYDaFgX/uCpqmZY0XhRC9UNPR+kKLKgpmJc7xge9ZqOuQiqY04l9RU26mlYJ2MHJ2ZrgZ0Tws48sHGyYoeiZyMurj3P3vfm4S7LhYuv8rxAo1lMu+RjwwiRphlhP0iG84Vy8fJxLi7JebUBhi1m1tu/khBGnyqtONq42dxtvZsb07oZI6/IyZgMdGoKWc6tdMkuLYAZoIkW+2/81A+sMj+3ikYVYOcFMiF4jf+w95uPewBMPBXwHUkhaIsSZMxJjzKlkT1P6QYNM2ylGx/cVJiNF+Hp0WXvhfQqpn8lZEAJ9e476oxWHGOd+hlRTflnCr/cRW0XhCuXO+EQJGYhiIk7HY3zV2PYrhrVEqbP3zCW2jeOy6vY2uUfchMU97NfBX4gsL6VL7F1AfILFuQ8VfDEUAi00TqcLisNXbel+cMhyKxuE8nhRWfPF0EEpp6Lhdvw5L
+    AUTHELIA_JWT_SECRET: AgAWGJDhnB5sumvQlkWV2TY8QtReAC+IV9g5TSdu5Uf4APqWdIj5wG6JWUUKKi46ngITgQJ06zXoTjkklmhQhQNmYRMKj5nyXP344wrNH8z1dg8uxZBAeN0gZRA5jxJIP8La9xv0fDceOZxlBaJFqTWlV7Bj4rLmJFoOJpjCWy7y87sR/5rCeviYLZozsb6tMYlckQOUJ8ZixJFPFb2VM6xpTRmuRA1r4YE6fLyWesBfHrQDArLr/ZbNnb0ikxurA189CilP1mD2J1P750C7Qe+Yz0cF9KZUGI14eyqJa0jOzjBhxw30ysv9qYNzeqeur+dFeTx070xEarRBIK8ft3Wm7mV9hW0y23kr/RU/IvO3s8IF5Qoa0lo0Mwqg228N4yPwj/5ty+88dlLosP53ix1B1OFqk9texIYEFmQy21AUBgY/dZKYyae8jL3Uln1wizKpvqpGK4zfB+Q9KOj3AiGotLNu8x+hDj1JWxI/iw24gR8Vo/mxrN24r54X2NCHCK1K8IQbaY1S3i5tzw6XrU+zneAbm4Fc6bJABokpFvOHMIfe3i05eb/hhaZsJhMy3hhCKrajjcYXdwZcx2MnqCOmrRCQLGHsyMW9g4q1tqjvOIaZvzXG4BWPDhWBjAMVM4QaCxDbn39VzRl8+MFmkYiyU+q2XYZp0ohE1oAOHuMUbWUphlJXRVqwfFrrWOul3Bw7KdGIn7nUpHmD+JNzKNB2moXA1gciLXj7vrjoQt9Y
+    AUTHELIA_NOTIFIER_SMTP_PASSWORD: AgCo1WWtjynviQrY0Vlb5BrAKxJkMBQnnbSzmByAfTqbFDS8CWPGDzRixNm+bIM6vxj2C6QeQvrFC1dd0S9p6OkKGfOzwMF3jftaRM5zsh0zWuDkkPc7dswcozzF41H30O87vlHpZ+lpb/Cntmxy30m7tP6ziU+J2Ykgo/Q80h5cMxaTPf/Dwcmcph4c3OWy5bpNq/GRnfoW+haQ13ZQaDb2BIsdXXNrUDIlrd9tbyDX3VrzydNoSX8yY7T55cPNc89KjZScVotVgUAuOVrEnRSonEma3KfqXloylUUiAdXYH/RVO0IHQLvI4YPYjmwAnfYz0S3AW195j5eKImOXi0oK0hVm42fvGC9RhmpUvEg6x2dJXnBo8+Bb504ZWpbvg46ZurVDZTi1lM4vgyp1474ox53/LJzKAukuUGodg7ERBqWwiRvbQs6z9xXfq7y6+mr8vdkxhLE/WcFeg2DWTAwm9w5P/Cv2XICfjvEMK0OamW3w0RxZRXiXovh9zqDx86u5+g/d9szC/oh16cOoj0i+uF7nplgGTu54MOoV2v/0SpHLUv0zrxvG5BdDvngFYa0g6KZIutjs8TpPODfNkE1kue/xEWDvhGYeY5ouUpCH/tL/luefU8FUuIYTmH426X/ixZ53NBIiWeB2ux9IiF/sWPPPuIjNWeWDycISFTxbzVZxgV3RfYvFjzlV555/XxbTBzMLSvvA6K3NIxCusNzM
+    AUTHELIA_SESSION_REDIS_PASSWORD: AgAC4jBpgNtXE0NALEtUW3ZlGk6zDO/DX81BPHx7gJj7hSfCPXpfFevpot6kOC+VgiLcT5ddeDPGbbwtSLWS2GamBAYaLa0chWhYRTJ2OQyGVpmAu1gvIHrTcYowT/BRMs4EtcXszybDDhYgBDu4FSC1cYr9HGnM5zg3Bxew15UTtmj1zFFSlkMtNcqldb2kTSLnejMnp+bGY0/59ykuIqdwq2zI8FkuleL3ZGGzgb50VfJ7qfX5zrCKOzJ6hryLeylJe7G9IRCDk9d3TwfVKd61CbTpqSMXBKptat7ZNf9qrXanK5PzqgSfyX5VdZB7NbsJAh3PqNk4g2L3eSBaTG0VjYUKJokdoy8nXRDlzNmNqKzvR8GRVW6+bd+PQxli4uaaKrPIuOB62p1hM1ajCV1tXbGzUa7Q7V5uPgjYz1IU0yqxDlwpxZrQUmlrLvyXWP/GeGJ/XISYIhzgI5OPc9Co72H/uiG2DKFc6ZNsmii6Tasy4CdLumrE33JfwJQiw6GIKOmwM7/hpAn8xz00aa5l2ce5shVB9jUu8blueJLL4RymlsbqBhqbxoKIug9OojI1D7DOnlIdra8BcUdVzs1SRgfvLeD8Q/W789ev6q9fhOAXdwoUBesDr8sRv3ZWAKlnakY5Bp5ZOUhj5uaMAEA376DJAZTJ45ZXTbvmkH1ej2jjebSsCMojJVe5n9852qO5tWydJLdHS/6Ba0sFL9H2TcbhR5Y4IBUDAzC93fw51g==
+    AUTHELIA_SESSION_SECRET: AgCGTVvs/Ma77+zC0xM+8UqBwkBPisytxUOQyRcun5wZM+ylrcAep3GkHfIcutCemAUqXLZ2D/9WfYl4qNFAJh1bgDx32mx7eIr9WFK5h39WS7amwP7mUomtb/JE2FxIjsggkpXCdCAoN9/b5ySo+tAopN+bD3rq8mBhudMJoeqzybLr74EHlKRPmkU23Zyg3aI1NKc7gDBWtrSmQlrnG3LHcDjH4/bNgFPvwjzc8OTED0ZeIJ+00SaKBZd5HfuNt27cGcmPPLgXJscbN5RWF2EZqOap+26Uv1+hsLQ7E1jlIEsWOoSyNVtNeqcAxDJWVFsl61OaHEDCMdvw42gs2fHJmvJO4KJgzk7YrUp+ObQMFFBXOc72YeDN7MpxW6cwyqglKX9JwnkXAX82kwkilBYHLK6zYUMc1GTFNu/589NngHeOXzhBwB/NMmNZFjx/pn+BpfUj39+U2Sta0P4mOePKlqV4Xp1hK8GqY83+39xCDC3oyZATC6hX0DK373Nv4Tcgve+PEN3TIuQaC41rn/+AuTMUPQSsuTzktALHmCuC/CC3I8tg5ovXLTdLxV65zzqNLueDc/9UsGZJxo+dWZ/VYCkkTHBH4E60o1ZAfDg38muoXN4TfaO8ME9yOO3kyB5r9U/it98ChXPtBPjugv2zQ/CErsrsVjnITswjvku5E56JC57pnntsI7rFPriiQ57DZhc0NYLfQWjjjqWU9EAiCBacxeyVbtGSfJWwU8j2Jw==
   template:
     metadata:
       creationTimestamp: null
@@ -60,6 +61,7 @@ metadata:
   namespace: default
 data:
   configuration.yml: |
+    host: 0.0.0.0
     port: 80
     logs_level: info
     totp:
@@ -71,6 +73,10 @@ data:
       domain: kiski.co
       expiriation: 604800
       inactivity: 300
+      redis:
+        host: 127.0.0.1
+        port: 6379
+        database_index: 0
     access_control:
       default_policy: two_factor
     storage:
@@ -104,7 +110,7 @@ spec:
         app: authelia
     spec:
       containers:
-      - image: authelia/authelia:4.5.0
+      - image: authelia/authelia:4.5.1
         imagePullPolicy: Always
         name: authelia
         ports:
@@ -114,27 +120,28 @@ spec:
           mountPath: /etc/authelia
         - name: authelia-data
           mountPath: /data
-        env:
-        - name: AUTHELIA_JWT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: authelia
-              key: AUTHELIA_JWT_SECRET
-        - name: AUTHELIA_SESSION_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: authelia
-              key: AUTHELIA_SESSION_SECRET
-        - name: AUTHELIA_NOTIFIER_SMTP_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: authelia
-              key: AUTHELIA_NOTIFIER_SMTP_PASSWORD
-        - name: AUTHELIA_DUO_API_SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: authelia
-              key: AUTHELIA_DUO_API_SECRET_KEY
+        envFrom:
+        - secretRef:
+            name: authelia
+      - image: redis:5.0.7-alpine
+        imagePullPolicy: Always
+        name: authelia-redis
+        command:
+          - "/usr/local/bin/redis-server"
+        args:
+          - "--requirepass"
+          - "$(AUTHELIA_SESSION_REDIS_PASSWORD)"
+          - "--dir"
+          - "/data"
+          - "-- save"
+          - "300"
+          - "1"
+        volumeMounts:
+        - name: authelia-data
+          mountPath: /data
+        envFrom:
+        - secretRef:
+            name: authelia
       volumes:
       - name: authelia-config
         configMap:
