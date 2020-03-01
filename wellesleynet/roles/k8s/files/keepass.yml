@@ -1,0 +1,197 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: keepass
+  namespace: default
+spec:
+  encryptedData:
+    auth.conf: AgBkreyeYD5RWe2OCnPWnEQgScMb9nWyfvuGMIH4iNtoEwvrvfci+CNPB6iQKZY66WB/K97nnAZzcKMek70WBhqevTL218D3VD5bUV5p92LttUhRgdbegAptTV7/8E5vUlvJ7fplKgxfG/eVZcV0FNEw2E9fQPhWueIWOCZxeLJgXgMLiSEWPIir4Iss/6CJwCCEglR25S4vJUyXmvQcWhF6lAr8i15lu4BrdI/t2Hm4aPUEMs9NwPNktiD3pkaBxHr211niTGMciYl6KpBX9UwnM1iwYCwDF3eEmrPrMeh7iH8zZuhNZFI6YTooW+FAfSHp9y5ZOmfcj34dDMzBFKVl/ZIYHke3PrVfpABO8Mwve5NBM3F0C5Ut0nVLAFRQvnB7LJCMyvm/KEPoHcvLYuUlU7mw1gHn3agkGeNfyhmZ4csi9i/uX4ZJbbLoPY0rHM+YNBk60ilH4fkuG3ACGgd5cPT+56eszfhI1akHGVgGh8VirzO2gPlgj4f4jmuJgqSB6UaGFf7kl3PLmuZYtYKOz0qwvi0uqRzdYeXWisQNf9QEUbqVJAbn8073KeZ7a0Mx5eMyDvyyeAAECoo5ix82JMHpthRgp9R9vmSTCLSBTTVLb8/8qdmZ3aTleKxgMPluqNKTmZj1jd7UQzaG7rSvKmx/kgVZoEytDb8UV8BIYUc65jt+wolE+NENtV2wVqEArjLtGJog51WhN4dr3rc3tqzLDhRf4966xBRvV01fN82dO+XIJmRJki9rbfisKK7HRkQWLSrWbZ2b3H6Ls9pZmgd0FLUqCbdsB9Ln/tw858v0YcOWN815MQ==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: keepass
+      namespace: default
+    type: Opaque
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: keepass
+  namespace: default
+data:
+  httpd.conf: |
+    ServerRoot "/usr/local/apache2"
+    Listen 80
+    LoadModule mpm_event_module modules/mod_mpm_event.so
+    LoadModule authn_file_module modules/mod_authn_file.so
+    LoadModule authn_core_module modules/mod_authn_core.so
+    LoadModule authz_host_module modules/mod_authz_host.so
+    LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
+    LoadModule authz_user_module modules/mod_authz_user.so
+    LoadModule authz_core_module modules/mod_authz_core.so
+    LoadModule access_compat_module modules/mod_access_compat.so
+    LoadModule auth_basic_module modules/mod_auth_basic.so
+    LoadModule reqtimeout_module modules/mod_reqtimeout.so
+    LoadModule filter_module modules/mod_filter.so
+    #LoadModule mime_module modules/mod_mime.so
+    LoadModule log_config_module modules/mod_log_config.so
+    LoadModule env_module modules/mod_env.so
+    LoadModule headers_module modules/mod_headers.so
+    LoadModule setenvif_module modules/mod_setenvif.so
+    LoadModule version_module modules/mod_version.so
+    LoadModule unixd_module modules/mod_unixd.so
+    LoadModule dav_module modules/mod_dav.so
+    LoadModule status_module modules/mod_status.so
+    LoadModule autoindex_module modules/mod_autoindex.so
+    LoadModule dav_fs_module modules/mod_dav_fs.so
+    LoadModule dav_lock_module modules/mod_dav_lock.so
+    LoadModule dir_module modules/mod_dir.so
+    LoadModule alias_module modules/mod_alias.so
+    <IfModule unixd_module>
+    User daemon
+    Group daemon
+    </IfModule>
+    <Directory />
+        AllowOverride none
+        Require all denied
+    </Directory>
+    DavLockDB /tmp/DavLock
+    DocumentRoot "/usr/local/apache2/htdocs"
+    <Directory "/usr/local/apache2/htdocs">
+        DAV On
+        DirectoryIndex disabled
+        #AllowMethods HEAD GET POST CONNECT PUT DELETE OPTIONS PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK TRACE
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        AuthName "keepass"
+        AuthType Basic
+        AuthuserFile /usr/local/apache2/conf/auth.conf
+        Require valid-user
+    </Directory>
+    <Files ".ht*">
+        Require all denied
+    </Files>
+    ErrorLog /proc/self/fd/2
+    LogLevel warn
+    <IfModule log_config_module>
+        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+        LogFormat "%h %l %u %t \"%r\" %>s %b" common
+        <IfModule logio_module>
+          LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+        </IfModule>
+        CustomLog /proc/self/fd/1 common
+    </IfModule>
+    <IfModule headers_module>
+        RequestHeader unset Proxy early
+    </IfModule>
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: keepass
+  namespace: default
+  labels:
+    name: keepass
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/secure/keepass
+    server: callisto.wellesleynet.com
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: keepass
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: keepass
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: keepass
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keepass
+  serviceName: "keepass"
+  template:
+    metadata:
+      labels:
+        app: keepass
+    spec:
+      containers:
+      - image: httpd:2.4.41-alpine
+        imagePullPolicy: Always
+        name: keepass
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: keepass-data
+          mountPath: /usr/local/apache2/htdocs
+        - name: keepass-conf
+          mountPath: /usr/local/apache2/conf
+      volumes:
+      - name: keepass-data
+        persistentVolumeClaim:
+          claimName: keepass
+      - name: keepass-conf
+        projected:
+          sources:
+          - secret:
+              name: keepass
+          - configMap:
+              name: keepass
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: keepass
+spec:
+  selector:
+    app: keepass
+  ports:
+  - name: keepass
+    port: 80
+    protocol: TCP
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: keepass
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+  - host: keepass.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: keepass
+          servicePort: 80
+  tls:
+  - hosts:
+    - keepass.kiski.co
+    secretName: kiskico-wildcard
