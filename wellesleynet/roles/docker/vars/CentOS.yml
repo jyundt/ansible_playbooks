@@ -7,7 +7,7 @@ docker_deps:
   - yum-utils
   - device-mapper-persistent-data
   - lvm2
-docker_version: 18.09.9-3.el{{ ansible_distribution_major_version }}
+docker_version: 19.03.8-3.el{{ ansible_distribution_major_version }}
 docker_packages:
   - docker-ce-{{ docker_version }}
   - docker-ce-cli-{{ docker_version }}
