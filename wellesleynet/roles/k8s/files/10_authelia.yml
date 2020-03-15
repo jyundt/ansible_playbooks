@@ -91,7 +91,7 @@ data:
         port: 587
         sender: jyundt@gmail.com
         username: jyundt@gmail.com
-        disable_require_tls: true
+        disable_require_tls: false
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -110,7 +110,7 @@ spec:
         app: authelia
     spec:
       containers:
-      - image: authelia/authelia:4.7.0
+      - image: authelia/authelia:4.7.1
         imagePullPolicy: Always
         name: authelia
         ports:
