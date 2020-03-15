@@ -63,7 +63,7 @@ data:
   configuration.yml: |
     host: 0.0.0.0
     port: 80
-    logs_level: info
+    log_level: info
     totp:
       issuer: authelia.kiski.co
     authentication_backend:
@@ -110,7 +110,7 @@ spec:
         app: authelia
     spec:
       containers:
-      - image: authelia/authelia:4.6.0
+      - image: authelia/authelia:4.7.0
         imagePullPolicy: Always
         name: authelia
         ports:
