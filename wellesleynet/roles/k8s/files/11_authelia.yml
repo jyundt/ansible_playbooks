@@ -75,7 +75,7 @@ data:
         groups_filter: (&(memberUid={dn})(objectclass=posixgroup))
         group_name_attribute: cn
         mail_attribute: mail
-        user: cn=ldapsvc,ou=svaccts,dc=kiski,dc=co
+        user: cn=ldapsvc,ou=svcaccts,dc=kiski,dc=co
     session:
       domain: kiski.co
       expiriation: 604800
