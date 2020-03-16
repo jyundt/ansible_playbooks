@@ -35,6 +35,8 @@ metadata:
     app.kubernetes.io/part-of: ingress-nginx
 # custom, added for syncthing
 data:
+  389: "default/glauth:389"
+  636: "default/glauth:636"
   22000: "default/syncthing:22000"
   22067: "default/syncthing:22067"
   22070: "default/syncthing:22070"
