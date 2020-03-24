@@ -1,3 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: metallb-system
+  labels:
+    app: metallb
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
@@ -310,7 +316,7 @@ spec:
             secretKeyRef:
               name: memberlist
               key: secretkey
-        image: metallb/speaker:main
+        image: metallb/speaker:v0.9.3
         imagePullPolicy: Always
         name: speaker
         ports:
@@ -366,7 +372,7 @@ spec:
       - args:
         - --port=7472
         - --config=config
-        image: metallb/controller:main
+        image: metallb/controller:v0.9.3
         imagePullPolicy: Always
         name: controller
         ports:
