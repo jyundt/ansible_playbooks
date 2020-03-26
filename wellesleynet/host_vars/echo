@@ -1,0 +1,2 @@
+---
+luks_password: "{{ vault_echo_luks_password }}"
