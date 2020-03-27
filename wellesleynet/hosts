@@ -2,7 +2,7 @@
 1jane
 2jane
 3jane
-echo ansible_python_interpreter=/usr/bin/python3 timezone=America/New_York
+echo timezone=America/New_York
 
 [wireguard]
 nyx.kiski.co ansible_python_interpreter=/usr/bin/python3 timezone=America/New_York
