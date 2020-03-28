@@ -1,0 +1,5 @@
+---
+- name: Install and configure x11vnc
+  hosts: x11vnc
+  roles:
+    - x11vnc

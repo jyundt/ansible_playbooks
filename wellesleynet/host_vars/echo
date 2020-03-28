@@ -1,2 +1,5 @@
 ---
 luks_password: "{{ vault_echo_luks_password }}"
+timezone: America/New_York
+x11vnc_port: 5901
+x11vnc_password: "{{ vault_echo_x11vnc_password }}"

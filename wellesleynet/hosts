@@ -2,7 +2,7 @@
 1jane
 2jane
 3jane
-echo timezone=America/New_York
+echo
 
 [wireguard]
 nyx.kiski.co ansible_python_interpreter=/usr/bin/python3 timezone=America/New_York
@@ -60,3 +60,6 @@ mnemosyne.wellesleynet.com
 [k8s:children]
 master
 worker
+
+[x11vnc]
+echo

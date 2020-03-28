@@ -1,0 +1,39 @@
+---
+- name: Install x11vnc
+  package:
+    name: x11vnc
+    state: present
+    update_cache: yes
+
+# Note that this won't check the validity of the x11vnc password, just the
+# presence of the file. If you want to change the password, nuke the old one
+# from the server and re-run.
+- name: Create x11vnc password
+  command:
+    cmd: "x11vnc -storepasswd {{ x11vnc_password }} {{ x11vnc_password_file }}"
+    creates: "{{ x11vnc_password_file }}"
+  notify: Restart x11vnc
+
+- name: Copy x11vnc systemd unit file
+  template:
+    src: x11vnc.service.j2
+    dest: "{{ x11vnc_systemd_unit_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart x11vnc
+
+- name: Open firewalld port for x11vnc
+  firewalld:
+    port: "{{ x11vnc_port }}/tcp"
+    state: enabled
+    permanent: True
+    immediate: True
+  notify: Restart x11vnc
+
+- name: Start/enable x11vnc
+  systemd:
+    name: x11vnc
+    state: started
+    enabled: yes
+    daemon_reload: yes

@@ -1,0 +1,6 @@
+---
+- name: Restart x11vnc
+  systemd:
+    name: x11vnc
+    state: restarted
+    daemon_reload: true

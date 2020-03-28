@@ -1,0 +1,15 @@
+[Unit]
+Description=x11vnc
+Requires=gdm.service
+After=gdm.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/x11vnc -auth guess -forever -shared -rfbauth {{ x11vnc_password_file }} -rfbport {{ x11vnc_port }} -noxdamage -noxrecord
+ExecStop=/usr/bin/pkill x11vnc
+Restart=on-failure
+RestartSec=2
+SuccessExitStatus=2
+
+[Install]
+WantedBy=graphical.target
