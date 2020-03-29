@@ -1,0 +1,149 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: guacamole
+  namespace: default
+spec:
+  encryptedData:
+    POSTGRES_PASSWORD: AgBPquI6LnXtXQOTbpjzJ7DCqEcnNbst0C1vWMCB7OR1x3A6jGy22rlGNlD8y5X/zjkEgN9hGfZQQ5VKXo3UJO7Je5XRRDxKLwGIDpQdL+qVGNaoU/jWxIOG+fYXt4x6oQpV4NaPaD+Asj7Nqu1M7okSnvHVUwdwaUDrmuqHevvz7PtRIgyzGZ/ygfJLupaOZilFNePomzplrgQOGT/adSR0OfS/zB9nZZgi76eBoglViA8wdVZfYSxpwZE82aAKF+GOllkyI/vPhRhxhpvUFHQ/bwmv4ZEVtvUBCfHMJVDE2jFB6f6cu0fWovWXHLCdveIemkCeadfh0aMkeNmqDdYr0xV0SYQKqgJpUPkEj4HZv5/PvCpPTf+xH6OZ5pa2wqSz0zXWtVIzDgLw+4C74RC0lzjXPvqcQ7ldEQmFd69pN+SQ1nHGDUrcDrApw1a276K6l5tP3ivIpStFo1NctUki4M2y4iaoRigGdjp3NHrUTNphKPjtynJ5yjDwzCqdPCW3TTcWotqgRmaMe4VQ07ly0QUUZl3HH48unXdhgHkf8UoMawP48mZewKbn29LPu6i/NacqVN+3Zt2lxuL50MyfGQrnBmFRs2TvMPyc/iX0df2Y5ZITKBOx4v/jIvF6E4Hwz4h+SrWCGyf2sOXD0PWFaR20ZXVaOiiDB5cLP6tazixwpt/rVtreLAmQ1u8+Ch8S/siUzf1HbEkwXUltHl+K/AV/63C6eRiHYrOabpz1og==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: guacamole
+      namespace: default
+    type: Opaque
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: guacamole
+  namespace: default
+  labels:
+    name: guacamole
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/apps/kubernetes/guacamole
+    server: callisto.wellesleynet.com
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: guacamole
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: guacamole
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: guacamole
+  namespace: default
+data:
+  GUACD_HOSTNAME: localhost
+  GUACD_PORT: "4822"
+  POSTGRES_HOSTNAME: localhost
+  POSTGRES_PORT: "5432"
+  POSTGRES_USER: guacamole
+  POSTGRES_DB: guacamole
+  POSTGRES_DATABASE: guacamole
+  PGDATA: /var/lib/postgresql/data/pgdata
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: guacamole
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guacamole
+  serviceName: "guacamole"
+  template:
+    metadata:
+      labels:
+        app: guacamole
+    spec:
+      containers:
+      - image: guacamole/guacd:1.1.0
+        imagePullPolicy: Always
+        name: guacd
+      - image: guacamole/guacamole:1.1.0
+        imagePullPolicy: Always
+        name: guacamole
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: guacamole
+        - secretRef:
+            name: guacamole
+      - image: postgres:12.2-alpine
+        imagePullPolicy: Always
+        name: guacamole-postgres
+        volumeMounts:
+        - name: guacamole
+          mountPath: /var/lib/postgresql/data
+        envFrom:
+        - configMapRef:
+            name: guacamole
+        - secretRef:
+            name: guacamole
+      volumes:
+      - name: guacamole
+        persistentVolumeClaim:
+          claimName: guacamole
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: guacamole
+spec:
+  selector:
+    app: guacamole
+  ports:
+  - name: guacamole
+    port: 800
+    protocol: TCP
+    targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: guacamole
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/app-root: /guacamole
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+spec:
+  rules:
+  - host: guac.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: guacamole
+          servicePort: 8080
+  tls:
+  - hosts:
+    - guacamole.kiski.co
+    secretName: kiskico-wildcard
