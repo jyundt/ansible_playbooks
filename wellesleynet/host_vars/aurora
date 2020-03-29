@@ -1,0 +1,4 @@
+---
+luks_password: "{{ vault_aurora_luks_password }}"
+timezone: America/New_York
+x11vnc_password: "{{ vault_aurora_x11vnc_password }}"
