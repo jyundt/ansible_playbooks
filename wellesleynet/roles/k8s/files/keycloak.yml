@@ -1,0 +1,145 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: keycloak
+  namespace: default
+spec:
+  encryptedData:
+    DB_PASSWORD: AgDAmnPfRuAMs0ZcY4xn8eZhj2dxP+hMFK2RRAuxX/ZoREjF+X0CrVLI49QPs6FLJ7f262EdxwQtE6t0AEUYacT7bLs2MzSTcjcqskO8wvUuPL4vV7MQ8saaw5PzPXpqq/RqlGmU2SpjDxskZPQmApDzzdi0VXKuMicPs8XTO7b0FJc67sXzcWYDNYA0SBt2XtN0+UdSnGK/sCC76uhIzJlRgx35uMWkB3kfZArQnvFQh3XxYTjzmLHAEPumGkWfwGSMn6B2yuPFl6K2BomXl54fT80p9iPn1+UROGKipRT5YukUip5GKhmTpX+EEnA5vxWwhyNO9ILFC672at1WR/JAlg1fun2AqkPc5PgHpajQB18jzSOt/aitDRAAYTQD7lrqEF/GJm95LcKk72L9dhacbhgJ1qFLnPuLvpsGGmeT/ypOuQdMTdqhc+Z5rvVmjIp9GOkqAApMWgjJv3Rl2Qsrm035MnYEc0sz5+rc0ax8lDgGZGxNA1StvXnV6Hx25JxpyGs8fxOTOaPpfqxWqqgO3H6Kx6RYzhmt7gwxXwCaNoll2lDLan9FyCrJHg7hf+rVBoqstTcT27LEpmJ3dy6sAl7g02wxOQQrQqPzUlo/mWMw1X9aGQ+qRY5AdH2hmOJyKPSXfn3RHjywW/sDnq/aLrMycbNjoxOSFxVKwG4njIou5xulIkDRCCotPXEitA85wAuyoLHU7EPSCyaePT1zSSQhDBw7zPQfQoOPdBkeIA==
+    POSTGRES_PASSWORD: AgAlxFBLRPHx8NdafvKXrNqkRhZTuTmR6ERicCL47n3fby8LFzH4gsoRrDr+n+nxFbpOZS3a1prIX7VrR9Q5qozotjKDbP+Nb1wfwI2RRuzQkzpsqKUoNzjKga4UGfkeB4spTX1yP/kSwb4PyRX5KJCYZuuSUqtx+jqfWBctqTvRliJzuObL/+P0ub36NIknz3kbTB6px9tusoOLzLbKthZmZlUWQyD0ET0IBekFS7HIXn+e4zYkJH9Yylu7b9vfs4dp3o3/S2FB5yBMl14YKV+tmXOcmJZ1eQ1XilzgliLQpVE98MKQ9R+VDC11nC4d0u6ODHAWfbLAyIDDAFqSHW2oWpgRgmrtVk0DHziq5X+CWCUm+NlT5eVJLUMpOW4JOD7VNaX8P7+1gIhI2MS1R4fW5ZvBeiepiIB74QD45UOjF9k4LWysT4dFT1j0lsvT/DDT2nWbhFG6NkX2t5GctEn/P8TiPsUv2d3nnSBxxoy3l9Y/V7YHFhRIyFmeCRXIaYp8j2UE+XnYUNvd/L4m17WQxh4DhE7T+qfJSvt6GUEirDXckLJdS36lcyMTb5xh5/sUyhNONkLWjdJCs3Bo6hVs+Dk0q+6eFOwRqVqi1VinmsqZyaWH0jVS5CuxlXttTuxhUBDW0z+Zg4OVjtkkW6YS8Kl7EED2j+o26nLf1LqTDwzwZTv4Z5qlNCdRemVsy7tuAmyV9msdphJvy15mBN4YJHgkJKSfD4YOlI75OWu44g==
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: keycloak
+      name: keycloak
+      namespace: default
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: keycloak
+  namespace: default
+  labels:
+    name: keycloak
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/apps/kubernetes/keycloak
+    server: callisto.wellesleynet.com
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: keycloak
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: keycloak
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: keycloak
+  namespace: default
+data:
+  POSTGRES_USER: keycloak
+  POSTGRES_DB: keycloak
+  PGDATA: /var/lib/postgresql/data/pgdata
+  DB_VENDOR: postgres
+  DB_ADDR: localhost
+  DB_PORT: "5432"
+  DB_DATABASE: keycloak
+  DB_USER: keycloak
+  PROXY_ADDRESS_FORWARDING: "true"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: keycloak
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  serviceName: "keycloak"
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+      - image: jboss/keycloak:9.0.2
+        imagePullPolicy: Always
+        name: keycloak
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: keycloak
+        - secretRef:
+            name: keycloak
+      - image: postgres:12.2-alpine
+        imagePullPolicy: Always
+        name: keycloak-postgres
+        volumeMounts:
+        - name: keycloak
+          mountPath: /var/lib/postgresql/data
+        envFrom:
+        - configMapRef:
+            name: keycloak
+        - secretRef:
+            name: keycloak
+      volumes:
+      - name: keycloak
+        persistentVolumeClaim:
+          claimName: keycloak
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: keycloak
+spec:
+  selector:
+    app: keycloak
+  ports:
+  - name: keycloak
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: keycloak
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+spec:
+  rules:
+  - host: keycloak.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: keycloak
+          servicePort: 8080
+  tls:
+  - hosts:
+    - keycloak.kiski.co
+    secretName: kiskico-wildcard
