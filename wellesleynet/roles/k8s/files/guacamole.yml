@@ -121,7 +121,7 @@ spec:
     app: guacamole
   ports:
   - name: guacamole
-    port: 800
+    port: 8080
     protocol: TCP
     targetPort: 8080
 ---
