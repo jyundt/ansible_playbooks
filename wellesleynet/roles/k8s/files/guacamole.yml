@@ -145,5 +145,5 @@ spec:
           servicePort: 8080
   tls:
   - hosts:
-    - guacamole.kiski.co
+    - guac.kiski.co
     secretName: kiskico-wildcard
