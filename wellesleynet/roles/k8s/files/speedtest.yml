@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: speedtest
+  name: speedtest
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: speedtest
+  template:
+    metadata:
+      labels:
+        app: speedtest
+    spec:
+      containers:
+      - image: linuxserver/librespeed:5.2-ls9
+        imagePullPolicy: Always
+        name: speedtest
+        ports:
+        - containerPort: 80
+        env:
+        - name: TZ
+          value: 'America/New_York'
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: speedtest
+  namespace: default
+  labels:
+    app: speedtest
+spec:
+  selector:
+    app: speedtest
+  ports:
+  - protocol: TCP
+    port: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: speedtest
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 30m
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 30m
+spec:
+  rules:
+  - host: speed.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: speedtest
+          servicePort: 80
+  tls:
+  - hosts:
+    - speed.kiski.co
+    secretName: kiskico-wildcard
+
