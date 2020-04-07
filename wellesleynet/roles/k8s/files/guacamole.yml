@@ -135,6 +135,7 @@ metadata:
     nginx.ingress.kubernetes.io/app-root: /guacamole
     nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    nginx.ingress.kubernetes.io/proxy-buffering: "off"
 spec:
   rules:
   - host: guac.kiski.co
