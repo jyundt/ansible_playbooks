@@ -15,3 +15,8 @@ data:
       avoid-buggy-ips: true
       addresses:
       - 192.168.167.0/24
+    - name: local
+      protocol: layer2
+      auto-assign: false
+      addresses:
+      - 192.168.67.201-192.168.67.211
