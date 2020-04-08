@@ -129,6 +129,9 @@ metadata:
 spec:
   selector:
     app: plex
+  type: LoadBalancer
+  loadBalancerIP: 192.168.67.202
+  externalTrafficPolicy: Local
   ports:
   - name: plex
     port: 32400
