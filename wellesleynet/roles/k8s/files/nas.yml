@@ -88,6 +88,8 @@ metadata:
     nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    # BMC/BIOS updates can be ~32MB
+    nginx.ingress.kubernetes.io/proxy-body-size: 33m
 spec:
   rules:
   - host: callisto-bmc.kiski.co
@@ -110,6 +112,8 @@ metadata:
     nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    # BMC/BIOS updates can be ~32MB
+    nginx.ingress.kubernetes.io/proxy-body-size: 33m
 spec:
   rules:
   - host: io-bmc.kiski.co
