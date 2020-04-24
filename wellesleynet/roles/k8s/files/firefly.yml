@@ -1,0 +1,163 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: firefly
+  namespace: default
+spec:
+  encryptedData:
+    APP_KEY: AgBUwJF64cxiafBXwVplE7bEJyFwqGbTs/b1AybMdBoz1N2GjexIDTrv9EXGkzTgFfdk9e1+6feyggiru1mcv5Cr/FO0eZGawBLnZFi1eqDGUv5e5+lQ8qa1Bi57sJTjiaAqx+rgpDAZWIv+NXpLmCFQTCCnN1JYxlq2Nqpot6ieya/nNNsn4lWdB1BqihYQRlIhAu9I9Fw/eGJdXjCkxtAP+qQpS2tJ4G5UbQdkMjeaD6w+Vw5IOsNRV1EkKXLW40Efh7n1cLHeu/XgEKf1ljLVbcrwWG66u+E/O7J8VXqf37l6QTpqmJZb/vaQD8yvwHYfFelI6a7a9VkWG/wslm+hJS2KgEaofoK1nWla4M58ZPTHdSvwUl9RVtQGQI7+ZbjUNy40iA7lubSLPpkXHjHwv1apDcTQrvVCQczOAFunKndQd0nK4bUQSWn98XBAfIHAusZ06TJxoPkiXC/shK/ZuyqkyhIChWo6wYB5w/VM69vZlPWFDqPpfkCmD3M5YSoY+TnmGkMzEauMavENF0IqoI9u42nbGBcXleMeGbU1tl/zz29WYvCQZWawlTbtBMJQiYPAuwq2v9d7LNlJlfMpRivVwKR0K4YVAFowTNsfV3TxH+yILvWSn9pZDbOExhpxNcdhLFOyK7tCA/qLK4TXxcmHReAe4tmQq5O5zsrpiUjf0eDdo4xS0mLakhWW2cC86r6Lm0FKwnt02eTSUG4GWiQ6GSpwlNMPdKzQzR6HPg==
+    DB_PASSWORD: AgB8lWvz6IgH+Ijd9id9X0lniRSj7i9jGUYx/YFjZ5Dc1L+b92ekK4mW2jjnuZKyKPS8GppnW0zjnSlrIeliqT6AC4rnqjT9GrUUA1e7EJ5b3/Xb+pvY5kUH08JE/QVOobY/jSId9gKHRHi3N6VlA5dOM0nQ7Gm6PE+25b7ZaHrjdMbDA6TwE6yz3vr9uLjUSgOo3/4HMxNruW4zAYqP8npv7emLMmIt5OnpaBRqHGbC+ClHZB2/bIuodM9nO4oW4dJhn25VqkQmXF6ekYHrfVIH7KAiRs5vBWzUAYbAI+nK41PYDG3lwIHBMA6zRATh5wtX/woPjMYmqJ/65+hfLfENHbiS/ES5zZR19WBowPOw0sd/rQHfOmdKr+J+cMEqseJISa55QcU/q6gE5O03voP4GUpe60jwxKJmE7DRfEVbyQZSUHKQbhilgYppv99zh2lj+sYRMwVUeXpXTi+ZNKlIeuAGy/dIoNkEivzgXHw60ZVPOlQj117MZUR5ablRRMAuqPnc3sJ8WuEdOgCQZWl6RS/XRbzJd1d0Lc8Gfwta+mCkntF3jgH7KAGmUcCaJMk46YwsDxGX+e6221UMUMClfF/UhMNFc59KPtrKnKu+SWZ8q94z4y2zZNdr1UZa8u1sziN2V/JmeqpQ8jlmCnxbrIGB5Q6KD/Sj9GfJjiy5E/FpJ+DB56u2WzM7iClGrM46tnN5dcvb
+    MAIL_PASSWORD: AgCSeQ5vkiNxiUFzPYK7sZoi1Yr38HZwZmwUdTVJ176+Sfmu3hmqCxbo7gz7XsVL4J2MPH2LiMfqeigUzKeyhCqm8xHBZHgK3FCHHkB/TnDxNzi+Z1Bz1YXNeyu9itzxQAuGS1nYY4YTtKa2/Qp6oN3mmedZYcRjpCqO5nQ7IdjyQ67WFSy1r5OGTOqS8kASW3rZ7ky7cyYiU8l0JgYJbSifxPM2S5PGeo8QxSE+kHR9SpAGYMwtxOKDcLSZKEV+6QmDBbT/4a4wrXkfauiN26SKMVU5ZJ6dvf2j+7WVXc/7dO0+GHmpEj0XebC4SVN17k5DZ/mGxxcfcoinPQRVExqdU4Yp7lWCR7wCWvw17WIqJf+jlXacklQNsdumM+t6Gu4gvFu7SN/wYfG8p1P9boUqZsFAxJce4kp+MI8gxd4A2Xe2aKKFQ4xr6AjjOBb0EFzTXKiMh9zvN+Zk3cpwFlf35X3McHshhRGGL6qQ3qFnq3bCl9MyRUv24DCxK7lgUeeP7/bGKYa8hACHFzq0rdbSkmyWPAWmwL0Mpb/qnRJSbMkkp+psgVc17khffSNFobLrvHRF9KVxGfAVlnN3fNs6D/HwUVpASOCvKXoBccBZgVPhO9huZ9YhJf258Mg5r7xWVIvtsC4nCM6LsRO24IHwVmbSmgSVq6P0rmOre3Ffww7+KW+eEhNIMX6Zq+8ag0jQPqZ+2GWgIb+q6Igw3Owr
+    POSTGRES_PASSWORD: AgC2Tg3k2ksODneWoNvcWCQUJqDRlKQyXDnHkiEDHn4+38gCGdn+KBv70NnXXXb1vqMOE/Q7weiDxcGzNjCv4i562kTJQPtqk+aIE+3wXpO2Bw184SbYN3r+NDJTVlt0H5Ju1PCRbpgIPc9QJzQ3BQ5n6e/+CaMSUmD6Ko/4BsM+DtDly/25s09CrOX1dy1ZHbn628cpGOHQgtdxPG/m4BiSWY1rvO0PezQoQ2u/ASoFOjbp9lPTKjm0FkaePaaJ2GQ2ANmDSWffkA9AGq/KtOc7PuEYWbTapbizPfoqO8sktuP6mjiV5nH81FiRN34OztTkNCOJTVXPKf71kmmVKTKIiUPj+FSY/uFLWxjIywn5Epz0TLi4WXe/E9qfTw8SaVFXoCtdZ46zjr2HdXUgRzgkjf1+pMC1o78CNOrfzhb09efMhy+57Z909wzjKdRZ2/JaHQ92Yc8ZjLMKvqh9dmPsFsJnDGiydBDb9agcNi53sgg7iAnttEtXRsr5skxyxS1cHLFDSm7V+lYapZxIrksnIw809lziLgygpl5FpkAgHUIyRG5+xuDrQJfou7sAxPvvrxA8oNe5CFjPxT+BO1mKwt66v6+gpHC3Vlm7FNTUv/ick1ydVvwFuVvL2ZIWkR3NBFUKmMGrXkZsrdV/HkYhhfXFQlwxqLJUgRShkpH+9mhP83EhlLw7C51nP/ZH/jMRTQDLSGRA
+  template:
+    metadata:
+      creationTimestamp: null
+      name: firefly
+      namespace: default
+    type: Opaque
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: firefly
+  namespace: default
+  labels:
+    name: firefly
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/apps/kubernetes/firefly
+    server: callisto.wellesleynet.com
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: firefly
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: firefly
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: firefly
+  namespace: default
+data:
+  MAIL_DRIVER: smtp
+  MAIL_HOST: smtp.gmail.com
+  MAIL_PORT: "587"
+  MAIL_FROM: jyundt@gmail.com
+  MAIL_USERNAME: jyundt@gmail.com
+  MAIL_ENCRYPTION: tls
+  DB_HOST: localhost
+  DB_PORT: "5432"
+  DB_DATABASE: firefly
+  DB_USERNAME: firefly
+  POSTGRES_PORT: "5432"
+  POSTGRES_USER: firefly
+  POSTGRES_DB: firefly
+  POSTGRES_DATABASE: firefly
+  PGDATA: /var/lib/postgresql/data/pgdata
+  TRUSTED_PROXIES: "**"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: firefly
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: firefly
+  serviceName: "firefly"
+  template:
+    metadata:
+      labels:
+        app: firefly
+    spec:
+      containers:
+      - image: jc5x/firefly-iii:release-5.2.3
+        imagePullPolicy: Always
+        name: firefly
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: firefly
+        - secretRef:
+            name: firefly
+        volumeMounts:
+        - name: firefly
+          mountPath: /var/www/firefly-iii/storage/export
+          subPath: export
+        - name: firefly
+          mountPath: /var/www/firefly-iii/storage/upload
+          subPath: upload
+      - image: postgres:12.2-alpine
+        imagePullPolicy: Always
+        name: firefly-postgres
+        volumeMounts:
+        - name: firefly
+          mountPath: /var/lib/postgresql/data
+        envFrom:
+        - configMapRef:
+            name: firefly
+        - secretRef:
+            name: firefly
+      volumes:
+      - name: firefly
+        persistentVolumeClaim:
+          claimName: firefly
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: firefly
+spec:
+  selector:
+    app: firefly
+  ports:
+  - name: firefly
+    port: 80
+    protocol: TCP
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: firefly
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+spec:
+  rules:
+  - host: firefly.kiski.co
+    http:
+      paths:
+      - backend:
+          serviceName: firefly
+          servicePort: 80
+  tls:
+  - hosts:
+    - firefly.kiski.co
+    secretName: kiskico-wildcard

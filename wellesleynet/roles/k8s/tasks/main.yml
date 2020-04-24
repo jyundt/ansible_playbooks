@@ -261,5 +261,11 @@
       definition: "{{ lookup('file', 'speedtest.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
+  - name: Create firefly-iii deployment
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'firefly.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
   run_once: True
   delegate_to: "{{ k8s_master }}"
