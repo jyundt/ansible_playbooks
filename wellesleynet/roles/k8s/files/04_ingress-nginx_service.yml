@@ -5,7 +5,7 @@ metadata:
   namespace: ingress-nginx
   labels:
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/part-of: ingress-nginx
+    app.kubernetes.io/instance: ingress-nginx
 spec:
   type: LoadBalancer
   loadBalancerIP: 192.168.67.201
@@ -41,4 +41,46 @@ spec:
       protocol: TCP
   selector:
     app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/instance: ingress-nginx
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: ingress-nginx-maxmind
+  namespace: ingress-nginx
+spec:
+  encryptedData:
+    MAXMIND_LICENSE_KEY: AgCEQeLU7p9FNgvakxlNYoF69j6F36nJPlFryj0NmG7XvgtXRpJRQCDuBq1cvRd5byT+EGsUReN8eD0N78wfaPQzwateWhOVUijb064J5AkvdQKcWmrOUIECmUymNk6+vizYCRQeWTqpVVOx0cyS4lsKX2TKifCl9BKn3DvDOVDF6FY6nh1Jsh17rS0bHlMM0c6M8M6RSXUsZiGv8Az/JOgI3XfyIpSc8XQBLx29fhagzWT3ai9hL9xiqJRgNkzc0rciTJ++zdzZL5n9j+E7XrbLE/lKMooABoees8J35HKbyhuSCohJICoW5LjW9JrNDY+B0HpEaxfT+s2aO2yaFudbCVKS6KQnaTo6iB2WwIlIdiJJY/0hImXNcFJ6lEPDZeyEF9dsRVCDtLNjkZfiMd9UoBBVh4OD+KKru12s/Q46y7U0nXY3UPTqTsSxinYjBNmWG2T2xTn556xyZjbocuheQihCEOx29Ed71zrW8ubb1h1se+9vQ2qVSRnE1P2I8fCa3Py/zDkGTTLFaeAYjRB1CiFwJ81qtzJVq72TqEI+ZKZwe72nNMx+yPbZDsb30tz7ONf12emAwirQ3yWFHTa1c5cuOxH679z3i2v+ZvgXvHBM/TE6Dbu8tijEN9e8l3T+orNA/IZ0W7ueGbGnTITdDV6pu/l6uHPAlpDtvwJ0m3AZxb4yp3fdoD6q8QCFfsmBC0kYVyXD7TqdpQwlz8ni
+  template:
+    metadata:
+      creationTimestamp: null
+      name: ingress-nginx-maxmind
+      namespace: ingress-nginx
+    type: Opaque
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: tcp-services
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
+# custom, added for syncthing
+data:
+  636: "default/glauth:636"
+  22000: "default/syncthing:22000"
+  22067: "default/syncthing:22067"
+  22070: "default/syncthing:22070"
+  19200: "default/syncthing:19200"
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: udp-services
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+
