@@ -83,4 +83,21 @@ metadata:
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
-
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: lb-dhparam
+  namespace: ingress-nginx
+spec:
+  encryptedData:
+    dhparam.pem: AgCPayII1Ieiql9LfJElFJyxbB7CymyFGw5CwhsLuEEoaC9T2Sf2C8k+FUMyyaaGOGjKzdcEw8S7CBLCMD3eD5mIMqHvUdTK62Hlw8jZVnuqDxUMTomIKtN2YSrBO+dKc93ZZ0+8/GmPfla+hpIFaUqIvoExcaMFtSSSsROoPMBT4d+1vftBGg5TJe6Ks0yQxl5fm9Q92iQbAcdHerH9AkCPZv0m3YBzelp4DK8KIN4ypqMxF/fF9CROjN/zaA3WA3+LO/42VRJQfL+8d9salJ2CDgTivIDoqoYa/wnNPbPPoWEWJrkM6Fl2fni5B6VSt66z8A/JD5iEf74Bj+0GDpVnu/IgelHMiSUmJ7NVmBWSDcvXJ48lKb3yKqd/SxbCjLLBoQPRtrOYfbMlRvNzltugQfxr/VTptpU6SEvnb6+6YB1Sb5ue0fnBgkcXFNk8NCfIsYtnpaGlNTMY6T4ClvF18iQ+rRDL7mIukQjGKgYSrakKT7HXaR8cZuNxTgyIbKh8Tums+f+mZtt0as9AbNH92+A8zgbDiQO3eVYu5DOcFmc1baM6uSGpo/gDdUx7UHb3yUm8x4iv2T8glVGwTNH+wGJzxBOihPR2RdjFO8Mjpr/rKQ8EkTVov19T9UBho1iFPCdGk/HNlix+jg6HpQV4GqmjFQAKYMkJcS1CSugk5NcL9tCz8kggNh4KN7jyeICNJurJtQdmKmb+3zLEvV6O8DmR7pHKFOaWf/ykvIAGeTK+vM3frxmxttFyiB5hAGTLZXWpgkY5lDCLEZHuKJDkkosp4nMA1EOhkXhWG1LLLmIlSfUvhwL1xInrwI721iN1WtyVLaS7bSFyu4eEqfnhSY6F8Wum70JMzPEz5Ijpr2XZQt617XOCKyfHd9Rb5Rf+ktmziLQve7pRdFKn4z25V/0j8YjevNKriReleFtbIBU4Icd5H8MSNOiNQJqGuSybq5W/WzJ+aLQvZsIJK7Ij8nYB/RN+fcezS5UwYpgba0Ka3ryiyxbmx7s/oAMlSfpsOM+GkpAwOpS3FC2UiOAQk3hnIWwRGFx7hC0tzu+UXOwfAadZr1iYYMVEYGbqVW1u+Vdhq100ULEQa6yK1Uy9Mhlu0K5noD/WLcRT8AUiC7y8p2/MoYTcQWA0VHlR+P15ZbX98UVEy9NHknl7lrfYn8Km5Q/uGrx1zQJW3CFE1n4AtscHBfF/eA8KS+R++UNYmG90j4GSF+qqR6Uz2a27swEuJe/qFMFzmPFgj1oMot3P7q0CDXlf
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: ingress-nginx
+        app.kubernetes.io/part-of: ingress-nginx
+      name: lb-dhparam
+      namespace: ingress-nginx
