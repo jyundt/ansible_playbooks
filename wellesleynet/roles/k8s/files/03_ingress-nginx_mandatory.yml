@@ -45,6 +45,8 @@ data:
   hsts-max-age: "31536000"
   use-geoip2: "true"
   ssl-dh-param: "ingress-nginx/lb-dhparam"
+  add-headers: "ingress-nginx/custom-headers"
+  proxy-set-headers: "ingress-nginx/custom-headers"
 ---
 # Source: ingress-nginx/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1

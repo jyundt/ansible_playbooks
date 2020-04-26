@@ -101,3 +101,14 @@ spec:
         app.kubernetes.io/part-of: ingress-nginx
       name: lb-dhparam
       namespace: ingress-nginx
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: custom-headers
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+data:
+  X-Country: "$geoip2_city_country_code"
