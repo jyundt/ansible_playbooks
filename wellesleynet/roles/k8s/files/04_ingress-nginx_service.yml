@@ -42,6 +42,7 @@ spec:
   selector:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/component: controller
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
