@@ -58,6 +58,19 @@ spec:
 kind: ConfigMap
 apiVersion: v1
 metadata:
+  name: authelia-secret-file-locations
+  namespace: default
+data:
+    AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: /secrets/AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD
+    AUTHELIA_DUO_API_SECRET_KEY_FILE: /secrets/AUTHELIA_DUO_API_SECRET_KEY
+    AUTHELIA_JWT_SECRET_FILE: /secrets/AUTHELIA_JWT_SECRET
+    AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /secrets/AUTHELIA_NOTIFIER_SMTP_PASSWORD
+    AUTHELIA_SESSION_REDIS_PASSWORD_FILE: /secrets/AUTHELIA_SESSION_REDIS_PASSWORD
+    AUTHELIA_SESSION_SECRET_FILE: /secrets/AUTHELIA_SESSION_SECRET
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
   name: authelia
   namespace: default
 data:
@@ -68,18 +81,13 @@ data:
     totp:
       issuer: authelia.kiski.co
     authentication_backend:
-      ldap:
-        url: ldaps://glauth.kiski.co:636
-        base_dn: dc=kiski,dc=co
-        username_attribute: uid
-        groups_filter: (&(memberUid={dn})(objectclass=posixgroup))
-        group_name_attribute: cn
-        mail_attribute: mail
-        user: cn=ldapsvc,ou=svcaccts,dc=kiski,dc=co
+      file:
+        path: /data/users.yml
     session:
       domain: kiski.co
-      expiriation: 604800
-      inactivity: 300
+      expiration: 7d
+      inactivity: 5m
+      remember_me_duration: 1M
       redis:
         host: 127.0.0.1
         port: 6379
@@ -117,7 +125,7 @@ spec:
         app: authelia
     spec:
       containers:
-      - image: authelia/authelia:4.8.0
+      - image: authelia/authelia:4.15.1
         imagePullPolicy: Always
         name: authelia
         ports:
@@ -127,9 +135,12 @@ spec:
           mountPath: /etc/authelia
         - name: authelia-data
           mountPath: /data
+        - name: authelia-secrets
+          mountPath: /secrets
+          readOnly: true
         envFrom:
-        - secretRef:
-            name: authelia
+        - configMapRef:
+            name: authelia-secret-file-locations
       - image: redis:5.0.7-alpine
         imagePullPolicy: Always
         name: authelia-redis
@@ -156,6 +167,9 @@ spec:
       - name: authelia-data
         persistentVolumeClaim:
           claimName: authelia
+      - name: authelia-secrets
+        secret:
+          secretName: authelia
 ---
 apiVersion: v1
 kind: Service
