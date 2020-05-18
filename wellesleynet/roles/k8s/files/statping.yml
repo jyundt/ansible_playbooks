@@ -59,9 +59,6 @@ spec:
         env:
         - name: IS_DOCKER
           value: "true"
-        securityContext:
-          runAsUser: 2004
-          runAsGroup: 2000
         livenessProbe:
           httpGet:
             path: /health
