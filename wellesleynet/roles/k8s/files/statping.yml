@@ -59,6 +59,9 @@ spec:
         env:
         - name: IS_DOCKER
           value: "true"
+        securityContext:
+          runAsUser: 2004
+          runAsGroup: 2000
         livenessProbe:
           httpGet:
             path: /health
@@ -73,7 +76,7 @@ spec:
           periodSeconds: 5
         volumeMounts:
         - name: statping
-          mountPath: /config
+          mountPath: /app
       volumes:
       - name: statping
         persistentVolumeClaim:
