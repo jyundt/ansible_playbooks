@@ -51,7 +51,7 @@ spec:
         app: statping
     spec:
       containers:
-      - image: statping/statping:v0.90.39
+      - image: statping/statping:v0.90.42
         imagePullPolicy: Always
         name: statping
         ports:
