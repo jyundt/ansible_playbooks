@@ -94,7 +94,7 @@ spec:
         app: firefly
     spec:
       containers:
-      - image: jc5x/firefly-iii:release-5.2.5
+      - image: jc5x/firefly-iii:release-5.2.6
         imagePullPolicy: Always
         name: firefly
         ports:
