@@ -176,7 +176,7 @@ items:
                 # Added to get local IPs reporting correctly
                 - name: NO_MASQ_LOCAL
                   value: '1'
-              image: 'docker.io/weaveworks/weave-kube:2.6.2'
+              image: 'docker.io/weaveworks/weave-kube:2.6.5'
               readinessProbe:
                 httpGet:
                   host: 127.0.0.1
@@ -209,7 +209,7 @@ items:
                     fieldRef:
                       apiVersion: v1
                       fieldPath: spec.nodeName
-              image: 'docker.io/weaveworks/weave-npc:2.6.2'
+              image: 'docker.io/weaveworks/weave-npc:2.6.5'
               resources:
                 requests:
                   cpu: 10m
