@@ -8,7 +8,7 @@ docker_deps:
   - ca-certificates
   - curl
   - software-properties-common
-docker_version: 5:19.03.8~3-0~ubuntu-{{ ansible_distribution_release }}
+docker_version: 5:19.03.12~3-0~ubuntu-{{ ansible_distribution_release }}
 docker_packages:
   - docker-ce={{ docker_version }}
   - docker-ce-cli={{ docker_version }}
