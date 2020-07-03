@@ -94,11 +94,11 @@ spec:
         app: firefly
     spec:
       containers:
-      - image: jc5x/firefly-iii:release-5.2.8
+      - image: jc5x/firefly-iii:release-5.3.0
         imagePullPolicy: Always
         name: firefly
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         envFrom:
         - configMapRef:
             name: firefly
@@ -137,9 +137,9 @@ spec:
     app: firefly
   ports:
   - name: firefly
-    port: 80
+    port: 8080
     protocol: TCP
-    targetPort: 80
+    targetPort: 8080
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -157,7 +157,7 @@ spec:
       paths:
       - backend:
           serviceName: firefly
-          servicePort: 80
+          servicePort: 8080
   tls:
   - hosts:
     - firefly.kiski.co
