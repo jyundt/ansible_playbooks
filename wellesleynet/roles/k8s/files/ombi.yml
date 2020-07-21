@@ -51,7 +51,7 @@ spec:
         app: ombi
     spec:
       containers:
-      - image: linuxserver/ombi:v3.0.4892-ls40
+      - image: linuxserver/ombi:v3.0.5202-ls63
         imagePullPolicy: Always
         name: ombi
         ports:
