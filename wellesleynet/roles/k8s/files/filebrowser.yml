@@ -86,7 +86,7 @@ spec:
         app: filebrowser
     spec:
       containers:
-      - image: filebrowser/filebrowser:v2.5.0
+      - image: filebrowser/filebrowser:v2.6.1
         imagePullPolicy: Always
         name: filebrowser
         ports:
