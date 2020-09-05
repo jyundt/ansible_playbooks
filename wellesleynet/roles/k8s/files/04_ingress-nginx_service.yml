@@ -39,6 +39,27 @@ spec:
       port: 19200
       targetPort: 19200
       protocol: TCP
+    - name: croc
+      protocol: TCP
+      port: 9009
+      targetPort: 9009
+    - name: croc-relay1
+      protocol: TCP
+      port: 9010
+      targetPort: 9010
+    - name: croc-relay2
+      protocol: TCP
+      port: 9011
+      targetPort: 9011
+    - name: croc-relay3
+      protocol: TCP
+      port: 9012
+      targetPort: 9012
+    - name: croc-relay4
+      protocol: TCP
+      port: 9013
+      targetPort: 9013
+
   selector:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: ingress-nginx
@@ -75,6 +96,11 @@ data:
   22067: "default/syncthing:22067"
   22070: "default/syncthing:22070"
   19200: "default/syncthing:19200"
+  9009: "default/croc:9009"
+  9010: "default/croc:9010"
+  9011: "default/croc:9011"
+  9012: "default/croc:9012"
+  9013: "default/croc:9013"
 ---
 kind: ConfigMap
 apiVersion: v1
