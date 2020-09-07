@@ -76,7 +76,7 @@ wireguard_data:
     privatekey: "{{ vault_wireguard_iphone_privatekey }}"
     publickey: "ClpnPUpXazUnNqmitVsIwhjDFOvZxDMCR/+uNZVKQ1E="
     ip: "10.0.0.16/24"
-  bunny:
-    privatekey: "{{ vault_wireguard_bunny_privatekey }}"
-    publickey: "hMv+3avCi1nrspdLy0T6S56IWETvtq6iutscEWKgdQY="
+  olive:
+    privatekey: "{{ vault_wireguard_olive_privatekey }}"
+    publickey: "4b+mHcmerJZJlhEzGRQ5svBXYBjiPc9JjLtkXvnrfDc="
     ip: "10.0.0.17/24"
