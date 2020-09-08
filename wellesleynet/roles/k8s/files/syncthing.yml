@@ -112,7 +112,7 @@ spec:
         app: syncthing
     spec:
       containers:
-      - image: syncthing/syncthing:1.8.0
+      - image: syncthing/syncthing:1.9.0
         imagePullPolicy: Always
         name: syncthing
         ports:
@@ -142,7 +142,7 @@ spec:
           mountPath: "/var/syncthing"
         - name: syncthing-data
           mountPath: "/var/syncthing/data"
-      - image: syncthing/relaysrv:1.8.0
+      - image: syncthing/relaysrv:1.9.0
         imagePullPolicy: Always
         name: strelaysrv
         ports:
@@ -170,7 +170,7 @@ spec:
         - name: syncthing-secrets
           mountPath: "/var/strelaysrv/key.pem"
           subPath: strelaysrv-key.pem
-      - image: syncthing/discosrv:1.8.0
+      - image: syncthing/discosrv:1.9.0
         imagePullPolicy: Always
         name: stdiscosrv
         ports:
