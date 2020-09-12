@@ -1,0 +1,54 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: cloudflare-api-token-secret
+  namespace: cert-manager
+spec:
+  encryptedData:
+    api-token: AgAPwZPEdgixVjVGiYI0QxgwoLTebRvFIp1L4H7Ez+1qT3UWOb03Iwp0mB2xB+NKsD2v9m7/3mQifyO/dQD3bw+d4idZLYl9ZVjYUE4m7+/2brpgHvCsBtPIuHefGmoJkxI2KuJlvl98pSJC7pVGYfg9J9ON9ezku0mDcJ+AKu5Jm/Xb0EcYNS+W5ElUe5ZvkMCXn/CfuVGzy/ronEvj7SlsWYf8hCnMUl3DxBvZfgFO3pEZfUQj9nCQt/Pz8kt2kupl4iq+za7k+jwDRvbYr2F6+gjpTaczkCY8TudPZ57n8G+XF2roOqAGonRaOQ4GJ05H0gH7/lW4GHHVpD2mFH1j/PNYM1IVr5Vlb4RFU5oTY8RO5QgTa9SgEgTYQSi/FKmQIW+u1tkQundEuO9DEt+rtr4j/W+PjeFINL/nxW0MuBcoVdyY3hZmmWxjlp9xC8vl0iErDF/VwKzWkXkocaGKKP/W7seCsfzfRBHuujE4I655Y9kwIWUw6K9Lfk4Bm6GCx1YIomrzp9XFrh05KsgD/gD0xelLQTPzB/ojDvuawTGPYKtU0IPEEBoedFOZDLZtWXYO/RA0RgAhASaRMcyroZeLriddeY7jRWygZOSFdn3BefPrVK71GWFytrrYJLo1LzFsP7EWKUmGLB3FC/Kj7GFXASPKpFy2R9TWXCh2l0rjumYtPwwC+/D46skz2yRU7nbCU0ZuNoTc7PRflHvWkKcW16MNp8iu2AdgJHMzu/OBZWxWepm+
+  template:
+    metadata:
+      creationTimestamp: null
+      name: cloudflare-api-token-secret
+      namespace: cert-manager
+    type: Opaque
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+  namespace: cert-manager
+spec:
+  acme:
+    server: "https://acme-staging-v02.api.letsencrypt.org/directory"
+    email: "jyundt@gmail.com"
+    privateKeySecretRef:
+      name: letsencrypt-staging-private-key
+    solvers:
+    - dns01:
+        cloudflare:
+          email: jyundt@gmail.com
+          apiTokenSecretRef:
+            name: cloudflare-api-token-secret
+            key: api-token
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-production
+  namespace: cert-manager
+spec:
+  acme:
+    server: "https://acme-v02.api.letsencrypt.org/directory"
+    email: "jyundt@gmail.com"
+    privateKeySecretRef:
+      name: letsencrypt-production-private-key
+    solvers:
+    - dns01:
+        cloudflare:
+          email: jyundt@gmail.com
+          apiTokenSecretRef:
+            name: cloudflare-api-token-secret
+            key: api-token
+

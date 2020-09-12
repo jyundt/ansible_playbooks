@@ -119,20 +119,16 @@
       definition: "{{ lookup('file', '06_sealed_secrets_controller.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
-  # This could probably be DRY-ed out a bit: the wildcard cert exists as an
-  # ansible vault encrypted file in a couple of different roles _and_ as a
-  # base64 encoded SealedSecret. Whenever this cert is rotated, this
-  # SealedSecret file must be updated as well.
-  - name: Create wildcard cert(s) secret
+  - name: Install cert-manager
     k8s:
       state: present
-      definition: "{{ lookup('file', '07_ssl_certs.yml') }}"
+      definition: "{{ lookup('file', '07_cert-manager.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
-  - name: Create oauth2-proxy service
+  - name: Create cert-manager ClusterIssuers
     k8s:
       state: present
-      definition: "{{ lookup('file', '08_oauth2-proxy.yml') }}"
+      definition: "{{ lookup('file', '08_cert-manager-config.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
   - name: Create Intel GPU plugin
@@ -141,10 +137,10 @@
       definition: "{{ lookup('file', '09_intel_gpu_plugin.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
-  - name: Create glauth statefulset
+  - name: Install legacy SSL wildcard certs
     k8s:
       state: present
-      definition: "{{ lookup('file', '10_glauth.yml') }}"
+      definition: "{{ lookup('file', '10_ssl_certs.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
   - name: Create authelia statefulset
