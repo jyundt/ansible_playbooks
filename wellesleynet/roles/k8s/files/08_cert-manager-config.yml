@@ -14,6 +14,22 @@ spec:
       namespace: cert-manager
     type: Opaque
 ---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: cloudflare-api-key-secret
+  namespace: cert-manager
+spec:
+  encryptedData:
+    api-key: AgAlTN57PKORgtLR/gUX4gfrJdX2Jb1xng49szQ0DtJW+bmLdb0Ns1lXiYwomB9pCac9NwlUgG17iOkyucM6WE2008c8aRZqR8nQw5Jn+al+0sWIPl2v1bZJKA0/xG3tgHikipMKIEx/OcwDWtXkLtRO7h2dvZ0E4WD9OLgRDxCjPv3RgGRZpRcgdkKskXkR5EBP+UgSDO6P+nDfJ0NIoipXTVvtECNH5hwc6bF1/f7l4PcXdOj8Nu2ebeicgjXPlOYgQmwgP3rVSdWDDSdHrA20NRR+FOLM/YEIZS6J5oCuAd6vBISxvg8sl7GiMTOUc4qAgABrcgHNVHGGEpthNXt/rZ6jfVBefILbH4f6XF4ucWoguG9B753WDMY+T9DI4Ni1V2OSRC6wVdvGd9osqGJevi8ElQbzAMNSQanBC/Z7rbQESJ3hxQOIuhePTOtznIYgvFuGrXsvi/EoZo5SJr19+kSwxZOdtwYgZ9MafutqTQzW9FIKaRPJjD/PvKu8+D5VyZal5jjAUwitwcNdfGxWoyJG/NXz5bAzRwAjQjjOqQEcY6JHaPzi+kgp9DOZsuz9kPy9102DxGe73sMNzNW2YTyXRUmZ5EQ4v/WIbFGNiKu5u163Gq864Hdfe2tH8KsJ//Gl4X96V6+8MyU7mDyLg+5gPla0egdGX6M3aKkUAUvLxMfQdo0g9Do6nwzjWPI5clLGeARn6Ln8DlNs+mcTQUmPO1UOBUw8qfvQ7mwBQj00kLpn
+  template:
+    metadata:
+      creationTimestamp: null
+      name: cloudflare-api-key-secret
+      namespace: cert-manager
+    type: Opaque
+---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
@@ -29,9 +45,9 @@ spec:
     - dns01:
         cloudflare:
           email: jyundt@gmail.com
-          apiTokenSecretRef:
-            name: cloudflare-api-token-secret
-            key: api-token
+          apiKeySecretRef:
+            name: cloudflare-api-key-secret
+            key: api-key
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -48,7 +64,6 @@ spec:
     - dns01:
         cloudflare:
           email: jyundt@gmail.com
-          apiTokenSecretRef:
-            name: cloudflare-api-token-secret
-            key: api-token
-
+          apiKeySecretRef:
+            name: cloudflare-api-key-secret
+            key: api-key
