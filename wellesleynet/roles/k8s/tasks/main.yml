@@ -293,5 +293,11 @@
       definition: "{{ lookup('file', 'croc.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
+  - name: Create ddclient deployment
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'ddclient.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
   run_once: True
   delegate_to: "{{ k8s_master }}"

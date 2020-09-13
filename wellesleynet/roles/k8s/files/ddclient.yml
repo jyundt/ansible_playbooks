@@ -1,0 +1,61 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: ddclient
+  namespace: default
+spec:
+  encryptedData:
+    ddclient.conf: AgBDybxMI+Sq2G9dqZhx9rXow9oTFDUkvvuOM9+QQdqzLIHN58isauKtlcxx/E3/av5OQs6hY+BfDxwS7M8BSHc9el1SkU6Gx+/swr+1a9FgUzfZZjevskJI3RwKmFB53TnsMBCrqgf3t2DILa2vmaMk6febq0XdAZYIvceiFm8l8CC02n2n+tCpTKg8TtFHN4fvFyTqgfoalN0SKw7Mx7JpmEao0N/YE+dlpVNy6BJmf/e8B4saqGh4d7xx3tYRFUelGsIRArDpqSMmBeaFUhOxGx6+yzGZlqz4M3BVtlrx7m8fLRI/PHoF/oOi77G/d+wgfwF/dyJHN43/9oS4Fe4dBpgCoAeCnJSkZwUaclQGDUWK1mm5m7MEV31zN1rdF0zLSd9esLAuaweYlp3OrgPFEcSBMUN+ALkVXyu+LxVwaCk11NzUc31roKUXTsrnTEwvgcIJcFLar8S61XAjZiWZDlgfDQoYJhhqae/k7bIbooCdiJl5gJ53/B7xx10yuXFPu9YB/hWnRYiBhXpn1k6sbw7LJusly3eVduhu4mnnirISD9dv0xF6qTmUrzcS1X6aruFndkvJv1f3PKOO9RoFsKedKIEfJsWeEHvFcacULbdiR/FGVSUxN2+VTdI/SgY8b2KiJ/UF2W85TRvDhMNXi1nSw+SO8/Wannda/sHinVfMPsSBOp9jOkxFbII3MHwIl+9l5c2uTH7ys7n9zSRxhbsxUno2XThlnhGqhfrBPZ5UwPcMMa88EwBw5E8aDauJJW0GWfAnexZwnptPpaQKkqTrPetEDEx/yNC2kvOkyIgW3YHsLDvl1etc3Vaxm0YIdD+mbxOI1C1mNnup9eLjj94ERtkyG2fC1IkgqUd8cKUKCYqQm/lyAqO4ldYhVOH+/PMR9YqR0Qg1Ws2KEUoJd2hm6mvjNe/vPj7ciuHuHzGBFp9Vq1umQKjTsEKEJm+fiF86TFhToAkhzVKuca8n5GCpWAEyI+ROLlBKkTHUdgbwq9jE1hn6fuZxI4MbnVWc7MjksMoPZqZVmnYspIWlP6B8yGdcGc5RE6AgQ4JPMcGFjHxMaq2fF1hGP+JbhzT9tNSU9RxYESSyigKQQ4j2wFvT2hBCd1xboOg5cI+01P8ynEX+zjt9XzlCWYaKv5Njkag5Ln21Vtw4MUsNS03z2omtv0e/5wP/T1K176QdbRKinIpIeunKRA7B+jUuq9leveyEa6+G+ZwQnw==
+  template:
+    metadata:
+      creationTimestamp: null
+      managedFields:
+      - apiVersion: v1
+        fieldsType: FieldsV1
+        fieldsV1:
+          f:data:
+            .: {}
+            f:ddclient.conf: {}
+          f:type: {}
+        manager: kubectl
+        operation: Update
+        time: "2020-09-13T03:27:41Z"
+      name: ddclient
+      namespace: default
+    type: Opaque
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ddclient
+  name: ddclient
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddclient
+  template:
+    metadata:
+      labels:
+        app: ddclient
+    spec:
+      containers:
+      - image: linuxserver/ddclient:v3.9.1-ls41
+        imagePullPolicy: Always
+        name: ddclient
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: ddclient
+          mountPath: /config
+          readOnly: true
+      volumes:
+      - name: ddclient
+        secret:
+          secretName: ddclient
+      restartPolicy: Always
+
