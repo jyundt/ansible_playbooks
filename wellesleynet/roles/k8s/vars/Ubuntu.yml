@@ -4,3 +4,4 @@ k8s_packages:
   - kubectl={{ k8s_version }}-00
   - kubelet={{ k8s_version }}-00
   - nfs-common
+  - open-iscsi

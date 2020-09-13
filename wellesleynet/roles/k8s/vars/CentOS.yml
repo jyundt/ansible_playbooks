@@ -5,3 +5,4 @@ k8s_packages:
   - kubelet-{{ k8s_version }}
   - nfs-utils
   - python2-openshift
+  - iscsi-initiator-utils

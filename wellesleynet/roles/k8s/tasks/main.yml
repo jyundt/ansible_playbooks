@@ -149,6 +149,18 @@
       definition: "{{ lookup('file', '11_authelia.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
+  - name: Deploy longhorn storage
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '12_longhorn.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Deploy longhorn storage and webui config
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '13_longhorn_config.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
   - name: Create rclone cronjob
     k8s:
       state: present
