@@ -16,39 +16,16 @@ spec:
     type: Opaque
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: guacamole
-  namespace: default
-  labels:
-    name: guacamole
-spec:
-  capacity:
-    storage: 1Pi
-  volumeMode: Filesystem
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /mnt/data/apps/kubernetes/guacamole
-    server: callisto.wellesleynet.com
-  mountOptions:
-  - nfsvers=4.1
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: guacamole
-  namespace: default
 spec:
-  selector:
-    matchLabels:
-      name: guacamole
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
+  storageClassName: longhorn-default
   resources:
     requests:
-      storage: 1Pi
+      storage: 1Gi
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -313,7 +290,7 @@ spec:
     protocol: TCP
     targetPort: 8080
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: guacamole
@@ -323,16 +300,21 @@ metadata:
     nginx.ingress.kubernetes.io/app-root: /guacamole
     nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
     nginx.ingress.kubernetes.io/proxy-buffering: "off"
 spec:
   rules:
   - host: guac.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: guacamole
-          servicePort: 8080
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: guacamole
+            port:
+              number: 8080
   tls:
   - hosts:
     - guac.kiski.co
-    secretName: kiskico-wildcard
+    secretName: guac-kiski-co-tls
