@@ -20,39 +20,17 @@ spec:
 status: {}
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: authelia
-  namespace: default
-  labels:
-    name: authelia
-spec:
-  capacity:
-    storage: 1Pi
-  volumeMode: Filesystem
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /mnt/data/apps/kubernetes/authelia
-    server: callisto.wellesleynet.com
-  mountOptions:
-  - nfsvers=4.1
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: authelia
   namespace: default
 spec:
-  selector:
-    matchLabels:
-      name: authelia
   accessModes:
   - ReadWriteOnce
+  storageClassName: longhorn-default
   resources:
     requests:
-      storage: 1Pi
+      storage: 100Mi
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -126,14 +104,14 @@ spec:
         app: authelia
     spec:
       containers:
-      - image: authelia/authelia:4.18.0
+      - image: authelia/authelia:4.21.0
         imagePullPolicy: Always
         name: authelia
         ports:
         - containerPort: 80
         volumeMounts:
         - name: authelia-config
-          mountPath: /etc/authelia
+          mountPath: /config
         - name: authelia-data
           mountPath: /data
         - name: authelia-secrets
@@ -142,6 +120,13 @@ spec:
         envFrom:
         - configMapRef:
             name: authelia-secret-file-locations
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /data/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
       - image: redis:5.0.9-alpine
         imagePullPolicy: Always
         name: authelia-redis
@@ -161,6 +146,13 @@ spec:
         envFrom:
         - secretRef:
             name: authelia
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /data/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
       volumes:
       - name: authelia-config
         configMap:
@@ -186,22 +178,27 @@ spec:
     protocol: TCP
     targetPort: 80
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: authelia
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: authelia.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: authelia
-          servicePort: 80
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: authelia
+            port:
+              number: 80
   tls:
   - hosts:
     - authelia.kiski.co
-    secretName: kiskico-wildcard
+    secretName: authelia-kiski-co-tls
