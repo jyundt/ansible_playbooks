@@ -260,6 +260,13 @@ spec:
       - image: postgres:12.2-alpine
         imagePullPolicy: Always
         name: guacamole-postgres
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /var/lib/postgresql/data/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
         volumeMounts:
         - name: guacamole
           mountPath: /var/lib/postgresql/data
