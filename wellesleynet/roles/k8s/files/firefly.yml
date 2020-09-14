@@ -20,39 +20,16 @@ spec:
     type: Opaque
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: firefly
-  namespace: default
-  labels:
-    name: firefly
-spec:
-  capacity:
-    storage: 1Pi
-  volumeMode: Filesystem
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /mnt/data/apps/kubernetes/firefly
-    server: callisto.wellesleynet.com
-  mountOptions:
-  - nfsvers=4.1
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: firefly
-  namespace: default
 spec:
-  selector:
-    matchLabels:
-      name: firefly
   accessModes:
   - ReadWriteOnce
+  storageClassName: longhorn-default
   resources:
     requests:
-      storage: 1Pi
+      storage: 1Gi
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -122,6 +99,13 @@ spec:
             name: firefly
         - secretRef:
             name: firefly
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /var/lib/postgresql/data/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
       volumes:
       - name: firefly
         persistentVolumeClaim:
@@ -141,7 +125,7 @@ spec:
     protocol: TCP
     targetPort: 8080
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: firefly
@@ -150,15 +134,20 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
     nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: firefly.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: firefly
-          servicePort: 8080
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: firefly
+            port:
+              number: 8080
   tls:
   - hosts:
     - firefly.kiski.co
-    secretName: kiskico-wildcard
+    secretName: firefly-kiski-co-tls
