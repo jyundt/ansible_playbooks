@@ -63,7 +63,7 @@ spec:
         app: droppy
     spec:
       containers:
-      - image: silverwind/droppy
+      - image: silverwind/droppy:12.2.0
         imagePullPolicy: Always
         name: droppy
         ports:
