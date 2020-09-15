@@ -140,10 +140,10 @@ spec:
   tls:
   - hosts:
     - droppy.kiski.co
-    secretName: droppy-kiski-co-tls 
+    secretName: droppy-kiski-co-tls
   - hosts:
     - files.kiski.co
-    secretName: files-kiski-co-tls 
+    secretName: files-kiski-co-tls
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -178,7 +178,7 @@ spec:
   tls:
   - hosts:
     - droppy.kiski.co
-    secretName: droppy-kiski-co-tls 
+    secretName: droppy-kiski-co-tls
   - hosts:
     - files.kiski.co
-    secretName: files-kiski-co-tls 
+    secretName: files-kiski-co-tls
