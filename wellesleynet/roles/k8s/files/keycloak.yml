@@ -17,39 +17,17 @@ spec:
       namespace: default
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: keycloak
-  namespace: default
-  labels:
-    name: keycloak
-spec:
-  capacity:
-    storage: 1Pi
-  volumeMode: Filesystem
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /mnt/data/apps/kubernetes/keycloak
-    server: callisto.wellesleynet.com
-  mountOptions:
-  - nfsvers=4.1
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: keycloak
   namespace: default
 spec:
-  selector:
-    matchLabels:
-      name: keycloak
   accessModes:
   - ReadWriteOnce
+  storageClassName: longhorn-default
   resources:
     requests:
-      storage: 1Pi
+      storage: 1Gi
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -84,7 +62,7 @@ spec:
         app: keycloak
     spec:
       containers:
-      - image: jboss/keycloak:10.0.2
+      - image: jboss/keycloak:11.0.2
         imagePullPolicy: Always
         name: keycloak
         ports:
@@ -94,7 +72,7 @@ spec:
             name: keycloak
         - secretRef:
             name: keycloak
-      - image: postgres:12.3-alpine
+      - image: postgres:12.4-alpine
         imagePullPolicy: Always
         name: keycloak-postgres
         volumeMounts:
@@ -105,6 +83,13 @@ spec:
             name: keycloak
         - secretRef:
             name: keycloak
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /var/lib/postgresql/data/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
       volumes:
       - name: keycloak
         persistentVolumeClaim:
@@ -124,7 +109,7 @@ spec:
     protocol: TCP
     targetPort: 8080
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: keycloak
@@ -132,15 +117,20 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
     nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: keycloak.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: keycloak
-          servicePort: 8080
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: keycloak
+            port:
+              number: 8080
   tls:
   - hosts:
     - keycloak.kiski.co
-    secretName: kiskico-wildcard
+    secretName: keycloak-kiski-co-tls
