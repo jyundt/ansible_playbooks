@@ -1,38 +1,16 @@
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: ombi
-  namespace: default
-  labels:
-    name: ombi
-spec:
-  capacity:
-    storage: 1Pi
-  volumeMode: Filesystem
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /mnt/data/apps/kubernetes/ombi
-    server: callisto.wellesleynet.com
-  mountOptions:
-  - nfsvers=4.1
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ombi
   namespace: default
 spec:
-  selector:
-    matchLabels:
-      name: ombi
   accessModes:
   - ReadWriteOnce
+  storageClassName: longhorn-default
   resources:
     requests:
-      storage: 1Pi
+      storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -66,6 +44,13 @@ spec:
           value: '2000'
         - name: TZ
           value: 'America/New_York'
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /config/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
       volumes:
       - name: ombi
         persistentVolumeClaim:
@@ -85,22 +70,27 @@ spec:
     protocol: TCP
     targetPort: 3579
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ombi
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: ombi.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: ombi
-          servicePort: 3579
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: ombi
+            port:
+              number: 3579
   tls:
   - hosts:
     - ombi.kiski.co
-    secretName: kiskico-wildcard
+    secretName: ombi-kiski-co-tls
