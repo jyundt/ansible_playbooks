@@ -1,38 +1,16 @@
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: tautulli
-  namespace: default
-  labels:
-    name: tautulli
-spec:
-  capacity:
-    storage: 1Pi
-  volumeMode: Filesystem
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /mnt/data/apps/kubernetes/tautulli
-    server: callisto.wellesleynet.com
-  mountOptions:
-  - nfsvers=4.1
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: tautulli
   namespace: default
 spec:
-  selector:
-    matchLabels:
-      name: tautulli
   accessModes:
   - ReadWriteOnce
+  storageClassName: longhorn-default
   resources:
     requests:
-      storage: 1Pi
+      storage: 2Gi
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -66,6 +44,13 @@ spec:
           value: '2000'
         - name: TZ
           value: 'America/New_York'
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /config/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
       volumes:
       - name: tautulli
         persistentVolumeClaim:
@@ -85,7 +70,7 @@ spec:
     protocol: TCP
     targetPort: 8181
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: tautulli
@@ -94,15 +79,20 @@ metadata:
     nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: tautulli.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: tautulli
-          servicePort: 8181
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: tautulli
+            port:
+              number: 8181
   tls:
   - hosts:
     - tautulli.kiski.co
-    secretName: kiskico-wildcard
+    secretName: tautulli-kiski-co-tls
