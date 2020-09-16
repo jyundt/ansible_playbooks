@@ -1,26 +1,18 @@
-# TODO:
-# - add readiness probes
-# - cleanup nginx ingress rules/routes to match nginx conf from bitwarden
-# - disable signups after onboarding is complete
-apiVersion: v1
-kind: PersistentVolume
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
 metadata:
+  creationTimestamp: null
   name: bitwarden
   namespace: default
-  labels:
-    name: bitwarden
 spec:
-  capacity:
-    storage: 1Pi
-  volumeMode: Filesystem
-  accessModes:
-  - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /mnt/data/apps/kubernetes/bitwarden
-    server: callisto.wellesleynet.com
-  mountOptions:
-  - nfsvers=4.1
+  encryptedData:
+    SMTP_PASSWORD: AgADHX4hlUOGDo2irzmZiW5MyJXKNY2gt/RFtevGQBYZlUC6EiCbQUyeEIu1Uu/OkD6WDM5VTpX80s9ZdZgAlcnFwMkt+b+tGQUMne85hxYK6WHwVF8++fz1ajBqcnCPvMCh1pV+WdpToNq7CMr31Ak5rfhueYlmQWrcELVyCNKHM7GlbD69zDKISwz+Rhqw7hAjmO4rTwAvknA8bZST5y/B5ozwp5iYutvhy7Mmd1qJ/bBiepViDdh3RIc2HEuHRpYZNMAkhJfWGwojR25uzmit9YoVKca9A9oMZf/mOYr7FLAZT+rzmCJK8z4Qvt28K5iN07IzYGuBB1UFhcbweiWIlhp3Ag1y3CYJQbOZqQhcHLF2AfIBUGgyoLNdGrZqZ3rvqjcH/0N/hfrqCcNOTGnQipvWWVvhm2k4qPDm0tfkdEMbhtRk4u5aOM8zy+wewP2s/y3CxI7FVeGqkcTZsqHMy3D/qRphJpu3bEJ/q1UVqGqlc6dLjUHu2NMhaRCJYQ2TQde4kiwZbDW21O17cRK8hBZJsGw9lgcxN6ZN/kpYJjS+47GFDNBeSe2schkpF03VdvMgaJNOv2oreZZZQ25bRuLmq/aSCfzlxCvrI265AqXPEi4e97rXfNLffSnP+0E1l/+37bRbOr5auMS0b2tP9WDobnukgH7I8UaM+Oun12SLR5HB7zqGcwKT5AGEbxYbJ3jbrutu28awp/i75mFw
+  template:
+    metadata:
+      creationTimestamp: null
+      name: bitwarden
+      namespace: default
+    type: Opaque
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -28,35 +20,12 @@ metadata:
   name: bitwarden
   namespace: default
 spec:
-  selector:
-    matchLabels:
-      name: bitwarden
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
+  storageClassName: longhorn-default
   resources:
     requests:
-      storage: 1Pi
----
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
-  name: bitwarden
-  namespace: default
-spec:
-  encryptedData:
-    SA_PASSWORD: AgBSlOcJo6B4qAQ0+jJEFFdrT5jzQgY4EUsZTEojdZxKYYYyzhzU1YCZIYmedG1VayOQujIG9agfhUhO0fKZ97EjUXR2g2NBqWFAQ5OGWs5k7MPVSqchy17VyWCAqa57B830ClSoBzH7+HgiNCtxp84pU6fDyBqCvX3QPPM01CCgfM7rRJzxYiaH4DQ4Dt0QZZUY7m+vDSF4DBIHiP5JEZJbVKX/GPz1xAsY0Ps0SvpbLOL/vJ6IFYr/DYeyInnp6gUNFXs3UpbMQ9/cBFoyVsvGLy+CMrOYgetkiL9h4dVYr145U2nqv9D3KDmVOjuA8C6/YKb2oHf/+LweJzPAMMgF6OMC3sYGv3lV2z9gVEk0MpcPG2pxv67jmxa1TrkCSnNFX0nZlkujce9iTXOlENn8hkDLJG20iozy8o/kn1SmRUzQjV7Qzy8hfoTzGbVxX/zQclKuze7yvn6+mnDDEaeThHBq7HFsThcMID+wbMI/QPQxk5ox6StC2jUNLxcXpIUYXj/XaVW5SdVIN8aVgga7OGks1U4JlQ9M3r7+t4Npk9lrDRiIQiC0uQWaFe6yUtCz/2aaLvklpg9TR1LePMflxYyckHx08ALWg3THQ6QKe5koJk8Urdrc9A6YNPbWsewv5IHDlnqFALbKeNeZxjDRQBNXOGAyhvimfEh9l0JkKX07I1OVWhRLAxw42OLBuNINys6889CahJX+P/zXwD8WBR2T0cg97Y8EGGWBzJvpgA==
-    globalSettings__duo__aKey: AgBebHw7wK7UGJRVRvsswpAl+JIW7Bi7/xsfC1N6EW1d6274ZJLHiS5KqECMD+TDWU4U37MHNBMSSQuZASDxu7xG2TofOrgsVP187lrwXl13plLWltde4ZA8o4vQg0Th7mSRy0dZKFmVPmBJOaniRK4dt2i2j8i3FgNK+M0dVgKj90SGwXEIp/tVREbs6n1BTk8bJtcjP0K0pSmU6Xxic7SVA6OPUpWzzfcSAma27SInSHQRiJu+BMODO1OHi39+gLAYl1qEStCmb7dKJx2ZFrCQdzzJc/D9Y3i6++GXOTeOL37kCyhfDE4f0rteFCnXvGkCKHXZFm8L7AcjZfshh4FVxvAZqGQXyRbW51FxcMWCRtXRTLU1PeGiOe24KkGyF2PLN3LSxc8jxQuLAwxjiyoOxLi+megO5cZO4d9gKTuG98LpEIzeDomwqXS3Yd0S1gPwb/dJe8WY6h0EBibavGmXjbt8cZWM8r5ZJKpR98MkFl1ErXhlZQTq+WfuM/mteMCQAyBVmYgvl2yNfRTJiJdBCd/28OptbPl3juM03+OSslwGYPg4VYF5ofYfw7z+PJITypQFjvLi/cLbrcs9PBR3rOZu+t+9hDoKImfsTyjvja32OuCv0U4+P/9XyC12k5MYeYdqcVlWI/n1LN9DuXtrPdHG8th8IMmISwB3INvLdVKe6944K0K2ZSW8GBW6Wri+jU8JgMQ+ssOGEFWtkePSZudLkvkNtX7Ebv23pEvHhhRh/cvbJ8Z6kfD8VX9LXv0X7pIjb+xKXS/QWNmmVeLZ
-    globalSettings__identityServer__certificatePassword: AgBFEym20SyCmkHcxr1rChMG9I/sTyG/H/1hdfmv0IRpE1kRlbFuCZ6goOe7C1twit3JGWiLdkqmaGeE3Eb9yU3Nzl44MDw8diMJn90p94wM/3TV1Wm5yB74Ybxdg+V9k0GOYhcDwB2hVG0UUNE67gxL5zYlWDfAxQlkybZoNAbmv9FxmvukhjMKBuzY+rFWlKER7AsAd7tieICK4IhMNt5TlTgyiVjcU+z2uYwa6T+hXb5QAFXB/5xmW2sImYphPwjWKyO5A+jA5Xi1JufLNgHxMpMUvaTw9TAKEqrRPyuq09CJzodv05SxcuocAT4T8eXmV3be8cb/oMXe8pgJU4P+HgHl1eSsAtor3cQxmF5/2m81VQEQDrITGh/Ux12bWbS9ndvjtvNJZRAsq41+EZk7ryqLHEGXbS4gENcItY+tkZ+eHr0US7Z2D6a6Lz9tAW/zbqVD/fAE6ikgBDd532b2Kk2H41iaEpxBnQpRx3Pnh54crZqh6VRUIgNvFatt8aZ3Sz8sNHPfk7sze1hASwbqRnDUYShIH/lMLbLgpsxcM+fKtWIw6bpMYdOSye0EEJaWb8HqzW9o4jlY0que6iWv7T2AKR1rGBPKmcr5QFOPZRB5wIp5Lnh+zDJND5vx8EZMtphF6n+ymWjfJQUih+xdytdgPyJk6R7GuqmLT/WjmMAUmZDIHeQFGvwl3vhIllUHEQTUyDxxZ7CBPlL3g38lbEbdpu/LRxx3Q0YaM2WB1A==
-    globalSettings__installation__id: AgBo27ZnDmKIfKzJvPeT5esJT2SaJkjbd6Fe6RwC0F3c0pqae9Qc3WbCkQgzFp3DQPG9L5+BKj5yXC8l4S4lbr9QlhS+1MKkTDOVYIW85Sj0GHjMOMXRVyqTkjIBzVnUEUrkqW9nqHfd6qgD4zeCsrFm2/PMtNOxtrBB5Zr4nbne3Ht5O06BGfKHZbdrUNTbUYa7HkJ4NSPTrKkv/KZWWZJm68KDTD8SJEHeo0JI2deYu1wxQies73c1lmQ+CdVUztEg7NHeEjK1eIkZfm98PKME9OV3+Cfbk7o/nMV3gdzXB5t99iVhipIzkhJWICqwN0tBcGsi4J3hyk4Xe0hOASEvecJqQIoCywbN/K5e5ZXLTHtS/qa/8U+7ZodB3nHUabeA8zHW42CO0H+WmMU4royj0aEcK8NtWPJ17Jnu+Ks9yZdu1Rnttwj0gE1WyZqKtfEb/j9/pQsRkN5tFGZmOGoptXjI1a13WExGstnw2e1j/MlorwuqeUvxGLRJMoEv/2BrrozdYjvn4VEQdjKyi9RI8Taj98KshShEw19Tk6AHW4CIyex4M9fyvsa0yhqdJqAiU/uSWjE9gPp6xJ4VktpCwjZUsFzLisII1BBOwLxkngeagjiLBbU70M8qS4T7dxbP4Jfwo66rII/eit4L6C2gRE1T1Hk8LrY+Xfy4T/9+FivLggF6d2jDLzgC1iuvLx2hj+yf+ox05N5Qaag82k/66NWga2ApP8kc0qr9kPOFVWqUc80=
-    globalSettings__installation__key: AgBGO1oafQ5ZS+ODWS28gSWhJj9zIg3vWZUaq1WRO4vhetR0UsSN36fjwN/lti9jleu5L3T+Y/p5BRsNTaQ9yiyZN4otYQB5K3EBZzF2uXduQ0aBJwp2TDNeXp1LXCj8Y+Xo4vEdXXXCzar28Jk4sYyKhHkhJXnrWdLoxVOUnO6/h6H6eQMVu16HKJlF5T+v42FXh5gAqBFBulDEY3FOoh+lvkB3EV/Zc8pPKoBH30vvgzF0opxRbiEogEsYd8beHeIoe2EWjaVlWS3q9fBcDx2UbpH8ApTsuzpMpC7mHDuPQYJ57dlaeYvh1o9BBM32d2yd72yUMH9azkTqkn187iSRGFBEOF+j+I2hIQsClBGk0g+1+DH36UNtJIeQgErrkCVXCJhlNPrW6KAL5PP6hr8FLxgVbgHiJr3ojVDzh4gzPOF8KKACJyA/YOELWkl7nPpbnRnexS1YVZHEcN8KZe+Um8esjxF8YDdDYcQFo+rZnN2SuKk0ws3ROf0sVVfYagKL/6EIUlokfGItGZfhIvSq48h9ZQRvHW8PytnbdcxNV6zst5DAQo3/CPM43kVNPoHiAsThI11js4b14LnIQb6nrKpqH5yc8IJ7NpxzyGl6N57RtDvKIKslz3okuzgqilw4UF64NdSMrQ5QQoYjfyTumUwB6UMufAWP5shnnoYePj2OsvZj8/lXfu3NIlnUQHieCNnB5nEsOBPAqVDeDM+wxqdjCw==
-    globalSettings__internalIdentityKey: AgC6NRq7eLJGODG5hmWZr1rA0zF5BOmTohRECjI2rIUEfDiUUXxpiSV8f8STY4KbUQF4U6vN0oQYTlQGwlBlAYLEkl4NBxNqijGWpXZVQv4C78i/qjPBpr+UiWmzwjtBqDDHbT/ztQ0fV92cN/Ag9LRJleRGQ6nk9vG7zV5szYkSHJYHPQvmRGKvvxh65SQIFG/uV8CrssPzMrUU2d01K+ZWYqe6/ox4AFI28GBj3CTf0gfq+QwjM0aDo4J2BgkAZPuZCkU2oToltpTJDLl/+6yPrkOxTdn6AWoWzhJxRx03pKks4ABqCqYvCNByUNG9Igwhupx/i2j9w6Y5JsmDeRGk/lt7mnZzolJGFl5WWPo7reQm8kHJIaKqvjqztY+xtJzScRdRIj3P4X40PDiUyo5SVq5FyF79fC/f2OyXHMMVA+OkiGmvKsaK17WDiGm4W+eXBNK+gTpq8asFDai4x7QFR9evqvO94Heqn1scf8ttsZppQWQ0Hi0vbJrOdka6kYOChgCNfRbs/jTCTxWF2H9yZioUCJB5CdfEOJb5VK42p6HUwv9bYXJPmz3Rpep8D6lVu6ydh8Nf5z40MQwrmw8f09Wko9LiezCfqlopKT1NDvBpPCDgLXoP8Fn3UdgPub6mwp+dHba3uF2MSO+19ZBbXFCDs0PbrVMHLz6eF0xfYBd5PFTo99gdVGe7WnVxnqucX/vU13qubbHLxkpP9TU0dvXA8Lkyoq7Yv4HyT+U/sam8Li3n0hDfA28Y3ibwWLxpoBQE/IZ9qbpRE9RiadjE
-    globalSettings__mail__smtp__password: AgAiGLrEsJB8Ml2GRCHgJTwdMx446EfVx5z2jSBqCTpZvs+MFKQykM3qi52D9V4JCPUVFXe3aLTS3RU6tXSzrxaP/rsPOWs7+lJSysHslEokmlX26ddt+z9sfdAP9hbsfj50cK2FLq7m5BkoT8o4m2Uzs4VGYDbeD1JAzQAUdLJb4w+5+iCEW9iHOCs+wQ8C3JUs+canWY3tY1rCxnm7oyUNgQp7wQ5q6YrM93QN0EE9QZdmUSnFUFUuFvLkkuWxQaod5ZRkQILhqlN96Tt/O//t+Ey1EwTVku2TiNiK8dnb4+t6b42gtZlgUcVagL/holtz4l8l/xLp0MMJGZYKnY6yq3V5593R/oYjcOFlaKkkRjopY9eRhrYR5+rNKQ5lq3Cu5/nFOPZPt0AZX3kTN66y7YqG+63q0CoHgs02m0HI36ZEVW1+lsRPPfE1xs00CCenU/YF7NZGoIADNBIVSU/l316LU8yCdW7EChkjMAhvgrM6VafySlkUYTXvLbJll1VDQ6Nc1DyPReAKZlzaEZW5NAUuwVvpR2FgDsVvbXRv7hOCVXDvm9XeJJtRy36xpt24PKNUFY94NVXlk1fcYL2yqlnN5JxRSyWWB1zLKBfLNCxljNyDvhBXccKrpHJ5FqOwi/onrppNpdy3Kh1kqvz3HJNWVKBiB4IvTJVJzu3vv+HVIQE717GEidZyC7N+wMZI9BSEMPJ9csEo/xOM89Fl
-    globalSettings__sqlServer__connectionString: AgBMYTbNorjNKr9c4G/fYgfKZcQVTdWL6bSwazl5TOdtO13ADEXxljUnM/IgstW82e1+mLScqyTwixEkrWAS4Nt1Sf6uHCZqh6FEnQxkX/oDs1vD3icjhCTWPepad1M4AOx2EK61JAcRAkJSFNvwhylJNNbfa9hnvWpBfDo5sZskVZJbuHGgB2wdJt9MtSgKu49MK1XRof4Vi0KVqb7SFCsb2kWqQPKamDiCiNJZ9ogg8zYXsD32Fc96pjnniFT8tQ1PyGy0saXQus+RXLXlG+uQfXVEm4swwdRxbDVJQMXtnBTtigYGMzjWKpv5L13lXsIB1hwISGNgZ4OXCW02i/gYBeXxqBPQERuXlFuaor0yzm36J7EH52fUeYhZ2I6nvfOUUFenA20DIKA5kWE4NxfwXrGsY0wDMgpZnivN+l+mEUR0X8TtxUNYH0waXkKqrbozigPe+c788A8g+58KHJ3KtlAGy81Pj6CUpLXVl067bZUpwz0ZHCZHXBOl4+scc8I6MdU/jmMagBHw0PqNvFz1uew5gyoSmVNX1tp8HoYmkeC9CNlZzyF1v+kOdCcr1WRf+C7o5VYgzdPZ1QJeM0Mz1uE1CHem9MlaiDE96js81qE3km1M2VT4cMReppBs86xrkndXBuFi31t+najXhGrC7HZKTp898XishvGTBA7deFeoL+j+6ntQuU8gqvuw9qicN29wZtV1ZHpNpSuwqQ+H2EaQuQH1LVCBOhDquWCrXlrbgGKAYBlshbo5z80omywF2O08VHVhRTooRui6hm3lPu8SbYe+cMUbisHcGFIuRLrKOrqQOATZQUCX7BfsCQ6HCO3c3AllH0cFEc899rWNSxdpN/Jt8trmrKre2yDJQ+0LQT2Rm5IKP/Cvv7cxQWEXktBkfa97KxWlfEN69PRM7yCa6uBNywbRXRu1RQhbkNOLSkA2lhXJwemFGOUtKO1gjC4IT/42J+zfwmQtOrItZzFR2JeAtir72PyZJPgViw==
-  template:
-    metadata:
-      name: bitwarden
-      namespace: default
-    type: Opaque
+      storage: 50Gi
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -64,40 +33,17 @@ metadata:
   name: bitwarden
   namespace: default
 data:
-  ACCEPT_EULA: "Y"
-  MSSQL_PID: "Express"
-  globalSettings__baseServiceUri__vault: "http://bitwarden.kiski.co"
-  globalSettings__baseServiceUri__api: "http://bitwarden.kiski.co/api"
-  globalSettings__baseServiceUri__identity: "http://bitwarden.kiski.co/identity"
-  globalSettings__baseServiceUri__admin: "http://bitwarden.kiski.co/admin"
-  globalSettings__baseServiceUri__notifications: "http://bitwarden.kiski.co/notifications"
-  globalSettings__attachment__baseDirectory: "/etc/bitwarden/core/attachments"
-  globalSettings__attachment__baseUrl: "http://bitwarden.kiski.co/attachments"
-  globalSettings__dataProtection__directory: "/etc/bitwarden/core/aspnet-dataprotection"
-  globalSettings__logDirectory: "/etc/bitwarden/logs"
-  globalSettings__licenseDirectory: "/etc/bitwarden/core/licenses"
-  globalSettings__yubico__clientId: "REPLACE"
-  globalSettings__yubico__key: "REPLACE"
-  globalSettings__mail__replyToEmail: "no-reply@bitwarden.kiski.co"
-  globalSettings__mail__smtp__host: "smtp.gmail.com"
-  globalSettings__mail__smtp__port: "587"
-  globalSettings__mail__smtp__ssl: "true"
-  globalSettings__mail__smtp__username: "jyundt@gmail.com"
-  globalSettings__disableUserRegistration: "false"
-  globalSettings__hibpApiKey: "REPLACE"
-  adminSettings__admins: "jyundt@gmail.com"
-  LOCAL_UID: "0"
-  LOCAL_GID: "0"
-  ASPNETCORE_ENVIRONMENT: "Production"
-  globalSettings__selfHosted: "True"
-  globalSettings__baseServiceUri__internalNotifications: "http://localhost:5006"
-  globalSettings__baseServiceUri__internalAdmin: "http://localhost:5004"
-  globalSettings__baseServiceUri__internalIdentity: "http://localhost:5003"
-  globalSettings__baseServiceUri__internalApi: "http://localhost:5002"
-  globalSettings__baseServiceUri__internalVault: "http://localhost:5000"
-  globalSettings__pushRelayBaseUri: "https://push.bitwarden.com"
-  globalSettings__installation__identityUri: "https://identity.bitwarden.com"
-
+  WEBSOCKET_ENABLED: "true"
+  SIGNUPS_ALLOWED: "false"
+  # /admin protected by separate auth
+  DISABLE_ADMIN_TOKEN: "true"
+  SHOW_PASSWORD_HINT: "false"
+  DOMAIN: "https://bitwarden.kiski.co"
+  SMTP_HOST: "smtp.gmail.com"
+  SMTP_FROM: "jyundt@gmail.com"
+  SMTP_PORT: "587"
+  SMTP_SSL: "true"
+  SMTP_USERNAME: "jyundt@gmail.com"
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -118,10 +64,12 @@ spec:
         app: bitwarden
     spec:
       containers:
-      - name: bitwarden-mssql
-        image: bitwarden/mssql:1.32.0
+      - name: bitwarden
+        image: bitwardenrs/server:1.16.3-alpine
         ports:
-        - containerPort: 1433
+        - containerPort: 80
+          protocol: TCP
+        - containerPort: 3012
           protocol: TCP
         envFrom:
         - configMapRef:
@@ -129,139 +77,15 @@ spec:
         - secretRef:
             name: bitwarden
         volumeMounts:
-        - mountPath: /etc/bitwarden
+        - mountPath: /data
           name: bitwarden
-        - mountPath: /var/opt/mssql/data
-          name: bitwarden
-          subPath: mssql/data
-        - mountPath: /var/opt/mssql/log
-          name: bitwarden
-          subPath: logs/mssql
-      - name: bitwarden-web
-        image: bitwarden/web:2.12.0
-        ports:
-        - containerPort: 5000
-          protocol: TCP
-        envFrom:
-        - configMapRef:
-            name: bitwarden
-        - secretRef:
-            name: bitwarden
-        volumeMounts:
-        - mountPath: /etc/bitwarden
-          name: bitwarden
-      - name: bitwarden-attachments
-        image: bitwarden/attachments:1.32.0
-        ports:
-        - containerPort: 5001
-          protocol: TCP
-        envFrom:
-        - configMapRef:
-            name: bitwarden
-        - secretRef:
-            name: bitwarden
-        env:
-        - name: ASPNETCORE_URLS
-          value: http://+:5001
-        volumeMounts:
-        - mountPath: /etc/bitwarden
-          name: bitwarden
-      - name: bitwarden-api
-        image: bitwarden/api:1.32.0
-        ports:
-        - containerPort: 5002
-          protocol: TCP
-        envFrom:
-        - configMapRef:
-            name: bitwarden
-        - secretRef:
-            name: bitwarden
-        env:
-        - name: ASPNETCORE_URLS
-          value: http://+:5002
-        volumeMounts:
-        - mountPath: /etc/bitwarden
-          name: bitwarden
-      - name: bitwarden-identity
-        image: bitwarden/identity:1.32.0
-        ports:
-        - containerPort: 5003
-          protocol: TCP
-        envFrom:
-        - configMapRef:
-            name: bitwarden
-        - secretRef:
-            name: bitwarden
-        env:
-        - name: ASPNETCORE_URLS
-          value: http://+:5003
-        volumeMounts:
-        - mountPath: /etc/bitwarden
-          name: bitwarden
-      - name: bitwarden-admin
-        image: bitwarden/admin:1.32.0
-        ports:
-        - containerPort: 5004
-          protocol: TCP
-        envFrom:
-        - configMapRef:
-            name: bitwarden
-        - secretRef:
-            name: bitwarden
-        env:
-        - name: ASPNETCORE_URLS
-          value: http://+:5004
-        volumeMounts:
-        - mountPath: /etc/bitwarden
-          name: bitwarden
-      - name: bitwarden-icons
-        image: bitwarden/icons:1.32.0
-        ports:
-        - containerPort: 5005
-          protocol: TCP
-        envFrom:
-        - configMapRef:
-            name: bitwarden
-        - secretRef:
-            name: bitwarden
-        env:
-        - name: ASPNETCORE_URLS
-          value: http://+:5005
-        volumeMounts:
-        - mountPath: /etc/bitwarden
-          name: bitwarden
-      - name: bitwarden-notifications
-        image: bitwarden/notifications:1.32.0
-        ports:
-        - containerPort: 5006
-          protocol: TCP
-        envFrom:
-        - configMapRef:
-            name: bitwarden
-        - secretRef:
-            name: bitwarden
-        env:
-        - name: ASPNETCORE_URLS
-          value: http://+:5006
-        volumeMounts:
-        - mountPath: /etc/bitwarden
-          name: bitwarden
-      - name: bitwarden-events
-        image: bitwarden/events:1.32.0
-        ports:
-        - containerPort: 5007
-          protocol: TCP
-        envFrom:
-        - configMapRef:
-            name: bitwarden
-        - secretRef:
-            name: bitwarden
-        env:
-        - name: ASPNETCORE_URLS
-          value: http://+:5007
-        volumeMounts:
-        - mountPath: /etc/bitwarden
-          name: bitwarden
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /data/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
       volumes:
       - name: bitwarden
         persistentVolumeClaim:
@@ -276,33 +100,46 @@ metadata:
     app: bitwarden
 spec:
   ports:
-  - port: 1433
-    name: mssql
-  - port: 5000
-    name: web
-  - port: 5001
-    name: attachments
-  - port: 5002
-    name: api
-  - port: 5003
-    name: identity
-  - port: 5004
-    name: admin
-  - port: 5005
-    name: icons
-  - port: 5006
-    name: notifications
-  - port: 5007
-    name: events
+  - port: 80
+    name: bitwarden
+  - port: 3012
+    name: bitwarden-ws
   selector:
     app: bitwarden
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+  name: bitwarden-admin
+  namespace: default
+spec:
+  rules:
+  - host: bitwarden.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/admin"
+        backend:
+          service:
+            name: bitwarden
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - bitwarden.kiski.co
+    secretName: bitwarden-kiski-co-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
   name: bitwarden
   namespace: default
 spec:
@@ -310,43 +147,28 @@ spec:
   - host: bitwarden.kiski.co
     http:
       paths:
-      - path: /attachments(/|$)(.*)
+      - pathType: Prefix
+        path: "/notifications/hub"
         backend:
-          serviceName: bitwarden
-          servicePort: 5001
-      - path: /api(/|$)(.*)
+          service:
+            name: bitwarden
+            port:
+              number: 3012
+      - pathType: Prefix
+        path: "/notifications/hub/negotiate"
         backend:
-          serviceName: bitwarden
-          servicePort: 5002
-      - path: /identity(/|$)(.*)
+          service:
+            name: bitwarden
+            port:
+              number: 3012
+      - pathType: Prefix
+        path: "/"
         backend:
-          serviceName: bitwarden
-          servicePort: 5003
-      # similar to our root path, we can't drop the /admin path
-      - path: /()(admin.*)
-        backend:
-          serviceName: bitwarden
-          servicePort: 5004
-      - path: /icons(/|$)(.*)
-        backend:
-          serviceName: bitwarden
-          servicePort: 5005
-      - path: /notifications(/|$)(.*)
-        backend:
-          serviceName: bitwarden
-          servicePort: 5006
-      - path: /events(/|$)(.*)
-        backend:
-          serviceName: bitwarden
-          servicePort: 5007
-      # This regex is a hack because we have to use the second capture group
-      # our rewrite rules
-      - path: /()(.*)
-        backend:
-          serviceName: bitwarden
-          servicePort: 5000
+          service:
+            name: bitwarden
+            port:
+              number: 80
   tls:
   - hosts:
     - bitwarden.kiski.co
-    secretName: kiskico-wildcard
----
+    secretName: bitwarden-kiski-co-tls
