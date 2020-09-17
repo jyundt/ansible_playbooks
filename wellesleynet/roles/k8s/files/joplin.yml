@@ -88,39 +88,17 @@ data:
     </IfModule>
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: joplin
-  namespace: default
-  labels:
-    name: joplin
-spec:
-  capacity:
-    storage: 1Pi
-  volumeMode: Filesystem
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /mnt/data/apps/kubernetes/joplin
-    server: callisto.wellesleynet.com
-  mountOptions:
-  - nfsvers=4.1
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: joplin
   namespace: default
 spec:
-  selector:
-    matchLabels:
-      name: joplin
   accessModes:
   - ReadWriteOnce
+  storageClassName: longhorn-default
   resources:
     requests:
-      storage: 1Pi
+      storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -139,7 +117,7 @@ spec:
         app: joplin
     spec:
       containers:
-      - image: httpd:2.4.41-alpine
+      - image: httpd:2.4.46-alpine
         imagePullPolicy: Always
         name: joplin
         ports:
@@ -149,6 +127,13 @@ spec:
           mountPath: /usr/local/apache2/htdocs
         - name: joplin-conf
           mountPath: /usr/local/apache2/conf
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /usr/local/apache2/htdocs/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
       volumes:
       - name: joplin-data
         persistentVolumeClaim:
@@ -176,7 +161,7 @@ spec:
     protocol: TCP
     targetPort: 80
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: joplin
@@ -185,15 +170,20 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
     nginx.ingress.kubernetes.io/proxy-body-size: 16m
     nginx.ingress.kubernetes.io/client-body-buffer-size: 16m
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: joplin.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: joplin
-          servicePort: 80
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: joplin
+            port:
+              number: 80
   tls:
   - hosts:
     - joplin.kiski.co
-    secretName: kiskico-wildcard
+    secretName: joplin-kiski-co-tls
