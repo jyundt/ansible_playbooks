@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: callisto
+  name: callisto-external
   namespace: default
 spec:
   type: ExternalName
@@ -11,7 +11,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: io
+  name: io-external
   namespace: default
 spec:
   type: ExternalName
@@ -20,7 +20,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: callisto-bmc
+  name: callisto-bmc-external
   namespace: default
 spec:
   type: ExternalName
@@ -29,13 +29,13 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: io-bmc
+  name: io-bmc-external
   namespace: default
 spec:
   type: ExternalName
   externalName: io-bmc.wellesleynet.com
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: callisto
@@ -44,20 +44,25 @@ metadata:
     nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: callisto.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: callisto
-          servicePort: 443
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: callisto-external
+            port:
+              number: 443
   tls:
   - hosts:
     - callisto.kiski.co
-    secretName: kiskico-wildcard
+    secretName: callisto-kiski-co-tls
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: io
@@ -66,20 +71,25 @@ metadata:
     nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: io.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: io
-          servicePort: 443
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: io-external
+            port:
+              number: 443
   tls:
   - hosts:
     - io.kiski.co
-    secretName: kiskico-wildcard
+    secretName: io-kiski-co-tls
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: callisto-bmc
@@ -90,20 +100,25 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     # BMC/BIOS updates can be ~32MB
     nginx.ingress.kubernetes.io/proxy-body-size: 33m
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: callisto-bmc.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: callisto-bmc
-          servicePort: 443
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: callisto-bmc-external
+            port:
+              number: 443
   tls:
   - hosts:
     - callisto-bmc.kiski.co
-    secretName: kiskico-wildcard
+    secretName: callisto-bmc-kiski-co-tls
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: io-bmc
@@ -114,15 +129,20 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     # BMC/BIOS updates can be ~32MB
     nginx.ingress.kubernetes.io/proxy-body-size: 33m
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: io-bmc.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: io-bmc
-          servicePort: 443
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: io-bmc-external
+            port:
+              number: 443
   tls:
   - hosts:
     - io-bmc.kiski.co
-    secretName: kiskico-wildcard
+    secretName: io-bmc-kiski-co-tls
