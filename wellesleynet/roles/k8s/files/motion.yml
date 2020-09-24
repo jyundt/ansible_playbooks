@@ -14,7 +14,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    path: /mnt/data/video/nvr/motion
+    path: /mnt/data/apps/kubernetes/motion
     server: callisto.wellesleynet.com
   mountOptions:
   - nfsvers=4.1
@@ -74,6 +74,9 @@ spec:
           mountPath: /var/lib/motioneye
         - name: motion-config
           mountPath: /etc/motioneye
+        resources:
+          limits:
+            gpu.intel.com/i915: 1
       volumes:
       - name: motion-data
         persistentVolumeClaim:
