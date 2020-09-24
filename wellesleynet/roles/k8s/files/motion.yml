@@ -1,0 +1,124 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: motion-data
+  namespace: default
+  labels:
+    name: motion-data
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/video/nvr/motion
+    server: callisto.wellesleynet.com
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: motion-data
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: motion-data
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: motion-config
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: longhorn-default
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: motion
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: motion
+  serviceName: motion
+  template:
+    metadata:
+      labels:
+        app: motion
+    spec:
+      containers:
+      - image: ccrisan/motioneye:master-amd64@sha256:1704cddc44e0bc7e1c4aff9f1f6546127584e8351c04a0faa1d46c7fb791180b
+        imagePullPolicy: Always
+        name: motion
+        ports:
+        - containerPort: 8765
+        volumeMounts:
+        - name: motion-data
+          mountPath: /var/lib/motioneye
+        - name: motion-config
+          mountPath: /etc/motioneye
+      volumes:
+      - name: motion-data
+        persistentVolumeClaim:
+          claimName: motion-data
+      - name: motion-config
+        persistentVolumeClaim:
+          claimName: motion-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: motion
+spec:
+  selector:
+    app: motion
+  ports:
+  - name: motion
+    port: 8765
+    protocol: TCP
+    targetPort: 8765
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: motion
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+spec:
+  rules:
+  - host: motion.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: motion
+            port:
+              number: 8765
+  tls:
+  - hosts:
+    - motion.kiski.co
+    secretName: motion-kiski-co-tls
