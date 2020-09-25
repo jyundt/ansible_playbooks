@@ -77,6 +77,13 @@ spec:
           mountPath: /var/lib/motioneye
         - name: motion-config
           mountPath: /etc/motioneye
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /etc/motioneye/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
         resources:
           limits:
             gpu.intel.com/i915: 1
