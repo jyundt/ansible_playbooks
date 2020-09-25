@@ -37,6 +37,13 @@ spec:
         volumeMounts:
         - name: freshrss
           mountPath: /var/www/FreshRSS/data
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /var/www/FreshRSS/data/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
         env:
         - name: CRON_MIN
           value: 'CRON_MIN=13,43'
