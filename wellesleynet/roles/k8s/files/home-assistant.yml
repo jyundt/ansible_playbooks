@@ -50,9 +50,6 @@ spec:
           mountPath: /dev/ttyUSB1
         securityContext:
           privileged: true
-        resources:
-          limits:
-            gpu.intel.com/i915: 1
       nodeSelector:
         has_zwave_dongle: "true"
       volumes:
