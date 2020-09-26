@@ -160,7 +160,7 @@ spec:
           service:
             name: bitwarden
             port:
-              number: 3012
+              number: 80
       - pathType: Prefix
         path: "/"
         backend:
