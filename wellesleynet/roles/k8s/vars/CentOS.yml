@@ -6,3 +6,4 @@ k8s_packages:
   - nfs-utils
   - python2-openshift
   - iscsi-initiator-utils
+  - gasket-dkms
