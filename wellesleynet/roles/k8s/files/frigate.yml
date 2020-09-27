@@ -1,0 +1,181 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: frigate
+  namespace: default
+spec:
+  encryptedData:
+    FRIGATE_MQTT_PASSWORD: AgCZJ7eps7w0FZTD2DprLkr9SXcM584to+0DsatC2yN0A5EPF6FDukm/qUlE8tYGovgCfaP3oB2zj1ExAzQb7CrVrKF5tljiWnvHUD5l70G29oTAoOyvAPQz4yrlBk1HLQL+V/Rbr3yAUZY44HrEtwWD4P3af1taKYYiHaNJjJMY1CTFj340/VVC1J8aoz8FZZqTySjvQjgrQvknyeFLOeCocjLqcVsqtvGWvuzu7TKa59A0+/AZ6mtn1lYdo15S5pnyfdgkktBvilt5xpmY67VLdtkSseiJx2Rhsq2qAuFm5I8NPNA+qnztQwGk73D3ppbwivfSeNssC5cu0g8386eq3FUO14GdeTpuYyFExElFoBb9WiZAMjz9JXmST+bkTnWcM3A0R5Wby6mqHYZQxFDoO4a9w2CBr2QthQchIKX4BONzfl+B5hjdk+fuhT/itc6LaooQhAvTHYWm3u825IlLoiupQ9mOOylsiKLnFglrKZ7IhbImAYvlTdZ0g4t3MQzMtUw62RRgW46QfGnYXxazoY+D6DZG3D5Tu4XiB9loT5vOTLfNBemOX5IirfEeNG/jaDGs3RMsv2VgGoXIwB+G9ZgHaIXg1mM367+CHn2HYONc9oe8ptFJFG2J4T2I7hHrDGBW+vz7k+yJXV2kkXt3j6r5Wo23yh6nXkUFPEECUcPjpqKS8EKaV8SXvPxRZ882miXkFfWg/OLsFRkByBNKTPleIU5xzXxtYhLK0A5QQQ==
+    FRIGATE_RTSP_PASSWORD: AgAmBnoamGcWBSxhjczsyjkuchm9bp/+634v2hvENZdDk2czOd9djkuZla6Ux4u8rqSZg6Yz+gJ8gOBZcHMeX5cPrHfu8AU7+QVvqtq5V47v/fsFcSSQ75mIfxkCuSe23UBlBxi89NYo+5q2L4r3ShaTHEzW1JHYDaDOoqDdKRUAcQFO2U3Za7sQFNZwZQ470jFPPOQXThj3ewAIqzWl/BujWRdwGpQP+XbAGhYWf6YENhp/CkqYqwTil1qrR/Ef/PrQmXyF3azN/pU9RKuPruh73mfR7Xtve/owMRwqW9ygudi6RQ8KZbOzZdE736kzoIbqOcuAVCAPaKXfWIq49ezX0didkai+9EEuqF9cNH9InvD/mv2DLmzRCyEDA7cKxAZaNeVhsqH8srywxmNl8hZ+MOzIepc8Volmk82mMcnqJYSPL4j2+Jh8PfgkmrXtGqYgAJ2XbrrAsZvhq2vG169JoV55pSa8wzVARiNNcQxUU8+kDAmXPm+wQYyRYtVGaHqyebd4TGQyve35oUv+XV0mHjr7wqtnD1K4ug3CP5rr/AHnkYVU8H4t4G58M90x9YhZmDXjOnghKGkzU4Lxj2k62Ht6+1e3NhAPBn8+h0HtkqlxWV+Yzz2QRjzL8969peuDEtpQT+OdRgsCre7gWQ6F10mLaSg59aEK7z3JHE+Ea7pBOMzdIz/1NgVdphauZV1t18UJicj0Jg==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: frigate
+      namespace: default
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frigate-config
+data:
+  config.yml: |
+    web_port: 5000
+
+    mqtt:
+      host: mqtt.kiski.co
+      topic_prefix: frigate
+      user: frigate
+      password: '{FRIGATE_MQTT_PASSWORD}'
+
+    save_clips:
+      max_seconds: 300
+
+      ffmpeg:
+        global_args:
+          - -hide_banner
+          - -loglevel
+          - panic
+        hwaccel_args:
+          - -hwaccel
+          - vaapi
+          - -vaapi_device
+          - /dev/dri/renderD128
+        input_args:
+          - -avoid_negative_ts
+          - make_zero
+          - -fflags
+          - nobuffer
+          - -flags
+          - low_delay
+          - -strict
+          - experimental
+          - -fflags
+          - +genpts+discardcorrupt
+    #     - -vsync
+    #     - drop
+          - -rtsp_transport
+          - tcp
+          - -stimeout
+          - '5000000'
+          - -use_wallclock_as_timestamps
+          - '1'
+        output_args:
+          - -f
+          - rawvideo
+          - -pix_fmt
+          - rgb24
+
+    objects:
+      track:
+        - person
+        - cat
+
+    cameras:
+      living_room:
+        ffmpeg:
+          input: 'rtsp://wyze:{FRIGATE_RTSP_PASSWORD}@192.168.69.20/live'
+          fps: 15
+        take_frame: 1
+        best_image_timeout: 60
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: frigate
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frigate
+  serviceName: frigate
+  template:
+    metadata:
+      labels:
+        app: frigate
+    spec:
+      # 1jane has the TPU
+      nodeName: 1jane
+      containers:
+      - image: blakeblackshear/frigate:0.6.0
+        imagePullPolicy: Always
+        name: frigate
+        ports:
+        - containerPort: 5000
+        env:
+        - name: TZ
+          value: 'America/New_York'
+        volumeMounts:
+        - name: frigate-config
+          mountPath: /config
+        - name: frigate-cache
+          mountPath: /cache
+        - name: frigate-shm
+          mountPath: /dev/shm
+        - name: tpu
+          mountPath: /dev/apex_0
+        resources:
+          limits:
+            gpu.intel.com/i915: 1
+        envFrom:
+        - secretRef:
+            name: frigate
+        securityContext:
+          privileged: true
+      volumes:
+      - name: frigate-config
+        configMap:
+          name: frigate-config
+      - name: frigate-cache
+        emptyDir:
+          medium: Memory
+      - name: frigate-shm
+        emptyDir:
+          medium: Memory
+      - name: tpu
+        hostPath:
+          path: /dev/apex_0
+          type: CharDevice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: frigate
+spec:
+  selector:
+    app: frigate
+  ports:
+  - name: frigate
+    port: 5000
+    protocol: TCP
+    targetPort: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frigate
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+spec:
+  rules:
+  - host: frigate.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: frigate
+            port:
+              number: 5000
+  tls:
+  - hosts:
+    - frigate.kiski.co
+    secretName: frigate-kiski-co-tls
