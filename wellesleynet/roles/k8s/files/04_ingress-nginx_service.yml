@@ -59,6 +59,14 @@ spec:
       protocol: TCP
       port: 9013
       targetPort: 9013
+    - name: mosquitto
+      protocol: TCP
+      port: 1883
+      targetPort: 1883
+    - name: mosquitto-tls
+      protocol: TCP
+      port: 8883
+      targetPort: 8883
 
   selector:
     app.kubernetes.io/name: ingress-nginx
@@ -101,6 +109,8 @@ data:
   9011: "default/croc:9011"
   9012: "default/croc:9012"
   9013: "default/croc:9013"
+  1883: "default/mosquitto:1883"
+  8883: "default/mosquitto:8883"
 ---
 kind: ConfigMap
 apiVersion: v1

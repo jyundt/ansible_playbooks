@@ -1,0 +1,144 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mqtt-kiski-co-tls
+  namespace: default
+spec:
+  secretName: mqtt-kiski-co-tls
+  dnsNames:
+  - mqtt.kiski.co
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt-production
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: mosquitto
+  namespace: default
+spec:
+  encryptedData:
+    dhparam.pem: AgCqlHGzIZRygXLWfY9YQC5Wrba4DqdSm5ZZQM7E7EndMB8PlBGwdNn+91Puiz3WX9dafmc5bvExvTq2E/FxtHnrCdfOyRLSok5aTG64vt8PvDxQ5ATVN2QSC3oXLhAWCQm1pzTvRuGiiweN3AprUZuX2D8trTbAvx+cRtiGobrP3Daw2d2Dec+gEWNcoygquYWrzrZrxzy0oXO5BDfj3mBBATnhD5jHSy/eF+jeLXOl2UZVMPwrmyw1b8CHWezY5pT1H5XmXulaqhjI2NIl/Ijt/CUDJczakmzE2qvhEIINoiEX748nrjo0lMub0NE6m1yDZnQa2wkkUbBqg1/+7twtcAhNWvbxQ7d4VDpnwl7s5Ybhb7ptoiAF9T0uO82+7Ew0aM/J2ZCX/WC2M9Ihy+UBKBW0MO6b5t6b7DZsyX52frtvBsAfFA1b7Qcsg5oH50QqxZQ+VwjmblNfTHDk+ddReLXDCprkKnj4C2ah+2SnBAVurHBtG8dKDbX049+0zXvfZtKTKdMK45Rhg2J0C68RvdGramUjN8m+V0CVJ/+wCtGXTAadA76PPimQ3gEEH6X9HIa5AJIeDwpKbH+6XbCNTRfY0cozIpCSi8IQhFlOE8Ld5yqRNX8ZH2QNyuLMQ1gtoBI+sF/QNMmXtVAlq8WxaehOhljUBwlHfvj3e5TwYzD6kz4vwYlL2hZexhVNU4r0Hy0cFdNc0vIXaOMEcZ8BftJHARZ60FD4KEFhJidEXnFWlRBobY3RmccNHujBAqAxKyfWTa8Z01XW7up8n/z70MZ5U92ooeYGnS6cbX53olPJG7Imhvn2BXmcz5KEQ1Cw9VkFJU02GkCPmQhViy7hdOhK5Jk6R7KGkIVwI33nOW1sqqQK/Wi+XU1Fu+MK4fdoZU1V0ZQEhAuvWa7+XwEGRD/bn2xLtDyLjsP9NwlqGW+A5FnV0nmcGL/AeDqgk3HR1VfD+Feej704Iq1DdqTzKoBOZPhN6pPJou5HD5XiPjqK99sIp8SfpCnO4lLpAgjW5Wps0xGUU2TUO+F4Ma0nU3+iKHz0n76Vxa7/mMSLZy9lqHelq69/uYdEOO+DxGxdzE1sPJz6RpBqFks+gmg1r9DmDSML7NZuFLOot8I9ANkWPr48LW3yw+ock322YLamgJ8/Pz/XeZDe2m8gVm+EL2z5MlivWKppSyi0zDYJMNIpHLANa0B31nKm1LkF+t2JNcaYkP/CRwiG5aWH6okFQyUwpUzL/xjJwyU4XN4iCKv9fDpD4h6u
+    passwd: AgB2FzVNWtDmNJLEuol05KldVJHQVNLDGWZ+3LotvaI/ZHafSXrpr9lGoGakEDBSzW3jKqRa9vw0exn63HwNXMEU2yI1T7Cknh2f6ILc8sS8gMcGWrjEuDVLI1CyyjTMuowi0eXCB8B5FxpbD3Vh7R9595V54DqxrqhXvLWZElIkMK9lHQv9BJXEq6xjVXbrsY0C1KLFP3PVVC8qNpFNg95orkqlcbsXdmlWTB0Egj5G0K/p6JbeCGCSgZvXtzavAeGrC54vQgbAyzl8KwicU8v9yH0ix09XILq490XysftyqMgHnrvM5mNtGT24kwDj6xr9WtSIhcdNn4VjIKwK/GTZ356k1N5ix5Ffi8+Q5SgOK2tBvR0xdJqrSNpk3UyTR3S/dYu5/cdlWB0IbemZFQp785qz2eLcjYvKxHgu+E36DwvUbgrOI1lx/yc76MeGlZgPnzC3VLwgXQHyeh1S/PKzvw3OMEJkKkB63dJdMGGuX60C956giWWr2S+2X5wvDF6drNMKWd1o97Wm4Jd4z+gC1FF5ejOex1Zsac1ATPdVk0c286QOD5UrvPmdQ+OK6SsXlFSBYAP2eLD8omP+85B+3nCRq7gDMRO9X80Qwy/+7DDgW01n2g2LafABgXM4UHxVSwLswntPAr6LHWYfuGv7zIdqZA/4gbuBC4Byxoc1iQ7grWdEBpQGF6Vpmc/ElB8Tez670bqLbWIus+EAI0PJfu1ySwrbFTOky1KMKBvGyJUcbZqrMU/gLVWnAkGvqvnZoZKCwKrZ4A+abYKgmYnGGnFQ3HdHjOpb+1Glx7SJeeYg+qOCn0OzdL2tzg/feQ3EagLY3XeF7Wk1doYKGENucyjGhjU5dpHSljh6yumbQC/r5EyRD8VhC4zmFfdRBag7DRyFejkpI/UHASFcBvYBzIUreuM2DXmhOF2WxlFZhW3MSOjn2Pvo6BuqIs9ecySrVkEOzvd6ZpB5XiwIaBpFUn0Rj2uCcrPSiRGNIXweAM6rKPBInhvxrC6eoBB3WvwJ
+  template:
+    metadata:
+      creationTimestamp: null
+      name: mosquitto
+      namespace: default
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: mosquitto-conf
+  namespace: default
+data:
+  mosquitto.conf: |
+    user mosquitto
+    listener 1883
+    protocol mqtt
+
+    listener 8883
+    protocol mqtt
+    capath /etc/ssl/certs
+    certfile /mosquitto/secret/tls.crt
+    keyfile /mosquitto/secret/tls.key
+    ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
+    dhparamfile /mosquitto/secret/dhparam.pem
+    tls_version tlsv1.2
+
+    autosave_interval 300
+    persistence true
+    persistence_file mosquitto.db
+    persistence_location /mosquitto/data
+
+    log_type all
+    log_timestamp true
+    connection_messages true
+    log_timestamp_format %Y-%m-%dT%H:%M:%S
+    allow_anonymous false
+
+    password_file /mosquitto/secret/passwd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mosquitto-data
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: longhorn-default
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mosquitto
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mosquitto
+  serviceName: "mosquitto"
+  template:
+    metadata:
+      labels:
+        app: mosquitto
+    spec:
+      containers:
+      - image: eclipse-mosquitto:1.6.12
+        imagePullPolicy: Always
+        name: mosquitto
+        ports:
+        - containerPort: 1883
+        - containerPort: 8883
+        volumeMounts:
+        - name: mosquitto-data
+          mountPath: /mosquitto/data
+        - name: mosquitto-conf
+          mountPath: /mosquitto/config
+        - name: mosquitto-secret
+          mountPath: /mosquitto/secret
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /mosquitto/data/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: mosquitto-data
+        persistentVolumeClaim:
+          claimName: mosquitto-data
+      - name: mosquitto-conf
+        configMap:
+          name: mosquitto-conf
+      - name: mosquitto-secret
+        projected:
+          sources:
+          - secret:
+              name: mosquitto
+          - secret:
+              name: mqtt-kiski-co-tls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto
+  namespace: default
+  labels:
+    app: mosquitto
+spec:
+  ports:
+  - port: 1883
+    name: mosquitto
+  - port: 8883
+    name: mosquitto-tls
+  selector:
+    app: mosquitto
