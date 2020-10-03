@@ -72,8 +72,7 @@ spec:
         app: firefly
     spec:
       containers:
-        # 5.4.2
-      - image: jc5x/firefly-iii:latest@sha256:5f6006a07068bfb331045e383435eeb349a7fd6aa336f60a41bdfaf9b4588aaa
+      - image: jc5x/firefly-iii:version-5.4.3
         imagePullPolicy: Always
         name: firefly
         ports:
