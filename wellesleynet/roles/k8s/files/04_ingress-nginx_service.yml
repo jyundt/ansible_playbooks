@@ -4,10 +4,10 @@ metadata:
   name: ingress-nginx-controller
   namespace: ingress-nginx
   labels:
-    helm.sh/chart: ingress-nginx-3.4.0
+    helm.sh/chart: ingress-nginx-3.4.1
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.40.1
+    app.kubernetes.io/version: 0.40.2
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
 spec:
