@@ -28,6 +28,10 @@ data:
       topic_prefix: frigate
       user: frigate
       password: '{FRIGATE_MQTT_PASSWORD}'
+    detectors:
+      coral:
+        type: edgetpu
+        device: pci:0
 
     save_clips:
       max_seconds: 300
