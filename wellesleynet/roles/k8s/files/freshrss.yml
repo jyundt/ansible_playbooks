@@ -29,7 +29,7 @@ spec:
         app: freshrss
     spec:
       containers:
-      - image: freshrss/freshrss:1.15.3-alpine
+      - image: freshrss/freshrss:1.17.0-alpine
         imagePullPolicy: Always
         name: freshrss
         ports:
