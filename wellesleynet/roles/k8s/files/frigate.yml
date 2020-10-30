@@ -103,7 +103,7 @@ spec:
       # 1jane has the TPU
       nodeName: 1jane
       containers:
-      - image: blakeblackshear/frigate:0.7.1-amd64
+      - image: blakeblackshear/frigate:0.7.3-amd64
         imagePullPolicy: Always
         name: frigate
         ports:
