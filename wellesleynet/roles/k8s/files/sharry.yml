@@ -29,7 +29,7 @@ spec:
         app: sharry
     spec:
       containers:
-      - image: eikek0/sharry:1.4.3
+      - image: eikek0/sharry:1.5.0
         imagePullPolicy: Always
         name: sharry
         args:
