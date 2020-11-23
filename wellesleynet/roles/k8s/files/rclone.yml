@@ -79,7 +79,7 @@ spec:
         spec:
           containers:
           - name: rclone-jyundt-gmail
-            image: rclone/rclone:1.53.3
+            image: rclone/rclone:1.53.2
             args:
             - sync
             - "jyundt_gmail_gdrive:/"
@@ -113,7 +113,7 @@ spec:
                   name: rclone
                   key: RCLONE_CONFIG_JYUNDT_GMAIL_GDRIVE_CLIENT_ID
           - name: rclone-jyundt-digitalocean
-            image: rclone/rclone:1.53.3
+            image: rclone/rclone:1.53.2
             args:
             - sync
             - "jyundt_digitalocean_gdrive:/"
@@ -147,7 +147,7 @@ spec:
                   name: rclone
                   key: RCLONE_CONFIG_JYUNDT_DIGITALOCEAN_GDRIVE_CLIENT_ID
           - name: rclone-emily-gmail
-            image: rclone/rclone:1.53.3
+            image: rclone/rclone:1.53.2
             args:
             - sync
             - "emily_gmail_gdrive:/"
@@ -181,7 +181,7 @@ spec:
                   name: rclone
                   key: RCLONE_CONFIG_EMILY_GMAIL_GDRIVE_CLIENT_ID
           - name: rclone-emily-packet
-            image: rclone/rclone:1.53.3
+            image: rclone/rclone:1.53.2
             args:
             - sync
             - "emily_packet_gdrive:/"
