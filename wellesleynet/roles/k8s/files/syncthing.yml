@@ -112,7 +112,7 @@ spec:
         app: syncthing
     spec:
       containers:
-      - image: syncthing/syncthing:1.10.0
+      - image: syncthing/syncthing:1.12.0
         imagePullPolicy: Always
         name: syncthing
         ports:
@@ -142,7 +142,7 @@ spec:
           mountPath: "/var/syncthing"
         - name: syncthing-data
           mountPath: "/var/syncthing/data"
-      - image: syncthing/relaysrv:1.10.0
+      - image: syncthing/relaysrv:1.12.0
         imagePullPolicy: Always
         name: strelaysrv
         ports:
@@ -170,7 +170,7 @@ spec:
         - name: syncthing-secrets
           mountPath: "/var/strelaysrv/key.pem"
           subPath: strelaysrv-key.pem
-      - image: syncthing/discosrv:1.10.0
+      - image: syncthing/discosrv:1.12.0
         imagePullPolicy: Always
         name: stdiscosrv
         ports:
@@ -252,7 +252,7 @@ spec:
     protocol: TCP
     targetPort: 8443
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: syncthing
@@ -260,20 +260,25 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: syncthing.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: syncthing
-          servicePort: 8384
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: syncthing
+            port:
+              number: 8384
   tls:
   - hosts:
     - syncthing.kiski.co
-    secretName: kiskico-wildcard
+    secretName: syncthing-kiski-co-tls
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: syncthing-stdiscosrv
@@ -284,15 +289,20 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-SSL-Cert $ssl_client_cert;
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
   - host: stdiscosrv.kiski.co
     http:
       paths:
-      - backend:
-          serviceName: syncthing
-          servicePort: 8443
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: syncthing
+            port:
+              number: 8443
   tls:
   - hosts:
     - stdiscosrv.kiski.co
-    secretName: kiskico-wildcard
+    secretName: stdiscosrv-kisk-co-tls
