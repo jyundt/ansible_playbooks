@@ -281,11 +281,11 @@
       definition: "{{ lookup('file', 'statping.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
-  - name: Create factorio statefulset
-    k8s:
-      state: present
-      definition: "{{ lookup('file', 'factorio.yml') }}"
-      kubeconfig: "{{ k8s_config }}"
+# - name: Create factorio statefulset
+#   k8s:
+#     state: present
+#     definition: "{{ lookup('file', 'factorio.yml') }}"
+#     kubeconfig: "{{ k8s_config }}"
 
   - name: Create croc deployment
     k8s:
