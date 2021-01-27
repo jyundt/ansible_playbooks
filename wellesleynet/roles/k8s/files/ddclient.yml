@@ -44,7 +44,7 @@ spec:
         app: ddclient
     spec:
       containers:
-      - image: linuxserver/ddclient:v3.9.1-ls49
+      - image: linuxserver/ddclient:v3.9.1-ls50
         imagePullPolicy: Always
         name: ddclient
         ports:
