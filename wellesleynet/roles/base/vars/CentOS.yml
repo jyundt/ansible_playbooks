@@ -15,3 +15,4 @@ base_packages:
   - mbuffer
   - nvme-cli
   - psmisc
+  - kexec-tools
