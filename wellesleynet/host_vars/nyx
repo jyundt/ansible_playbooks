@@ -1,0 +1,2 @@
+---
+luks_password: "{{ vault_nyx_luks_password }}"
