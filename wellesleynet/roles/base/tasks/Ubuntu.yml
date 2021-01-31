@@ -19,26 +19,20 @@
 # Don't tell me how to live my life, Ubuntu...
 - name: "Remove Ubuntu bloatware"
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: absent
     purge: yes
-  loop:
-    - ubuntu-release-upgrader-core
-    - ubuntu-advantage-tools
-    - landscape-common
-    - update-notifier-common
+  vars:
+    packages:
+      - ubuntu-release-upgrader-core
+      - ubuntu-advantage-tools
+      - landscape-common
+      - update-notifier-common
+      - motd-news-config
 
 - name: "Disable motd-news timer"
   systemd:
     name: motd-news.timer
     state: stopped
     enabled: no
-  when: ansible_distribution_release == "bionic"
-
-- name: "Disable motd-news in /etc/default"
-  lineinfile:
-    dest: /etc/default/motd-news
-    line: "ENABLED=0"
-    state: present
-    regexp: "^ENABLED="
   when: ansible_distribution_release == "bionic"
