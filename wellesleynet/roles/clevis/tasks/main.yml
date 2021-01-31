@@ -23,6 +23,8 @@
       name: "{{ clevis_packages }}"
       update_cache: yes
 
+  # FIXME: this is broken for LUKSv2 disks because luksmeta is v1 specific.
+
   # We assume that an "initialized" disk has been enrolled with our
   # tang server. Non-initialized disks throw RC == 72 with luksmeta
   - name: "Identify enrolled LUKS partitions(s)"
