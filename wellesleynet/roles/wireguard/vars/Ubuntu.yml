@@ -1,3 +1,4 @@
 ---
-wireguard_repo: "ppa:wireguard/wireguard"
-wireguard_packages: "wireguard"
+wireguard_packages:
+  - wireguard-linux-compat
+  - wireguard

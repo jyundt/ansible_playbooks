@@ -1,4 +1,1 @@
 ---
-- name: "Add wireguard PPA"
-  apt_repository:
-    repo: "{{ wireguard_repo }}"
