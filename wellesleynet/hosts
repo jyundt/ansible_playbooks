@@ -3,9 +3,10 @@
 2jane
 3jane
 echo
+nyx
 
 [wireguard]
-nyx.wellesleynet.com ansible_python_interpreter=/usr/bin/python3 timezone=America/New_York
+nyx ansible_python_interpreter=/usr/bin/python3 timezone=America/New_York
 wggb01.wellesleynet.com ansible_host=138.68.141.148
 wgus01.wellesleynet.com ansible_host=159.203.107.147
 wgnl01.wellesleynet.com ansible_host=159.65.206.158
