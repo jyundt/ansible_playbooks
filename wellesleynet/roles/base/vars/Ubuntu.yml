@@ -10,3 +10,5 @@ base_packages:
   - iperf3
   - pv
   - mbuffer
+  - nvme-cli
+  - psmisc

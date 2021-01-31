@@ -99,14 +99,6 @@
     key: "{{ item.value.ssh_pub_key | default(None) }}"
   with_dict: "{{ user_dict }}"
 
-- name: "Download {{ cronwrapper }}"
-  get_url:
-    url: "{{ cronwrapper_url }}"
-    dest: "{{ cronwrapper_path }}/{{ cronwrapper }}"
-    mode: 0755
-    owner: "root"
-    group: "root"
-
 - name: "Install misc base packages"
   package:
     name: "{{ base_packages }}"
@@ -115,8 +107,3 @@
   include_role:
     name: raspberry-pi
   when: (ansible_lsb.id is defined and ansible_lsb.id == "Raspbian")
-
-- name: "Run NUC specific tasks"
-  include_role:
-    name: nuc
-  when: (ansible_product_name is defined and 'NUC' in ansible_product_name)
