@@ -36,7 +36,7 @@
 
   - name: "Enroll LUKs partition(s)"
     command:
-      cmd: "clevis bind luks -f -d {{ item.item }} tang '{{ tang_info | to_json }}'"
+      cmd: "clevis luks bind -f -d {{ item.item }} tang '{{ tang_info | to_json }}'"
       stdin: "{{ luks_password }}"
     with_items: "{{ luksmeta_out.results }}"
     vars:
