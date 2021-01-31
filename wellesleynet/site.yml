@@ -1,6 +1,5 @@
 ---
 - import_playbook: base.yml
-  when: inventory_hostname not in groups.freenas_jails
 - import_playbook: wireguard.yml
 - import_playbook: nginx.yml
 - import_playbook: nuc.yml
