@@ -41,6 +41,7 @@
     state: enabled
     permanent: true
     immediate: true
+    zone: public
   notify: "Restart firewalld"
 
 - name: "Add wireguard interface to trusted zone"
@@ -56,6 +57,15 @@
     masquerade: "yes"
     state: enabled
     permanent: true
+    zone: public
+  notify: "Restart firewalld"
+
+- name: "Enable masquerade"
+  firewalld:
+    masquerade: "yes"
+    state: enabled
+    permanent: true
+    zone: trusted
   notify: "Restart firewalld"
 
 - name: "Enable ipv4 forwarding"
