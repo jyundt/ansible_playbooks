@@ -44,5 +44,5 @@
     when: item.rc == 72
     loop_control:
       label: "{{ item.item }}"
-    notify: "Update dracut"
+    notify: "Update initrd"
   when: "'crypto_LUKS' in lsblk_out.stdout"
