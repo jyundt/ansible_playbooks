@@ -1,6 +1,7 @@
 ---
-ntp_package: "ntp"
-ntp_service: "{{ntp_package}}"
+# systemd-timesyncd is used from systemd
+ntp_package: "systemd"
+ntp_service: "systemd-timesyncd"
 base_deps:
   - python-apt
   - apt-transport-https
