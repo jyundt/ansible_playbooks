@@ -104,7 +104,7 @@ spec:
         app: authelia
     spec:
       containers:
-      - image: authelia/authelia:4.26.0
+      - image: authelia/authelia:4.26.1
         imagePullPolicy: Always
         name: authelia
         ports:
@@ -127,7 +127,7 @@ spec:
             - /data/lost+found
           initialDelaySeconds: 5
           periodSeconds: 5
-      - image: redis:5.0.9-alpine
+      - image: redis:5.0.10-alpine
         imagePullPolicy: Always
         name: authelia-redis
         command:
