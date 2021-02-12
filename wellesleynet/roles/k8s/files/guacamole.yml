@@ -257,7 +257,7 @@ spec:
         - name: guacamole-serverconf
           mountPath: /usr/local/tomcat/conf/server.xml
           subPath: server.xml
-      - image: postgres:12.2-alpine
+      - image: postgres:12.5-alpine
         imagePullPolicy: Always
         name: guacamole-postgres
         livenessProbe:
