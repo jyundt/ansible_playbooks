@@ -86,7 +86,7 @@ spec:
         - name: firefly
           mountPath: /var/www/html/storage/upload
           subPath: upload
-      - image: postgres:12.4-alpine
+      - image: postgres:12.5-alpine
         imagePullPolicy: Always
         name: firefly-postgres
         volumeMounts:
