@@ -1,0 +1,44 @@
+---
+- name: Install EPEL
+  dnf:
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
+    state: present
+    disable_gpg_check: yes
+
+- name: Upgrade all packages
+  dnf:
+    name: "*"
+    state: latest
+    update_cache: yes
+  when: "'k8s' not in group_names"
+
+- name: Configure SELinux
+  selinux:
+    policy: "{{ selinux_policy }}"
+    state: "{{ selinux_state }}"
+  register: selinux_status
+
+- name: Reboot for SELinux change
+  reboot:
+  when: selinux_status.reboot_required
+
+- name: "Installed tuned"
+  dnf:
+    name: tuned
+    state: latest
+    update_cache: yes
+
+- name: "Start/enable tuned"
+  systemd:
+    name: "tuned"
+    state: started
+    enabled: yes
+
+- name: "Detect current tuned profile"
+  shell: "/usr/sbin/tuned-adm active| cut -f 2 -d : | sed 's/^[ \t]*//'"
+  register: current_tuned_profile
+  changed_when: false
+
+- name: "Set tuned profile"
+  command: "/usr/sbin/tuned-adm profile {{ tuned_profile }}"
+  when: current_tuned_profile.stdout != tuned_profile

@@ -1,0 +1,16 @@
+---
+tuned_profile: "throughput-performance"
+ntp_package: "chrony"
+ntp_service: "chronyd"
+epel_repo_rpm: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ansible_distribution_major_version}}.noarch.rpm"
+base_deps:
+  - python3-libselinux
+  - util-linux
+  - unzip
+base_packages:
+  - iperf3
+  - pv
+  - mbuffer
+  - nvme-cli
+  - psmisc
+  - kexec-tools

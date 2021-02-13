@@ -1,14 +1,24 @@
 ---
-- name: "Include OS specific vars"
-  include_vars: "{{ ansible_distribution }}.yml"
+- name: "Include Red Hat-ish OS specific vars"
+  include_vars: "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}.yml"
+  when: ansible_os_family == "RedHat"
+
+- name: "Include Debian-ish OS specific vars"
+  include_vars: "{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+  when: ansible_os_family == "Debian"
 
 - name: "Install Ansible deps"
   package:
     name: "{{ base_deps }}"
     update_cache: yes
 
-- name: "Include OS specific tasks"
-  include_tasks: "{{ ansible_distribution }}.yml"
+- name: "Include Red Hat-ish OS specific tasks"
+  include_tasks: "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}.yml"
+  when: ansible_os_family == "RedHat"
+
+- name: "Include Debian-ish OS specific tasks"
+  include_tasks: "{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+  when: ansible_os_family == "Debian"
 
 - name: "Include DigitalOcean specific tasks"
   include_tasks: "digitalocean.yml"
