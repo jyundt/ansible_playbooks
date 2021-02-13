@@ -1,0 +1,6 @@
+---
+clevis_packages:
+  - clevis
+  - clevis-luks
+  - clevis-dracut
+clevis_update_initrd: "dracut -f"

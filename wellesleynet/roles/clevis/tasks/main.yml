@@ -15,8 +15,13 @@
       fail_msg: "luks_password variable is not set!"
       success_msg: "luks_password variable is set."
 
-  - name: "Include OS specific vars"
-    include_vars: "../vars/{{ ansible_distribution }}.yml"
+  - name: "Include Red Hat-ish OS specific vars"
+    include_vars: "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}.yml"
+    when: ansible_os_family == "RedHat"
+  
+  - name: "Include Debian-ish OS specific vars"
+    include_vars: "{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+    when: ansible_os_family == "Debian"
 
   - name: "Install clevis packages"
     package:
