@@ -50,8 +50,8 @@
 - name: "Install ssh pub keys for root"
   authorized_key:
     user: root
-    key: '{{ lookup("file", item) }}'
-  with_items: "{{ ssh_keys }}"
+    key: "{{ ssh_keys | join ('\n') }}"
+    exclusive: true
 
 - name: "Install firewalld"
   package:
@@ -105,8 +105,9 @@
 
 - name: "Install ssh pub keys for base users"
   authorized_key:
+    key: "{{ ssh_keys | join ('\n') }}"
+    exclusive: true
     user: "{{ item.value.user }}"
-    key: "{{ item.value.ssh_pub_key | default(None) }}"
   with_dict: "{{ user_dict }}"
 
 - name: "Install misc base packages"
