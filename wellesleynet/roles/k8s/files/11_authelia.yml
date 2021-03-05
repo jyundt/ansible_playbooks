@@ -104,7 +104,7 @@ spec:
         app: authelia
     spec:
       containers:
-      - image: authelia/authelia:4.26.1
+      - image: authelia/authelia:4.26.2
         imagePullPolicy: Always
         name: authelia
         ports:
