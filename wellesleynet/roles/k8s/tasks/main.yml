@@ -179,11 +179,11 @@
       definition: "{{ lookup('file', 'bitwarden.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
-  - name: Create syncthing faux-daemon statefulset
-    k8s:
-      state: present
-      definition: "{{ lookup('file', 'syncthing.yml') }}"
-      kubeconfig: "{{ k8s_config }}"
+ #- name: Create syncthing faux-daemon statefulset
+ #  k8s:
+ #    state: present
+ #    definition: "{{ lookup('file', 'syncthing.yml') }}"
+ #    kubeconfig: "{{ k8s_config }}"
 
   - name: Create tang deployment
     k8s:
