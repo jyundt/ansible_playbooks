@@ -117,7 +117,7 @@ spec:
         app: joplin
     spec:
       containers:
-      - image: httpd:2.4.46-alpine
+      - image: httpd:2.4.43-alpine
         imagePullPolicy: Always
         name: joplin
         ports:
