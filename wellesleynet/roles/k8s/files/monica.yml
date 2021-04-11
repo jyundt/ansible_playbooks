@@ -1,0 +1,149 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: monica
+  namespace: default
+spec:
+  encryptedData:
+    APP_KEY: AgBs2Atu2sDqvMCRCPjCmmZ9sHn9VA4tzD0q3H8iw3dVq5Fu2+iEVlfpb/AxaKzYAzIFy2TEyw8Zc18NoeaZOcKzVepNEYSQGxqWG5iSwu9Mwl6cFc+4DeoHRnCrdJWfjSuRt8uEN1+WpT9zfWdCezEUVeVTk0R6CThaxbs6XrOCU3uhv5ZQ2FbIbiheBbEQPU985FARUSLVflubCtI46iKdyY7Zc3JgFMfNYHr7bHHFwbLihR7mwbmg7bPFWbMCgOjXgeIsmGRpGi0pKnwAs76rFE70Gw2eyF75BuGWKxh12Z/htKD6+Vvt3qmxzMSKYWUQN1LkP3PGvNdEZYpIT0JCYiMI+5zSgI99Xetj82vMMxJpyojAlbRh7w1Tvio3/dWMt86bUZoEdK4Vm2AevVLnheloeBymg/9KDEjZZUFp/JkSeWqc5+bhcFerrNIvuo85ymhlacW0ZqNw+NJAxjObwWfTXwcKnu6/QorVi+MP4j5ToYnIPAVCJqi6pKxNqS/L+L9fIvoIwDK8hlxZySnxC+QFSYxpelB9qBDS/PxxoMYD9cJrU8gqTxdffCx/AXXwl90d+JTsLCjbfvx5dO3Cu1FvAvA42svRHN4yt/iezNlFuiqVSm74oJes6vlcXJ1PCjpW1pNRxxkXnxlnSVVtTV+VRCYi6O82AP0+HNriZqXqi+wAYtiI8CHvDR7cFnlkLw5MCgaMmHSR3XD6tEwMvntbTT6CXBoro3sm7T10Qw==
+    DB_PASSWORD: AgDOVOiFkha9l1BuwYcwY9AR9d05jpDjMjZzDubF0jTOo/EuykYiJVn3daPMJzUVSDu+/Ww4tTOmMfUh4WgNdDWEWBg6+tGDczakNh3TzMJ00L1LgVA/74L0IeSg8Zse2fyu3riyxYdqpUGq8TKVuUy9uCCDnC82zMH8MYXAa7BPMjSOzCJVe+XdG9mQOdiwdViaq0PXEjvD9aCTlLHN9cuITBPU1am2QwGjU2/6z8nRcwPClR2RxuxZZ1Onh0aGo14/lMCduRMNuL3JEJNg5ufso8KChYwR/Glg4oQ2+BCFvUMImecDnRM/252bk4TPzF2bA+i06YD5xj08zxY9thEvUUzg8TkmkcQm/zizrI2gdbsrUU5A5cQam7tbJQTL6QzqJNCxZG/h9B6B+ZBzJp4r7IwmAFyH0HI75hpNTSGebK08AJeaOMDvSk9PPo5E+mOsaLAoBtm4q1qXbfVsETdw2K5+GFv40N/qezs4OAZkW1Lo+khpC+f+F5y4yzdWm23ddwJRjDlhpFLRlhyrxCbXIgpU1Z+F7wI1NgC9/6yos6t6/sdVvVDNtzKpgXky6FKLvKVdIF8+XYpg44lrt7fWoU+4pclYpwuE0orMTC7DKCX2Kcaff88GfPQcwyDOtsgkM1kBkHxsLRhTlmXU4lIMizisW2izu14sFSA/qD7SnwSVS5SVp6auBaTBfUsE+dDNpl1oGqcKmoBb9qv1Mv/9KCiP61cZC6Yb5ge9+hnNbg==
+    HASH_SALT: AgDTwANH9bllQ5MuHUZ/3pJ5bnIGLqPkPRSEshxN+9XJdD/kK5XVZoao9LQtqcN7/8Igu80ix2Sw6DpxHx2EQciG/ZxXy3CzRxgyqeTj440cVnkMprdOwdTesrHHFpdXFLF9gb5Xl9YNAVyeZrLA4wMmzLLNI4XSXYekJipmtFLg7IGhSWKNoS/bPVfX2NbpRPQ2NtTSVWO9sR+iCkcYu4LTiw3AzJ9TF7qNJ27/41X0ZDT2KPmA9qHkzUJhniT8zrvJ5xnHG5GL+9FeyUhcaf6f+NO3kkRgC3qkEEnCvHt59a2AVPL2Ffy4FcDm5FtEQ+rv6qEPLpGkAHx8KhMmknck87Qsy2GMDrFjxd7D6GZfajbR2JuJRbzHAZnmhC86kEiwceSD1sbfNBrj/5m+lDGdSRJJl+P49aoP59xi1yoLlZLqNjEoUiDyiCsSwGWVN9ADyvQ5m39pm5cDDostTIk0ofE7FtyQ0NMuKvqa6xbWbwSm6K1wVLAp0JWhEWeQGgxQy/cRPq5y+QWxrb3cXYOSOFTTGSbw0xQa+mqxhYByzSMAwpgjKEMKpElwEqSEXWqA3xd+GqgzvlT40j66RCumHMCdowX6gcfwgLkhvNQJEj3Ti5qzZLUYgrIWwfd07VPr5Xa7hTB96OzbQqs+zrVErCWYgIYTfNOx0m/M/uX2pEoZrjbcnxx/RNKIYQk4/vjrbz0899JbaHMI54U1jdvOCLcv/EzbMRv26y0sCPLF4+/2xtRuLw==
+    MAIL_PASSWORD: AgBXWgNRu7lQmOp+6FEjfbN22JDwGpxAwMA/i2kv6VtRuocPqwMHzy6A/e/UpgtRYDwndsQSguz7okv4zmQEgLcfcgoP8soBUv2Z6cvnq4ZNWbzTpduv+V786ATy8+TOYal9IYVaVuyrMYb9f0p2bRex9pwj5XSJ263v3JotkXS0MG7SNN42qtgfLDvxmcKjCIw8ROuHS5lgwTRaWA9Ir2JGGoYpoju/g+NMKx46jn9rOh0iDWiV0/7e/mzIO6HVADqKJZgq6Mo0+ijC3EE57JGgHf4rr/48Wu5FoNnc57j4B64QgAfrtAxg6Mcr7BxiN3d5qh/njaR3zK+4e2jZn7RasUJrTN8iaEuWyRHiQ1rX7+4o2SCvut8Kbc4t4xngTtU6WNA/osqoXwMt0XcUz+fgbnSZ3Ou/ymdHJVm2zl1PeQJuxGrbpI/vYFbcaVr85uxm0T3P4SFH9E71x41ZCDfMI86DxmI5lWgs7yFRqVlPL5TXUvZ7NPx1G7IsT6XflZfJnqm3UES7Chg5pyWyx1wbo3c1HpjNcblCsPHPMBUDJUPb8hweZO+WNVB0j5UAuztymHr8DmkT2tW89neQrFF4zO75BzzMRHvyjg5bmC4zW909cI/NHvOh0p/CzC3H/uMFYSnHUKExdCo63LID+mzoHdqvkaL39OUGEK99X7plRwQMeWeyYvp+IEBqWSqj7u/nvxrl1eMNShwi4CyU+ZKV
+    MYSQL_PASSWORD: AgCay2aS5zkC2msm4/XowE8AbfmqUB3z0m/l/Z7ZWTRo0shAmGZqy0FtgSsKFtRkD6b/RUrC6hdML8GNCd9ACCRf3CbUHUBJfbNbmgnWL/MzUO23YeJGE7sx17XP6zJWvXWiOOp/LIXwshDU4cM5ZB7lGBq7Yg7KTVVQCltAHSbU3hHue8apNi98acuzCSZoG5+6t/+mHM/MWhEUHPijo3nYayJvHz1tAhr6HbsHIRPEITfAGhz5F3z1co2YaL81nxLw75EabP5W2Bs/xUUJXc5xs1uCh5Y91TDpfMv6wgzzPSopfgRVszvJgzfuUrRyau1lhcCFS9ZSZ4rc4kFRN2j7Xcq4S5nZXlD9fEhdWFmUQmEVE+R01gwg1/i+pRkoWej2VmzXIpY96zeFZUhfavnoLW92pu0Q7PW3oUQA578SXJbBjY1TpzKHjfJzH0IFX8WatJ3skSFzzKIsMLn1X4MfYifFE06Go6gf2RPnfv5ZkOaB2xi2tWA94MbRhA+w7WBsIMzKYS/W1yaQ/LrsItF+hvxkB9h2Vkl7K2rPK4oByfqcDViOsowzmL3vdMRng0Zr98qyqxpDvcc1pBsTg73rI9AVBcOUj0mhEdtHgJWjUx+b/ifc53JcpOaOR0bRtZwA56xGnCs+s+ztxmBQ1B4JOUdlGX/4chkgxZrsP0T6wd0GzUJDc+1JzifhfA9uVWOSsNo2MF5rzM9ozjYmRgvvHRer5Bf7xeQ/rRRWoq/E8w==
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: monica
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: longhorn-default
+  resources:
+    requests:
+      storage: 10Gi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: monica
+  namespace: default
+data:
+  APP_ENV: production
+  APP_URL: https://monica.kiski.co
+  DAV_ENABLED: 'true'
+  DB_HOST: 127.0.0.1
+  DB_PORT: "3306"
+  DB_CONNECTION: mysql
+  DB_DATABASE: monica
+  DB_USERNAME: monica
+  DEFAULT_MAX_STORAGE_SIZE: "1024"
+  HASH_LENGTH: "18"
+  MAIL_MAILER: smtp
+  MAIL_HOST: smtp.gmail.com
+  MAIL_PORT: "587"
+  MAIL_USERNAME: jyundt@gmail.com
+  MAIL_ENCRYPTION: tls
+  MAIL_FROM_ADDRESS: jyundt@gmail.com
+  MAIL_FROMNAME: Monica CRM
+  MYSQL_RANDOM_ROOT_PASSWORD: 'true'
+  MYSQL_DATABASE: monica
+  MYSQL_USER: monica
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: monica
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: monica
+  serviceName: "monica"
+  template:
+    metadata:
+      labels:
+        app: monica
+    spec:
+      containers:
+      - image: monica:2.20.0-apache
+        imagePullPolicy: Always
+        name: monica
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: monica
+        - secretRef:
+            name: monica
+        volumeMounts:
+        - name: monica
+          mountPath: /var/www/html/storage
+          subPath: monica
+      - image: mysql:5.7.33
+        imagePullPolicy: Always
+        name: monica-db
+        volumeMounts:
+        - name: monica
+          mountPath: /var/lib/mysql
+          subPath: mysql
+        envFrom:
+        - configMapRef:
+            name: monica
+        - secretRef:
+            name: monica
+       #livenessProbe:
+       #  exec:
+       #    command:
+       #    - ls
+       #    - /var/lib/mysql/lost+found
+       #  initialDelaySeconds: 5
+       #  periodSeconds: 5
+      volumes:
+      - name: monica
+        persistentVolumeClaim:
+          claimName: monica
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: monica
+spec:
+  selector:
+    app: monica
+  ports:
+  - name: monica
+    port: 80
+    protocol: TCP
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: monica
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+spec:
+  rules:
+  - host: monica.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: monica
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - monica.kiski.co
+    secretName: monica-kiski-co-tls
