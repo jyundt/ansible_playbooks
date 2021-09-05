@@ -92,7 +92,7 @@ spec:
         app: mosquitto
     spec:
       containers:
-      - image: eclipse-mosquitto:1.6.12
+      - image: eclipse-mosquitto:1.6.15
         imagePullPolicy: Always
         name: mosquitto
         ports:
