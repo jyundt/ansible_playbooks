@@ -51,9 +51,8 @@ metadata:
   namespace: default
 data:
   configuration.yml: |
-    host: 0.0.0.0
-    port: 80
-    log_level: debug
+    log:
+      level: debug
     totp:
       issuer: authelia.kiski.co
     authentication_backend:
@@ -103,8 +102,9 @@ spec:
       labels:
         app: authelia
     spec:
+      enableServiceLinks: false
       containers:
-      - image: authelia/authelia:4.29.4
+      - image: authelia/authelia:4.31.0
         imagePullPolicy: Always
         name: authelia
         ports:
@@ -174,9 +174,9 @@ spec:
     app: authelia
   ports:
   - name: authelia
-    port: 80
+    port: 9091
     protocol: TCP
-    targetPort: 80
+    targetPort: 9091
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -197,7 +197,7 @@ spec:
           service:
             name: authelia
             port:
-              number: 80
+              number: 9091
   tls:
   - hosts:
     - authelia.kiski.co
