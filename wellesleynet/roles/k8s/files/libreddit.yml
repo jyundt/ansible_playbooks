@@ -1,0 +1,100 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: libreddit
+  name: libreddit
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: libreddit
+  template:
+    metadata:
+      labels:
+        app: libreddit
+    spec:
+      containers:
+      # I think this is v0.15.3
+      - image: docker.io/spikecodes/libreddit@sha256:fb824c01df67dd314c4cd7686b100512cf69831212bf92f08676a8003f025726
+        imagePullPolicy: Always
+        name: libreddit
+        ports:
+        - containerPort: 8080
+        env:
+        - name: LIBREDDIT_DEFAULT_USE_HLS
+          value: "on"
+        - name: LIBREDDIT_DEFAULT_SHOW_NSFW
+          value: "on"
+        - name: LIBREDDIT_DEFAULT_LAYOUT
+          value: "compact"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: libreddit
+spec:
+  selector:
+    app: libreddit
+  ports:
+  - name: libreddit
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: libreddit
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+spec:
+  rules:
+  - host: r.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: libreddit
+            port:
+              number: 8080
+  - host: reddit.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: libreddit
+            port:
+              number: 8080
+  - host: libreddit.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: libreddit
+            port:
+              number: 8080
+  tls:
+  - hosts:
+    - r.kiski.co
+    secretName: r-kiski-co-tls
+  - hosts:
+    - reddit.kiski.co
+    secretName: reddit-kiski-co-tls
+  - hosts:
+    - libreddit.kiski.co
+    secretName: libreddit-kiski-co-tls
