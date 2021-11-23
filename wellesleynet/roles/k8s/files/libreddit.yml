@@ -17,8 +17,8 @@ spec:
         app: libreddit
     spec:
       containers:
-      # I think this is v0.18.1
-      - image: docker.io/spikecodes/libreddit@sha256:f4d0d1ff9b10221d18461c01f329d62cf63ce833bb5cc07c33ff62253117ba1b
+      # I think this is v0.18.2
+      - image: docker.io/spikecodes/libreddit@sha256:8e7215bdd4f4df7bf654744c6f74bbb58ee4e4a5e41ceead35a6eb6917658178
         imagePullPolicy: Always
         name: libreddit
         ports:
