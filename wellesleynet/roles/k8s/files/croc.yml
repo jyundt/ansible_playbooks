@@ -16,8 +16,8 @@ spec:
         app: croc
     spec:
       containers:
-      # No version numbers for the croc container, this is 8.6.8
-      - image: schollz/croc:sha-cdabf62
+      # No version numbers for the croc container, this is 9.5.0
+      - image: schollz/croc:sha-f210ef8
         imagePullPolicy: Always
         name: croc
         ports:
