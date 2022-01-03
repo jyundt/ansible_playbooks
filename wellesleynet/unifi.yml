@@ -1,7 +1,6 @@
+# Note that this isn't a fully functional role yet
 ---
-#- name: Deploy unifi controller
-#  hosts: unifi
-#  roles:
-#    - base
-#    - unificontroller
-#    - certbot
+- name: Deploy unifi controller
+  hosts: unifi
+  roles:
+    - unifi

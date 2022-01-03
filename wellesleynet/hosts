@@ -16,7 +16,7 @@ wgin01.wellesleynet.com ansible_host=159.65.149.232
 mnemosyne.wellesleynet.com
 
 [unifi]
-unifi.wellesleynet.com ansible_python_interpreter=/usr/bin/python3
+unifi.wellesleynet.com ansible_python_interpreter=/usr/bin/python3 ansible_host=165.227.71.130
 
 #[steam]
 #steam.shametime.com

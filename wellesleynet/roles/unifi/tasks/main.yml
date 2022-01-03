@@ -1,0 +1,9 @@
+---
+- name: "Open firewalld for unifi controller"
+  firewalld:
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+    zone: public
+  with_items: "{{ unifi_ports }}"
