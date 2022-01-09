@@ -5,6 +5,7 @@ lets_encrypt_priv_key: "/etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem
 ssh_keys:
   - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBO98zbO4QQPP+G7Gesk+yfN8hZK2v2EYkzDUL9nz4jxhKvs5uqcuj86qC4Ilmqkbj+lMCV7NApinRIbJ1+Lf6Gg=
   - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCoG0tPaP+xcSt1GdAnQVxETOBr9moK2D6xBBDOdNW0SuinOR7WjjuSNnQrMOD5DlYixIj4RTq6pvFWaKUwo5PI=
+  - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIN1jQWOns9kjPtH+DlvAqO0e3G6yUsMkaNagTO8YtlYvAAAABHNzaDo=
 certbot_username: "{{vault_certbot_username}}"
 ssl_cipher_suite: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS"
 homeassistant_unifi_password: "{{vault_homeassistant_unifi_password}}"
