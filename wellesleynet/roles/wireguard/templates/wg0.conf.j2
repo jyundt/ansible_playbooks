@@ -9,6 +9,7 @@ Address = {{ wireguard_data[ansible_hostname]['ip'] }}
 PublicKey = {{ wireguard_data[peer]['publickey'] }}
 AllowedIPs = {{ wireguard_data[peer]['ip'] | ipaddr('address') }}/32
 {% if 'publicip' in wireguard_data[peer] %}
+PersistentKeepalive = 25
 Endpoint = {{ wireguard_data[peer]['publicip'] }}:{{ wireguard_port }}
 {% endif %}
 {% endfor %}
