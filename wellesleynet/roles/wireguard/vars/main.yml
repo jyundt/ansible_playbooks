@@ -84,3 +84,11 @@ wireguard_data:
     privatekey: "{{ vault_wireguard_pixel5a_privatekey }}"
     publickey: "42btLUUWlXw6vivOq5A89ObzOGHG6pfDUR1VAMLT/SY="
     ip: "10.0.0.18/24"
+  io:
+    privatekey: "{{ vault_wireguard_io_privatekey }}"
+    publickey: "qkyHcp64vUbs2iXpasjD6IqTXqYn8pxRYbcUQPIOhQA="
+    ip: "10.0.0.19/24"
+  callisto:
+    privatekey: "{{ vault_wireguard_callisto_privatekey }}"
+    publickey: "qkyHcp64vUbs2iXpasjD6IqTXqYn8pxRYbcUQPIOhQA="
+    ip: "10.0.0.20/24"
