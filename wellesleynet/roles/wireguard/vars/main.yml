@@ -90,5 +90,5 @@ wireguard_data:
     ip: "10.0.0.19/24"
   callisto:
     privatekey: "{{ vault_wireguard_callisto_privatekey }}"
-    publickey: "qkyHcp64vUbs2iXpasjD6IqTXqYn8pxRYbcUQPIOhQA="
+    publickey: "20mnF/F2p3zA7hWL2H+Y1j/meuEY+W5+cweTZYZ1BD8="
     ip: "10.0.0.20/24"
