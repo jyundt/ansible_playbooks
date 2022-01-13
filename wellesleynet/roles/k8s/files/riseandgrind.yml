@@ -1,0 +1,110 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: riseandgrind
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: longhorn-default
+  resources:
+    requests:
+      storage: 50Mi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: riseandgrind
+  name: riseandgrind
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: riseandgrind
+  serviceName: riseandgrind 
+  template:
+    metadata:
+      labels:
+        app: riseandgrind
+    spec:
+      containers:
+      - env:
+        - name: TZ
+          value: America/New_York
+        image: nginx:stable-alpine
+        imagePullPolicy: Always
+        name: riseandgrind
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: riseandgrind
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /usr/share/nginx/html/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: riseandgrind
+        persistentVolumeClaim:
+          claimName: riseandgrind
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: riseandgrind
+spec:
+  selector:
+    app: riseandgrind
+  ports:
+  - name: riseandgrind
+    port: 80
+    protocol: TCP
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: riseandgrind
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+spec:
+  rules:
+  - host: riseandgrind.nyc
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: riseandgrind
+            port:
+              number: 80
+  - host: www.riseandgrind.nyc
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: riseandgrind
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - riseandgrind.nyc
+    secretName: riseandgrind-nyc-tls
+  - hosts:
+    - www.riseandgrind.nyc
+    secretName: www-riseandgrind-nyc-tls
+
