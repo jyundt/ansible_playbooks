@@ -141,30 +141,30 @@ spec:
               value: /opt/gmvault
             - name: HOME
               value: /opt/gmvault
-          - name: gmvault-emily-packet
-            image: jyundt/gmvault
-            args:
-            - sync
-            - -p
-            - -d
-            - "/opt/gmvault/data/emily@packet.com"
-            - "emily@packet.com"
-            volumeMounts:
-            - name: gmvault-home
-              mountPath: /opt/gmvault
-            - name: gmvault-secrets
-              mountPath: "/opt/gmvault/token.sec"
-              subPath: token.sec
-            - name: gmvault-secrets
-              mountPath: "/opt/gmvault/emily@packet.com.passwd"
-              subPath: emily-packet-passwd
-            - name: gmvault-data
-              mountPath: /opt/gmvault/data
-            env:
-            - name: GMVAULT_DIR
-              value: /opt/gmvault
-            - name: HOME
-              value: /opt/gmvault
+         #- name: gmvault-emily-packet
+         #  image: jyundt/gmvault
+         #  args:
+         #  - sync
+         #  - -p
+         #  - -d
+         #  - "/opt/gmvault/data/emily@packet.com"
+         #  - "emily@packet.com"
+         #  volumeMounts:
+         #  - name: gmvault-home
+         #    mountPath: /opt/gmvault
+         #  - name: gmvault-secrets
+         #    mountPath: "/opt/gmvault/token.sec"
+         #    subPath: token.sec
+         #  - name: gmvault-secrets
+         #    mountPath: "/opt/gmvault/emily@packet.com.passwd"
+         #    subPath: emily-packet-passwd
+         #  - name: gmvault-data
+         #    mountPath: /opt/gmvault/data
+         #  env:
+         #  - name: GMVAULT_DIR
+         #    value: /opt/gmvault
+         #  - name: HOME
+         #    value: /opt/gmvault
           volumes:
           - name: gmvault-home
             emptyDir:
