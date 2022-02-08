@@ -63,7 +63,7 @@ spec:
     requests:
       storage: 1Pi
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: rclone
@@ -180,40 +180,40 @@ spec:
                 secretKeyRef:
                   name: rclone
                   key: RCLONE_CONFIG_EMILY_GMAIL_GDRIVE_CLIENT_ID
-          - name: rclone-emily-packet
-            image: rclone/rclone:1.56.2
-            args:
-            - sync
-            - "emily_packet_gdrive:/"
-            - "/mnt/rclone/emily_packet_gdrive"
-            volumeMounts:
-            - name: rclone
-              mountPath: /mnt/rclone
-            env:
-            - name: RCLONE_DRIVE_CHUNK_SIZE
-              value: "256M"
-            - name: RCLONE_DRIVE_ALTERNATE_EXPORT
-              value: "True"
-            - name: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: rclone
-                  key: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_CLIENT_SECRET
-            - name: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_TYPE
-              valueFrom:
-                secretKeyRef:
-                  name: rclone
-                  key: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_TYPE
-            - name: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: rclone
-                  key: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_TOKEN
-            - name: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: rclone
-                  key: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_CLIENT_ID
+         #- name: rclone-emily-packet
+         #  image: rclone/rclone:1.56.2
+         #  args:
+         #  - sync
+         #  - "emily_packet_gdrive:/"
+         #  - "/mnt/rclone/emily_packet_gdrive"
+         #  volumeMounts:
+         #  - name: rclone
+         #    mountPath: /mnt/rclone
+         #  env:
+         #  - name: RCLONE_DRIVE_CHUNK_SIZE
+         #    value: "256M"
+         #  - name: RCLONE_DRIVE_ALTERNATE_EXPORT
+         #    value: "True"
+         #  - name: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_CLIENT_SECRET
+         #    valueFrom:
+         #      secretKeyRef:
+         #        name: rclone
+         #        key: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_CLIENT_SECRET
+         #  - name: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_TYPE
+         #    valueFrom:
+         #      secretKeyRef:
+         #        name: rclone
+         #        key: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_TYPE
+         #  - name: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_TOKEN
+         #    valueFrom:
+         #      secretKeyRef:
+         #        name: rclone
+         #        key: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_TOKEN
+         #  - name: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_CLIENT_ID
+         #    valueFrom:
+         #      secretKeyRef:
+         #        name: rclone
+         #        key: RCLONE_CONFIG_EMILY_PACKET_GDRIVE_CLIENT_ID
           volumes:
             - name: rclone
               persistentVolumeClaim:
