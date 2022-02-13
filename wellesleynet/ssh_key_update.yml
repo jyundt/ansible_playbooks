@@ -1,0 +1,14 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+  - name: "Install ssh pub keys"
+    ansible.posix.authorized_key:
+      user: "{{ item }}"
+      key: https://github.com/jyundt.keys
+      exclusive: true
+      state: present
+      validate_certs: True
+    with_items:
+      - root
+      - jyundt
