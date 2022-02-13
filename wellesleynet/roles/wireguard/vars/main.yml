@@ -92,3 +92,7 @@ wireguard_data:
     privatekey: "{{ vault_wireguard_callisto_privatekey }}"
     publickey: "20mnF/F2p3zA7hWL2H+Y1j/meuEY+W5+cweTZYZ1BD8="
     ip: "10.0.0.20/24"
+  thonkpad:
+    privatekey: "{{ vault_wireguard_thonkpad_privatekey }}"
+    publickey: "zMY4RX9n6OzpRAIBvMY7dFCw2THVE49Cx4lbf8lJ9n0="
+    ip: "10.0.0.21/24"
