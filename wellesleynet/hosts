@@ -1,8 +1,10 @@
+emilycwolfe.com
+
 [clevis]
 1jane
 2jane
 3jane
-echo
+#echo
 
 [wireguard]
 nyx ansible_python_interpreter=/usr/bin/python3 timezone=America/New_York
@@ -39,4 +41,4 @@ master
 worker
 
 [x11vnc]
-echo
+#echo
