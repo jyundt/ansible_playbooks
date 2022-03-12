@@ -261,6 +261,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
     cert-manager.io/cluster-issuer: "letsencrypt-production"
+    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
   - host: syncthing.kiski.co
@@ -290,6 +291,7 @@ metadata:
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-SSL-Cert $ssl_client_cert;
     cert-manager.io/cluster-issuer: "letsencrypt-production"
+    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
   - host: stdiscosrv.kiski.co

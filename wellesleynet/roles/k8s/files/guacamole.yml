@@ -309,6 +309,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
     cert-manager.io/cluster-issuer: "letsencrypt-production"
     nginx.ingress.kubernetes.io/proxy-buffering: "off"
+    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
   - host: guac.kiski.co
