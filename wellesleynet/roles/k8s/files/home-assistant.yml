@@ -144,3 +144,31 @@ spec:
   - hosts:
     - avcad.kiski.co
     secretName: avcad-kiski-co-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: home-assistant-zwave
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: zwave.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: home-assistant
+            port:
+              number: 8091
+  tls:
+  - hosts:
+    - zwave.kiski.co
+    secretName: zwave-kiski-co-tls
