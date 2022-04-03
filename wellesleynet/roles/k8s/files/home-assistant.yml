@@ -12,6 +12,19 @@ spec:
     requests:
       storage: 10Gi
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: home-assistant-zwave
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: longhorn-default
+  resources:
+    requests:
+      storage: 10Gi
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -29,7 +42,7 @@ spec:
         app: home-assistant
     spec:
       containers:
-      - image: homeassistant/home-assistant:2021.4.4
+      - image: homeassistant/home-assistant:2022.3.8
         imagePullPolicy: Always
         name: home-assistant
         ports:
@@ -44,10 +57,28 @@ spec:
         volumeMounts:
         - name: home-assistant-config
           mountPath: /config/
-        - name: home-assistant-usb0
-          mountPath: /dev/ttyUSB0
         - name: home-assistant-usb1
           mountPath: /dev/ttyUSB1
+        securityContext:
+          privileged: true
+      - image: zwavejs/zwavejs2mqtt:6.6.2
+        imagePullPolicy: Always
+        name: home-assistant-zwave
+        ports:
+        - containerPort: 8091
+        - containerPort: 3000
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /usr/src/app/store/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: home-assistant-zwave
+          mountPath: /usr/src/app/store
+        - name: home-assistant-usb0
+          mountPath: /dev/zwave
         securityContext:
           privileged: true
       nodeSelector:
@@ -56,6 +87,9 @@ spec:
       - name: home-assistant-config
         persistentVolumeClaim:
           claimName: home-assistant-config
+      - name: home-assistant-zwave
+        persistentVolumeClaim:
+          claimName: home-assistant-zwave
       - name: home-assistant-usb0
         hostPath:
           path: /dev/ttyUSB0
@@ -78,6 +112,10 @@ spec:
     port: 8123
     protocol: TCP
     targetPort: 8123
+  - name: home-assistant-zwave
+    port: 8091
+    protocol: TCP
+    targetPort: 8091
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
