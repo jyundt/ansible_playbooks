@@ -1,4 +1,17 @@
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: frigate-data
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: longhorn-default
+  resources:
+    requests:
+      storage: 10Gi
+---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
@@ -21,10 +34,8 @@ metadata:
   name: frigate-config
 data:
   config.yml: |
-    web_port: 5000
-
     mqtt:
-      host: mqtt.kiski.co
+      host: mosquitto.default.svc.cluster.local
       topic_prefix: frigate
       user: frigate
       password: '{FRIGATE_MQTT_PASSWORD}'
@@ -32,57 +43,27 @@ data:
       coral:
         type: edgetpu
         device: pci:0
-
-    save_clips:
-      max_seconds: 300
-
-      ffmpeg:
-        global_args:
-          - -hide_banner
-          - -loglevel
-          - panic
-        hwaccel_args:
-          - -hwaccel
-          - vaapi
-          - -vaapi_device
-          - /dev/dri/renderD128
-        input_args:
-          - -avoid_negative_ts
-          - make_zero
-          - -fflags
-          - nobuffer
-          - -flags
-          - low_delay
-          - -strict
-          - experimental
-          - -fflags
-          - +genpts+discardcorrupt
-    #     - -vsync
-    #     - drop
-          - -rtsp_transport
-          - tcp
-          - -stimeout
-          - '5000000'
-          - -use_wallclock_as_timestamps
-          - '1'
-        output_args:
-          - -f
-          - rawvideo
-          - -pix_fmt
-          - rgb24
-
+    ffmpeg:
+      hwaccel_args:
+        - -hwaccel
+        - vaapi
+        - -hwaccel_device
+        - /dev/dri/renderD128
+        - -hwaccel_output_format
+        - yuv420p
     objects:
       track:
         - person
         - cat
-
     cameras:
       living_room:
         ffmpeg:
-          input: 'rtsp://wyze:{FRIGATE_RTSP_PASSWORD}@192.168.69.20/live'
-          fps: 15
-        take_frame: 1
-        best_image_timeout: 60
+          inputs:
+            - path: rtsp://wyze:{FRIGATE_RTSP_PASSWORD}@192.168.69.20/live
+              roles:
+                - detect
+                - record
+                - rtmp
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -103,7 +84,7 @@ spec:
       # 1jane has the TPU
       nodeName: 1jane
       containers:
-      - image: blakeblackshear/frigate:0.7.3-amd64
+      - image: blakeblackshear/frigate:0.10.1-amd64
         imagePullPolicy: Always
         name: frigate
         ports:
@@ -112,10 +93,12 @@ spec:
         - name: TZ
           value: 'America/New_York'
         volumeMounts:
+        - name: frigate-data
+          mountPath: /media/frigate
         - name: frigate-config
           mountPath: /config
         - name: frigate-cache
-          mountPath: /cache
+          mountPath: /tmp/cache
         - name: frigate-shm
           mountPath: /dev/shm
         - name: tpu
@@ -129,6 +112,9 @@ spec:
         securityContext:
           privileged: true
       volumes:
+      - name: frigate-data
+        persistentVolumeClaim:
+          claimName: frigate-data
       - name: frigate-config
         configMap:
           name: frigate-config
@@ -156,6 +142,10 @@ spec:
     port: 5000
     protocol: TCP
     targetPort: 5000
+  - name: frigate-rtmp
+    port: 1935
+    protocol: TCP
+    targetPort: 1935
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
