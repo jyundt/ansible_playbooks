@@ -141,8 +141,8 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
     cert-manager.io/cluster-issuer: "letsencrypt-production"
-    nginx.ingress.kubernetes.io/proxy-body-size: 16m
-    nginx.ingress.kubernetes.io/client-body-buffer-size: 16m
+    nginx.ingress.kubernetes.io/proxy-body-size: 512m
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 512m
     kubernetes.io/ingress.class: "nginx"
   name: bitwarden
   namespace: default
