@@ -42,7 +42,7 @@ spec:
         app: home-assistant
     spec:
       containers:
-      - image: homeassistant/home-assistant:2022.4.7
+      - image: homeassistant/home-assistant:2022.5.2
         imagePullPolicy: Always
         name: home-assistant
         ports:
@@ -61,7 +61,7 @@ spec:
           mountPath: /dev/ttyUSB1
         securityContext:
           privileged: true
-      - image: zwavejs/zwavejs2mqtt:6.8.1
+      - image: zwavejs/zwavejs2mqtt:6.9.0
         imagePullPolicy: Always
         name: home-assistant-zwave
         ports:
