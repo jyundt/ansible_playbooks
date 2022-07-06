@@ -1,0 +1,96 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nitter
+  name: nitter
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nitter
+  template:
+    metadata:
+      labels:
+        app: nitter
+    spec:
+      containers:
+      - image: zedeus/nitter:0200cc21a32e0ed87025744066894cdc26f73ff3
+        imagePullPolicy: Always
+        name: nitter
+        ports:
+        - containerPort: 8080
+      - image: redis:6.2.7-alpine
+        imagePullPolicy: Always
+        name: nitter-redis
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: nitter
+spec:
+  selector:
+    app: nitter
+  ports:
+  - name: nitter
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nitter
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: n.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: nitter
+            port:
+              number: 8080
+  - host: twitter.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: nitter
+            port:
+              number: 8080
+  - host: nitter.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: nitter
+            port:
+              number: 8080
+  tls:
+  - hosts:
+    - n.kiski.co
+    secretName: n-kiski-co-tls
+  - hosts:
+    - twitter.kiski.co
+    secretName: twitter-kiski-co-tls
+  - hosts:
+    - nitter.kiski.co
+    secretName: nitter-kiski-co-tls
