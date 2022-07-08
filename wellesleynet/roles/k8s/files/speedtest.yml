@@ -49,6 +49,8 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 30m
     nginx.ingress.kubernetes.io/client-body-buffer-size: 30m
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
   - host: speed.kiski.co
@@ -64,5 +66,5 @@ spec:
   tls:
   - hosts:
     - speed.kiski.co
-    secretName: kiskico-wildcard
+    secretName: speed-kiski-co-tls
 
