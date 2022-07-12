@@ -1,0 +1,157 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: lldap
+  namespace: default
+spec:
+  encryptedData:
+    LLDAP_JWT_SECRET: AgBJ22GxKypJEOWyJR8iaXkY/bYbn4aBP0ygYkzL/I3GT5en5TvW72/WS8YzyDrncWqSpbd6j6WsNOt007i7kk3lA0WKZKvOA4Neml21YF9SEl+AaUjg8o6RxoI1WCFv9fFNq8oWEM5dU9ugZ5Yhol0/uZ80yKTVf8Zs7tsTCZjwI9jYrRzSigaIFlJwCo1MwAitXdbAlPJWSf3Y/JA2EIEjmKWEoovRqiu57d+YJ0iB7ygbOk+BaA4F7u1SCbBpKvo4M0xyxx66WRt/iHWA65aFYRENRrSq9mpSb3n9e3AhP1+lRIvEYuMuJj+O6dtkyKHn5gZ5qXNSg+UZf71+kcT7ffu5bY5rvE4AFg0zDBEX+XAXDGHu5FJ4XGH2E4cwJ+2p2wArDg65yaPHhJOJQDcAKCk1hf5pl+PveQ4djc7+HiWjTqF+XPicn/o1ROYwnQPNtqEoJZ+uI08cRVYBVTCPiXn0aHbDteGcSMONcSpMxD9XAXyvIg50/GVNICCRHNsCN+qSECb1PkXfP3AkZ3lpuPmqZonxUF5MjbFp4+wrn67SoU9PsoBi85pocb7Y8yeUdn0M41eUBFv4O4FASkKvPttk+oh5J+VMlBkxSmhNJLnNLqiXfMAG225H+4qv9soSdJzHbC8jmQQLzySdtrpuo/XwhjiQWHrKbYyzk2Oy9wCkDVGnWt29yIr1UH6l7sGLtyHcNK56Ip0V8EY3+qTKJerqeHhJuBi5WMVbhOB3xg==
+    LLDAP_LDAP_USER_PASS: AgCEUKLcs6ATLBllyldqjf0DoJtSme6vnWiqtGD9D8JytfBKibXxAKSv243AUEezBObcrghjx1U0D+2bL9+Gs4iQQYVVthZSfBAAkc2iovQwNwBXkHKr20+t7e3W0r+nM1fStuBcg6+4ozIfGlX2nN7UYghbr/hP00OT8YXIeW9xTK5D5USSsL9dwHzrb4gxozZjAFNka6JQjlZcjXRBMtzQNQRfYqin+9HLbefilZBrhcS819cOlUaLGdSLlSH0SVksXkFHRJ0J3FE5knKLOIKBu8eFWAzG5O7YGgd3dbPfB0/iuEK6nkuJbigvsJuTzemFc9NWo0Gs5r7AXIECvU+lqZCvm1jmn3VPH81CCVA84jlk4hAXrYT4PUOmU9qT3QJZtHYUx8Y1HgSTth3+9RxnowvXpA1DJ+tLPrP8h/QrktH2+y4xMuEXuOVXMVXm+W6gai+rXuchxfbrWo5vlBsjUx40h9KX+HZ0O97E+X4nse0+ckn9i3JvahvmmRztGEwoYBV+Ghr/MnzovA2x3ZyijUNX3Qwvmml3qf/kC7WZ+YmtZ3BPvqvNU+es37DF2txDzkFw2oPL2BcJMz6P+TfPNAfXmmx6dmsoTPBdj8BWy2XkwDBkMdDY/Q1sFJpf563WYjJU74uMfn6ioL3YZamgqXq74g4h0tF0KFgBerL65GEtxcsNgRsFwMxUrVEJ3/sDsqkT76uKjaqifEg7pg==
+    LLDAP_SMTP_OPTIONS_PASSWORD: AgB3z0lxvGk21bjXBxisIDCuhuxrUPhcRwgiq7F4j6oAMpeBIJs8VaoGT62IoWdXI5NKFUw8iijE81S9kOqRqy9khDu6ESHNPxEvwNx1mvOReCaA2eto6t+ujnsV8txSWjugsQdbp9JCgutdz0dXM9ih8cYNFKtViEFyvqPtx1SWySX8EvdGvlxNw+o3Q9LlC3JMkj4UvjNOCu08X5luxtW31p10AdDv+DZhANhymkNeXUSRvTo5mc+pzGROV5B/85pVl2VH57S/r0lQ2FhewreaQ7XgEYZdn51B98dj+wxLms3In01GDcstT7LqUJb/7t9Ol/LzZKZMba2IxFzm+thhKD1TIY9I9tnyi8aChUEhmbEedbQhObtgpX9KcboXYoPeQFvomIDUAgRsSes2Yg6mSwSOgz6Z+wl+Uh4wmnSSTnPqzV2h3q2Kp967EKHHyoZiS1NzkQ5QWqrNM8/6Xfm4Gjjntt4pe505JnVb5Ahf2S98q9sgr6wUlTmdu+88PpkkcuzGckq9h4pBiL36RjbXFgPd5GfNxktPD7Cd23pBes2NZN9Y4TTLaiN6hA8Va5kg+Lk9BAhCf/pt2McDpqE2Ob4/8TpmcKGdzkY3hVce4G9P2MziGsMKiMbnSCs4DIHI46cjpmaMuhV1DV7K4FXopiPPOIpqqcFYzwqgW++/kvgIcyWO2kLxLKJxlekjWFJnR/clBj0Ek4E44fA/ZoE/
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: lldap
+      namespace: default
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lldap
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: longhorn-default
+  resources:
+    requests:
+      storage: 100Mi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: lldap
+  namespace: default
+data:
+  LLDAP_VERBOSE: 'true'
+  LLDAP_LDAP_PORT: '3890'
+  LLDAP_HTTP_PORT: '17170'
+  LLDAP_HTTP_URL: https://ldap.kiski.co
+  LLDAP_LDAP_BASE_DN: "dc=kiski,dc=co"
+  LLDAP_LDAP_USER_DN: admin
+  LLDAP_LDAP_USER_PASS_FILE: /secrets/LLDAP_LDAP_USER_PASS
+  LLDAP_JWT_SECRET_FILE: /secrets/LLDAP_JWT_SECRET
+  LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: "true"
+  LLDAP_SMTP_OPTIONS__SERVER: smtp.gmail.com
+  LLDAP_SMTP_OPTIONS__PORT: '587'
+  LLDAP_SMTP_OPTIONS__TLS_REQUIRED: 'true'
+  LLDAP_SMTP_OPTIONS__USER: jyundt@gmail.com
+  LLDAP_SMTP_OPTIONS__PASSWORD_FILE: /secrets/LLDAP_SMTP_OPTIONS_PASSWORD
+  LLDAP_SMTP_OPTIONS__FROM: '<jyundt@gmail.com>'
+  LLDAP_SMTP_OPTIONS__REPLY_TO: '<jyundt@gmail.com>'
+  LLDAP_LDAPS_OPTIONS__ENABLED: 'false'
+  LLDAP_LDAPS_OPTIONS__PORT: '6360'
+  LLDAP_LDAPS_OPTIONS__CERT_FILE: /data/cert.pem
+  LLDAP_LDAPS_OPTIONS__KEY_FILE: /data/key.pem
+  UID: '1000'
+  GID: '1000'
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: lldap
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lldap
+  serviceName: "lldap"
+  template:
+    metadata:
+      labels:
+        app: lldap
+    spec:
+      enableServiceLinks: false
+      containers:
+      - image: nitnelave/lldap@sha256:dc9a41a41375341ed5cef5476c925f26b779e5da8df79d7a8dd22a93db394715
+        imagePullPolicy: Always
+        name: lldap
+        ports:
+        - containerPort: 3890
+        - containerPort: 17170
+        - containerPort: 6360
+        volumeMounts:
+        - name: lldap-data
+          mountPath: /data
+        - name: lldap-secrets
+          mountPath: /secrets
+          readOnly: true
+        envFrom:
+        - configMapRef:
+            name: lldap
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /data/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: lldap-data
+        persistentVolumeClaim:
+          claimName: lldap
+      - name: lldap-secrets
+        secret:
+          secretName: lldap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: lldap
+spec:
+  selector:
+    app: lldap
+  ports:
+  - name: authelia-ldap
+    port: 389
+    protocol: TCP
+    targetPort: 3890
+  - name: authelia-webui
+    port: 17170
+    protocol: TCP
+    targetPort: 17170
+  - name: authelia-ldaps
+    port: 636
+    protocol: TCP
+    targetPort: 6360
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ldap
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: ldap.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: lldap
+            port:
+              number: 17170
+  tls:
+  - hosts:
+    - ldap.kiski.co
+    secretName: lldap-kiski-co-tls
