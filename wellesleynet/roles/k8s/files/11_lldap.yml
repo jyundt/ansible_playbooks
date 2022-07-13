@@ -78,7 +78,7 @@ spec:
     spec:
       enableServiceLinks: false
       containers:
-      - image: nitnelave/lldap@sha256:dc9a41a41375341ed5cef5476c925f26b779e5da8df79d7a8dd22a93db394715
+      - image: nitnelave/lldap@sha256:d7c30805ceb7b5b1a773d55f14620a83b3996b51d29d620866f55266192bc671
         imagePullPolicy: Always
         name: lldap
         ports:
