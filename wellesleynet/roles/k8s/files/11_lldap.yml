@@ -37,7 +37,7 @@ metadata:
   name: lldap
   namespace: default
 data:
-  LLDAP_VERBOSE: 'true'
+  LLDAP_VERBOSE: 'false'
   LLDAP_LDAP_PORT: '3890'
   LLDAP_HTTP_PORT: '17170'
   LLDAP_HTTP_URL: https://ldap.kiski.co
