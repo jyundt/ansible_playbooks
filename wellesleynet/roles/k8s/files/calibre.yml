@@ -1,0 +1,139 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calibre-config
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: longhorn-default
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: calibre-books
+  namespace: default
+  labels:
+    name: calibre-books
+spec:
+  capacity:
+    storage: 1Pi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /mnt/data/books
+    server: callisto.wellesleynet.com
+  mountOptions:
+  - nfsvers=4.1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calibre-books
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: calibre-books
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Pi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: calibre
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calibre
+  serviceName: "calibre"
+  template:
+    metadata:
+      labels:
+        app: calibre
+    spec:
+      containers:
+      - image: linuxserver/calibre-web:0.6.18-ls170
+        imagePullPolicy: Always
+        name: calibre
+        ports:
+        - containerPort: 8083
+        volumeMounts:
+        - name: calibre-config
+          mountPath: /config
+        - name: calibre-books
+          mountPath: /books
+        env:
+        - name: PLEX_UID
+          value: '2004'
+        - name: PLEX_GID
+          value: '2001'
+        - name: TZ
+          value: 'America/New_York'
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /config/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: calibre-config
+        persistentVolumeClaim:
+          claimName: calibre-config
+      - name: calibre-books
+        persistentVolumeClaim:
+          claimName: calibre-books
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: calibre
+spec:
+  selector:
+    app: calibre
+  ports:
+  - name: calibre
+    port: 8083
+    protocol: TCP
+    targetPort: 8083
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: calibre
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: calibre.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: calibre
+            port:
+              number: 8083
+  tls:
+  - hosts:
+    - calibre.kiski.co
+    secretName: calibre-kiski-co-tls
