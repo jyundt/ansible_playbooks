@@ -87,7 +87,56 @@ data:
         port: 6379
         database_index: 0
     access_control:
-      default_policy: two_factor
+      default_policy: deny
+      rules:
+      - domain: bitwarden.kiski.co
+        resources:
+        - '^/admin([/?].*)?$'
+        subject:
+          - 'group:admin'
+        policy: two_factor
+      - domain: longhorn.kiski.co
+        policy: two_factor
+        subject:
+          - 'group:admin'
+      - domain: frigate.kiski.co
+        policy: two_factor
+      - domain: zwave.kiski.co
+        policy: two_factor
+        subject:
+          - 'group:admin'
+      - domain: io.kiski.co
+        policy: two_factor
+        subject:
+          - 'group:admin'
+      - domain: io-bmc.kiski.co
+        policy: two_factor
+        subject:
+          - 'group:admin'
+      - domain: callisto.kiski.co
+        policy: two_factor
+        subject:
+          - 'group:admin'
+      - domain: callisto-bmc.kiski.co
+        policy: two_factor
+        subject:
+          - 'group:admin'
+      - domain: n.kiski.co
+        policy: two_factor
+      - domain: nitter.kiski.co
+        policy: two_factor
+      - domain: twitter.kiski.co
+        policy: two_factor
+      - domain: r.kiski.co
+        policy: two_factor
+      - domain: libreddit.kiski.co
+        policy: two_factor
+      - domain: reddit.kiski.co
+        policy: two_factor
+      - domain: tautulli.kiski.co
+        policy: two_factor
+        subject:
+          - 'group:admin'
     storage:
       local:
         path: /data/db.sqlite3
