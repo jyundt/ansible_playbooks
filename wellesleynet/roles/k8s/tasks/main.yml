@@ -167,6 +167,18 @@
       definition: "{{ lookup('file', '15_authelia.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
+  - name: Create SMB CSI driver
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '16_csi_driver_smb.yaml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
+  - name: Create SMB creds
+    k8s:
+      state: present
+      definition: "{{ lookup('file', '17_smb_creds.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
   - name: Create rclone cronjob
     k8s:
       state: present
