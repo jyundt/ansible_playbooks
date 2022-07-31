@@ -128,6 +128,7 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
     cert-manager.io/cluster-issuer: "letsencrypt-production"
     kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: 128m
 spec:
   rules:
   - host: calibre.kiski.co
