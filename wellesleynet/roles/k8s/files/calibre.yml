@@ -22,15 +22,24 @@ metadata:
 spec:
   capacity:
     storage: 1Pi
-  volumeMode: Filesystem
+  mountOptions:
+  - dir_mode=0777
+  - file_mode=0777
+  - uid=1001
+  - gid=1001
+  - nobrl
   accessModes:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /mnt/data/books
-    server: callisto.wellesleynet.com
-  mountOptions:
-  - nfsvers=4.1
+  csi:
+    driver: smb.csi.k8s.io
+    readOnly: false
+    volumeHandle: calibre-books
+    volumeAttributes:
+      source: "//callisto.wellesleynet.com/books"
+    nodeStageSecretRef:
+      name: callisto-smb-creds
+      namespace: default
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -75,10 +84,10 @@ spec:
         - name: calibre-books
           mountPath: /books
         env:
-        - name: PLEX_UID
-          value: '2004'
-        - name: PLEX_GID
-          value: '2001'
+        - name: PUID
+          value: '1001'
+        - name: PGID
+          value: '1001'
         - name: TZ
           value: 'America/New_York'
         livenessProbe:
