@@ -17,7 +17,7 @@ spec:
         app: nitter
     spec:
       containers:
-      - image: zedeus/nitter:0200cc21a32e0ed87025744066894cdc26f73ff3
+      - image: zedeus/nitter:5f31e86e0e8578377fa7d5aeb9631bbb2d35ef1e
         imagePullPolicy: Always
         name: nitter
         ports:
