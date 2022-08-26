@@ -42,7 +42,7 @@ spec:
         app: home-assistant
     spec:
       containers:
-      - image: homeassistant/home-assistant:2022.8.4
+      - image: homeassistant/home-assistant:2022.8.7
         imagePullPolicy: Always
         name: home-assistant
         ports:
