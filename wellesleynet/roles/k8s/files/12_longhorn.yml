@@ -306,7 +306,7 @@ spec:
       jsonPath: .spec.image
     - name: RefCount
       type: integer
-      description: Number of volumes are using the engine image
+      description: Number of resources are using the engine image
       jsonPath: .status.refCount
     - name: BuildDate
       type: date
@@ -838,42 +838,43 @@ metadata:
   namespace: longhorn-system
 data:
   default-setting.yaml: |-
-    backup-target:
-    backup-target-credential-secret:
-    allow-recurring-job-while-volume-detached:
-    create-default-disk-labeled-nodes:
-    default-data-path:
-    replica-soft-anti-affinity:
-    replica-auto-balance:
-    storage-over-provisioning-percentage:
-    storage-minimal-available-percentage:
-    upgrade-checker:
-    default-replica-count:
-    default-data-locality:
-    default-longhorn-static-storage-class:
-    backupstore-poll-interval:
-    taint-toleration:
-    system-managed-components-node-selector:
-    priority-class:
-    auto-salvage:
-    auto-delete-pod-when-volume-detached-unexpectedly:
-    disable-scheduling-on-cordoned-node:
-    replica-zone-soft-anti-affinity:
-    node-down-pod-deletion-policy:
-    allow-node-drain-with-last-healthy-replica:
-    mkfs-ext4-parameters:
-    disable-replica-rebuild:
-    replica-replenishment-wait-interval:
-    concurrent-replica-rebuild-per-node-limit:
-    disable-revision-counter:
-    system-managed-pods-image-pull-policy:
-    allow-volume-creation-with-degraded-availability:
-    auto-cleanup-system-generated-snapshot:
-    concurrent-automatic-engine-upgrade-per-node-limit:
-    backing-image-cleanup-wait-interval:
-    backing-image-recovery-wait-interval:
-    guaranteed-engine-manager-cpu:
-    guaranteed-replica-manager-cpu:
+    #backup-target:
+    #backup-target-credential-secret:
+    #allow-recurring-job-while-volume-detached:
+    #create-default-disk-labeled-nodes:
+    #default-data-path:
+    #replica-soft-anti-affinity:
+    #replica-auto-balance:
+    #storage-over-provisioning-percentage:
+    #storage-minimal-available-percentage:
+    #upgrade-checker:
+    #default-replica-count:
+    #default-data-locality:
+    #default-longhorn-static-storage-class:
+    #backupstore-poll-interval:
+    #taint-toleration:
+    #system-managed-components-node-selector:
+    #priority-class:
+    #auto-salvage:
+    #auto-delete-pod-when-volume-detached-unexpectedly:
+    #disable-scheduling-on-cordoned-node:
+    #replica-zone-soft-anti-affinity:
+    #node-down-pod-deletion-policy:
+    #allow-node-drain-with-last-healthy-replica:
+    #mkfs-ext4-parameters:
+    #disable-replica-rebuild:
+    #replica-replenishment-wait-interval:
+    #concurrent-replica-rebuild-per-node-limit:
+    #disable-revision-counter:
+    #system-managed-pods-image-pull-policy:
+    #allow-volume-creation-with-degraded-availability:
+    #auto-cleanup-system-generated-snapshot:
+    #concurrent-automatic-engine-upgrade-per-node-limit:
+    #backing-image-cleanup-wait-interval:
+    #backing-image-recovery-wait-interval:
+    #guaranteed-engine-manager-cpu:
+    #guaranteed-replica-manager-cpu:
+    #failed-backup-ttl:
 ---
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
@@ -984,7 +985,7 @@ spec:
     spec:
       containers:
       - name: longhorn-manager
-        image: longhornio/longhorn-manager:v1.2.4
+        image: longhornio/longhorn-manager:v1.2.5
         imagePullPolicy: IfNotPresent
         securityContext:
           privileged: true
@@ -993,15 +994,15 @@ spec:
         - -d
         - daemon
         - --engine-image
-        - longhornio/longhorn-engine:v1.2.4
+        - longhornio/longhorn-engine:v1.2.5
         - --instance-manager-image
-        - longhornio/longhorn-instance-manager:v1_20220303
+        - longhornio/longhorn-instance-manager:v1_20220303_patch1
         - --share-manager-image
-        - longhornio/longhorn-share-manager:v1_20211020
+        - longhornio/longhorn-share-manager:v1_20211020_patch1
         - --backing-image-manager-image
-        - longhornio/backing-image-manager:v2_20210820
+        - longhornio/backing-image-manager:v2_20210820_patch1
         - --manager-image
-        - longhornio/longhorn-manager:v1.2.4
+        - longhornio/longhorn-manager:v1.2.5
         - --service-account
         - longhorn-service-account
         ports:
@@ -1018,8 +1019,6 @@ spec:
         - name: longhorn
           mountPath: /var/lib/longhorn/
           mountPropagation: Bidirectional
-        - name: longhorn-default-setting
-          mountPath: /var/lib/longhorn-setting/
         env:
         - name: POD_NAMESPACE
           valueFrom:
@@ -1033,9 +1032,6 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-        # Should be: mount path of the volume longhorn-default-setting + the key of the configmap data in 04-default-setting.yaml
-        - name: DEFAULT_SETTING_PATH
-          value: /var/lib/longhorn-setting/default-setting.yaml
       volumes:
       - name: dev
         hostPath:
@@ -1046,9 +1042,6 @@ spec:
       - name: longhorn
         hostPath:
           path: /var/lib/longhorn/
-      - name: longhorn-default-setting
-        configMap:
-          name: longhorn-default-setting
 #      imagePullSecrets:
 #      - name: ""
 #      priorityClassName:
@@ -1123,7 +1116,7 @@ spec:
     spec:
       containers:
       - name: longhorn-ui
-        image: longhornio/longhorn-ui:v1.2.4
+        image: longhornio/longhorn-ui:v1.2.5
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name : nginx-cache
@@ -1191,18 +1184,18 @@ spec:
     spec:
       initContainers:
         - name: wait-longhorn-manager
-          image: longhornio/longhorn-manager:v1.2.4
+          image: longhornio/longhorn-manager:v1.2.5
           command: ['sh', '-c', 'while [ $(curl -m 1 -s -o /dev/null -w "%{http_code}" http://longhorn-backend:9500/v1) != "200" ]; do echo waiting; sleep 2; done']
       containers:
         - name: longhorn-driver-deployer
-          image: longhornio/longhorn-manager:v1.2.4
+          image: longhornio/longhorn-manager:v1.2.5
           imagePullPolicy: IfNotPresent
           command:
           - longhorn-manager
           - -d
           - deploy-driver
           - --manager-image
-          - longhornio/longhorn-manager:v1.2.4
+          - longhornio/longhorn-manager:v1.2.5
           - --manager-url
           - http://longhorn-backend:9500/v1
           env:
