@@ -172,7 +172,7 @@ spec:
     spec:
       enableServiceLinks: false
       containers:
-      - image: authelia/authelia:4.36.4
+      - image: authelia/authelia:4.36.9
         imagePullPolicy: Always
         name: authelia
         ports:
