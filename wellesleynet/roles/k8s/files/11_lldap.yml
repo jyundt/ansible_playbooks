@@ -50,7 +50,7 @@ data:
   LLDAP_SMTP_OPTIONS__PORT: '587'
   LLDAP_SMTP_OPTIONS__TLS_REQUIRED: 'true'
   LLDAP_SMTP_OPTIONS__USER: jyundt@gmail.com
-  LLDAP_SMTP_OPTIONS__PASSWORD_FILE: /secrets/LLDAP_SMTP_OPTIONS_PASSWORD
+  LLDAP_SMTP_OPTIONS__PASSWORD_FILE: /secrets/LLDAP_SMTP_OPTIONS__PASSWORD
   LLDAP_SMTP_OPTIONS__FROM: '<jyundt@gmail.com>'
   LLDAP_SMTP_OPTIONS__REPLY_TO: '<jyundt@gmail.com>'
   LLDAP_LDAPS_OPTIONS__ENABLED: 'false'
@@ -78,7 +78,7 @@ spec:
     spec:
       enableServiceLinks: false
       containers:
-      - image: nitnelave/lldap@sha256:d7c30805ceb7b5b1a773d55f14620a83b3996b51d29d620866f55266192bc671
+      - image: nitnelave/lldap:v0.4.1-alpine
         imagePullPolicy: Always
         name: lldap
         ports:
