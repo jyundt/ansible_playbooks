@@ -1,4 +1,3 @@
----
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
@@ -7,7 +6,8 @@ metadata:
   namespace: default
 spec:
   encryptedData:
-    auth.conf: AgCAieqOrPysKylXOUXzcPDQv5F0i6aWV/1h+geqH+9iUX7mEpD4diVlj9eiPyUVqvDWowWKBSl7djac6Sx9NnEECvdWrWTW5pXh/Q8Pq9YA/wuyZyCt0thKuXXYE3JoNR7tdcnocrIDF5EEH0CzakhvVjxJ7mUSxwIughHg31+e5W5ZzUPTfXU+VPcm5RFWESMtVacsrmnQBnigtMlMYI9+buivGhGajZF1lmKxOVTFzlplx73UA/fhSY8JK/pMsyqSYb0c25dqg2Jwqr8Sjgl2Crp4Ol48yjyBghP63tLrDiUs0a6Ra1Ooe9mUKN8Sz2ml3QfqvAorcApjJcZCTJ99Fq2hV/BrUJ4XhiuxZpRbM2HvARv36WgTndL9BpLBBoJAhZwyljyEY//R43TmIEr1Y1D6RWE/E/z2NKhK5BG4PHF2voSoORyQ7fnrwc2Cudqgy6m5JT8PdJm3bu4KqUctZRQmDon988QYzRZPcu/YnPRds5klr+Eqjqp7uLv+8ApLMO+fOWR9TG1V0neXBDyK4KlqPbx8N/tvW/l9My07IsJ3eaPCbrtUy7qloVFbpgJqdbCzsYyAZSnd+QSswIEeM7laEAqQaHJy9VBNXHUbq3gI8S9AIO7mAucaIc8kKXs83s5gJX9XlJzkW9oxhWcVBjYj0BWh41t2HHMhy153Se9Dxm2SYxyvJZ3sHHXu547UJ1PN9SB3xj9T4mhyxhccpMfmOd19nZ4oOrSAsxwzKQhO04x1SD4Ox0Fju6U=
+    MAILER_AUTH_PASSWORD: AgA4gcC8yRE+If5elyCoRtsoG3J+1OTGk9/2UBcG8PdOsG0/G5wJmYog+zBTkJWohFxwFTRCUC6nAq3E3HhK9zwON/+nzRpwhXqIeA5LkhmlccnByzgRigzVcYx57TMS2sFIL2G9Zx7I33Hqpon5FWqEjYKrJnk8b8ys86b/10rPJo4W6F4L1OEjdQEUFQWGYU9e4ehgZ+RxxRxJ87SY1iYddGnAv/X3ZO1fMa+C2pHJcz1oAhSH29XU6orKciNeLSG7UhCuTYKz6RR0up8mAWrk1mrH6vy0lMjO+R+EIwRB/Ad42VFyFxrUQ7vnJjG3C+KY+A3a80S52AxinrcjAhUnxOQPaTaUEx+YGs9omRmL6B3dd/q1yeHCPqHKkRz7nIwXVrKkxtfMfDRhlNVGA3N/mfM4OGuEjODCsqpgCQbvGEfet+ulMi3tGCoJXRB6fJd237ME/cQ/JcfAjtpqymFhQwO+pzquklz+JPBy/aKjmRiPISglBFJWGDiYRplM7MzPxQpMpBdNRms48RY5zhMlP8UkkLbXmGMnI9mSrBi+PJW/13QgOoj2fEmM+Ye8YXWFNrotef00209TU3T6TsqpNrmSy5tF5Q/Gmf6WGF4U0aNvsMEMsm8dCsJ6lpLa2vwwjFOHLxYfyHsRq9WAxQiTrw3Wo7nxs6mOhkt1Ol4s98DUAOG363yao0sK8koSHmDt5ugi6eexAGmUglPoK/i8
+    POSTGRES_PASSWORD: AgBuQwGCUkWQYKQYsU7j1+pKU1umkyqh3uqbTQyIy85ONBwSu+fFVO+sHXpKBu2KZKT9kzVA+I7dX7ORXWwnNqQWnLIZYzYhhae3mokQNgxrbH1q46nki18tu4OyL95trxdgZAqweahEt4hed8eYaUD7U3CbjVJBUwsHe2Y7bJLYWhKrmSjmq+YUQg0Xppl/ZR5LupmilVIFuo/doKYyc6OC/D0VEQ7OFe0C46g9q1tYRNgMEwoeItoFoPsaVDALBOjV74occnfOGHwDjgjThwMeo6k3NVxUnnBKIAASXHizP+/3RC3AdjMqvp6EQwB2Zx9TzISMC9c797pJQ+vi4L0PryWuBggmVaFgwevjQ02VvST1+L0hrjWFHNFTUudWT7o1SLx9WA9bXIll3k/tKjSmiESihIfJANBLOfokkNUXZWxlFB/I6qKhXahLLjH2IPGQv15hyZ+ISmAwa6/BlIEdsJ4Nv3409FYWVEV0a+OU4Qu8dhFsjkRbBvf2fyqG/FzsyK9NDKt8OMPFNBKR4E6SUKzXVQK6PY5CYoIr1k8QlYtIrHzbdb3S7+zOeKRDTB+34BoVw0GwH0rQLOPsOrZhDG1mXsi/LcP6YP8AlfuX+2xWFn7gVGGRmM8GWgkJMjlhNcRMJtKi3CWHdxdZeIuunaq0REUW0TfuR9kSvJabC5eUiON174XDqt4qE+1hFo++/zpPG84kQ8BYFFSGaz6ZkQC8Em8SYa1E20h6YdnnaA==
   template:
     metadata:
       creationTimestamp: null
@@ -21,71 +21,21 @@ metadata:
   name: joplin
   namespace: default
 data:
-  httpd.conf: |
-    ServerRoot "/usr/local/apache2"
-    Listen 80
-    LoadModule mpm_event_module modules/mod_mpm_event.so
-    LoadModule authn_file_module modules/mod_authn_file.so
-    LoadModule authn_core_module modules/mod_authn_core.so
-    LoadModule authz_host_module modules/mod_authz_host.so
-    LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
-    LoadModule authz_user_module modules/mod_authz_user.so
-    LoadModule authz_core_module modules/mod_authz_core.so
-    LoadModule access_compat_module modules/mod_access_compat.so
-    LoadModule auth_basic_module modules/mod_auth_basic.so
-    LoadModule reqtimeout_module modules/mod_reqtimeout.so
-    LoadModule filter_module modules/mod_filter.so
-    #LoadModule mime_module modules/mod_mime.so
-    LoadModule log_config_module modules/mod_log_config.so
-    LoadModule env_module modules/mod_env.so
-    LoadModule headers_module modules/mod_headers.so
-    LoadModule setenvif_module modules/mod_setenvif.so
-    LoadModule version_module modules/mod_version.so
-    LoadModule unixd_module modules/mod_unixd.so
-    LoadModule dav_module modules/mod_dav.so
-    LoadModule status_module modules/mod_status.so
-    LoadModule autoindex_module modules/mod_autoindex.so
-    LoadModule dav_fs_module modules/mod_dav_fs.so
-    LoadModule dav_lock_module modules/mod_dav_lock.so
-    LoadModule dir_module modules/mod_dir.so
-    LoadModule alias_module modules/mod_alias.so
-    <IfModule unixd_module>
-    User daemon
-    Group daemon
-    </IfModule>
-    <Directory />
-        AllowOverride none
-        Require all denied
-    </Directory>
-    DavLockDB /tmp/DavLock
-    DocumentRoot "/usr/local/apache2/htdocs"
-    <Directory "/usr/local/apache2/htdocs">
-        DAV On
-        DirectoryIndex disabled
-        #AllowMethods HEAD GET POST CONNECT PUT DELETE OPTIONS PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK TRACE
-        Options Indexes FollowSymLinks
-        AllowOverride None
-        AuthName "joplin"
-        AuthType Basic
-        AuthuserFile /usr/local/apache2/conf/auth.conf
-        Require valid-user
-    </Directory>
-    <Files ".ht*">
-        Require all denied
-    </Files>
-    ErrorLog /proc/self/fd/2
-    LogLevel warn
-    <IfModule log_config_module>
-        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
-        LogFormat "%h %l %u %t \"%r\" %>s %b" common
-        <IfModule logio_module>
-          LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
-        </IfModule>
-        CustomLog /proc/self/fd/1 common
-    </IfModule>
-    <IfModule headers_module>
-        RequestHeader unset Proxy early
-    </IfModule>
+  APP_BASE_URL: 'https://joplin.kiski.co'
+  DB_CLIENT: pg
+  POSTGRES_DATABASE: joplin
+  POSTGRES_DB: joplin
+  POSTGRES_USER: joplin
+  POSTGRES_PORT: '5432'
+  POSTGRES_HOST: joplin-0
+  PGDATA: /var/lib/postgresql/data/pgdata
+  MAILER_ENABLED: 'true'
+  MAILER_HOST: smtp.gmail.com
+  MAILER_SECURITY: tls
+  MAILER_PORT: '465'
+  MAILER_AUTH_USER: jyundt@gmail.com
+  MAILER_NOREPLY_NAME: 'Joplin Server'
+  MAILER_NOREPLY_EMAIL: 'jyundt@gmail.com'
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -98,7 +48,7 @@ spec:
   storageClassName: longhorn-default
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -117,35 +67,38 @@ spec:
         app: joplin
     spec:
       containers:
-      - image: httpd:2.4.54-alpine
+      - image: joplin/server:2.9.7-beta
         imagePullPolicy: Always
         name: joplin
         ports:
-        - containerPort: 80
+        - containerPort: 22300
+        envFrom:
+        - configMapRef:
+            name: joplin
+        - secretRef:
+            name: joplin
+      - image: postgres:14.5-alpine
+        imagePullPolicy: Always
+        name: joplin-postgres
         volumeMounts:
-        - name: joplin-data
-          mountPath: /usr/local/apache2/htdocs
-        - name: joplin-conf
-          mountPath: /usr/local/apache2/conf
+        - name: joplin
+          mountPath: /var/lib/postgresql/data
+        envFrom:
+        - configMapRef:
+            name: joplin
+        - secretRef:
+            name: joplin
         livenessProbe:
           exec:
             command:
             - ls
-            - /usr/local/apache2/htdocs/lost+found
+            - /var/lib/postgresql/data/lost+found
           initialDelaySeconds: 5
           periodSeconds: 5
       volumes:
-      - name: joplin-data
+      - name: joplin
         persistentVolumeClaim:
           claimName: joplin
-      - name: joplin-conf
-        projected:
-          sources:
-          - secret:
-              name: joplin
-          - configMap:
-              name: joplin
-
 ---
 apiVersion: v1
 kind: Service
@@ -159,7 +112,7 @@ spec:
   - name: joplin
     port: 80
     protocol: TCP
-    targetPort: 80
+    targetPort: 22300
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
