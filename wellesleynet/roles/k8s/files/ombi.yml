@@ -29,7 +29,7 @@ spec:
         app: ombi
     spec:
       containers:
-      - image: linuxserver/ombi:v4.22.5-ls131
+      - image: linuxserver/ombi:v4.22.5-ls147
         imagePullPolicy: Always
         name: ombi
         ports:
