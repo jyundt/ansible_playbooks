@@ -1,19 +1,3 @@
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
-  creationTimestamp: null
-  name: bitwarden
-  namespace: default
-spec:
-  encryptedData:
-    SMTP_PASSWORD: AgADHX4hlUOGDo2irzmZiW5MyJXKNY2gt/RFtevGQBYZlUC6EiCbQUyeEIu1Uu/OkD6WDM5VTpX80s9ZdZgAlcnFwMkt+b+tGQUMne85hxYK6WHwVF8++fz1ajBqcnCPvMCh1pV+WdpToNq7CMr31Ak5rfhueYlmQWrcELVyCNKHM7GlbD69zDKISwz+Rhqw7hAjmO4rTwAvknA8bZST5y/B5ozwp5iYutvhy7Mmd1qJ/bBiepViDdh3RIc2HEuHRpYZNMAkhJfWGwojR25uzmit9YoVKca9A9oMZf/mOYr7FLAZT+rzmCJK8z4Qvt28K5iN07IzYGuBB1UFhcbweiWIlhp3Ag1y3CYJQbOZqQhcHLF2AfIBUGgyoLNdGrZqZ3rvqjcH/0N/hfrqCcNOTGnQipvWWVvhm2k4qPDm0tfkdEMbhtRk4u5aOM8zy+wewP2s/y3CxI7FVeGqkcTZsqHMy3D/qRphJpu3bEJ/q1UVqGqlc6dLjUHu2NMhaRCJYQ2TQde4kiwZbDW21O17cRK8hBZJsGw9lgcxN6ZN/kpYJjS+47GFDNBeSe2schkpF03VdvMgaJNOv2oreZZZQ25bRuLmq/aSCfzlxCvrI265AqXPEi4e97rXfNLffSnP+0E1l/+37bRbOr5auMS0b2tP9WDobnukgH7I8UaM+Oun12SLR5HB7zqGcwKT5AGEbxYbJ3jbrutu28awp/i75mFw
-  template:
-    metadata:
-      creationTimestamp: null
-      name: bitwarden
-      namespace: default
-    type: Opaque
----
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -39,11 +23,7 @@ data:
   DISABLE_ADMIN_TOKEN: "true"
   SHOW_PASSWORD_HINT: "false"
   DOMAIN: "https://bitwarden.kiski.co"
-  SMTP_HOST: "smtp.gmail.com"
-  SMTP_FROM: "jyundt@gmail.com"
-  SMTP_PORT: "587"
   SMTP_SSL: "true"
-  SMTP_USERNAME: "jyundt@gmail.com"
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -71,10 +51,39 @@ spec:
           protocol: TCP
         - containerPort: 3012
           protocol: TCP
+        env:
+        - name: SMTP_HOST
+          valueFrom:
+            secretKeyRef:
+              name: mailgun-smtp-creds
+              key: mailgun_host
+              optional: false
+        - name: SMTP_PORT
+          valueFrom:
+            secretKeyRef:
+              name: mailgun-smtp-creds
+              key: mailgun_tls_port
+              optional: false
+        - name: SMTP_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mailgun-smtp-creds
+              key: mailgun_username
+              optional: false
+        - name: SMTP_FROM
+          valueFrom:
+            secretKeyRef:
+              name: mailgun-smtp-creds
+              key: mailgun_from_address
+              optional: false
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mailgun-smtp-creds
+              key: mailgun_password
+              optional: false
         envFrom:
         - configMapRef:
-            name: bitwarden
-        - secretRef:
             name: bitwarden
         volumeMounts:
         - mountPath: /data
