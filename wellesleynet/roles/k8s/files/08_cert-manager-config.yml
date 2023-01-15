@@ -38,13 +38,13 @@ metadata:
 spec:
   acme:
     server: "https://acme-staging-v02.api.letsencrypt.org/directory"
-    email: "jyundt@gmail.com"
+    email: "me@jyundt.com"
     privateKeySecretRef:
       name: letsencrypt-staging-private-key
     solvers:
     - dns01:
         cloudflare:
-          email: jyundt@gmail.com
+          email: me@jyundt.com
           apiTokenSecretRef:
             name: cloudflare-api-token-secret
             key: api-token
@@ -57,13 +57,13 @@ metadata:
 spec:
   acme:
     server: "https://acme-v02.api.letsencrypt.org/directory"
-    email: "jyundt@gmail.com"
+    email: "me@jyundt.com"
     privateKeySecretRef:
       name: letsencrypt-production-private-key
     solvers:
     - dns01:
         cloudflare:
-          email: jyundt@gmail.com
+          email: me@jyundt.com
           apiTokenSecretRef:
             name: cloudflare-api-token-secret
             key: api-token
