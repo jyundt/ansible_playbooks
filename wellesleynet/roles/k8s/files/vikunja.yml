@@ -1,0 +1,203 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vikunja
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: longhorn-default
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: vikunja
+  namespace: default
+spec:
+  encryptedData:
+    VIKUNJA_SERVICE_JWTSECRET: AgACXOMHZp1bYSVJlHGAu0DctkUgFwjhMwnwioBCWpblktxnOfVhegbdKgzKYBv8e6bZyBXft3ZFf/JTV7si3DmBgyKiLZhB9ITISNkmZn4EzS060UHtJ6VYDc+h6eGZQEZd02xQn7pJS7qT78cUmIQU1sN5GmubZJlWjbnrpksXIXe4eL8S/P5MnrNqqoc5xBF2d5NSweGDglLFXiHSpO6uTRMAJD0Ty8s1OHKLf9UzqEnAv5UKnEJwwVXgQJstZh/lnZFssaYiyfkt0Un29okJQwPIc/9az5h8BUbJY8eJsq80+luU8Ls/b0jmTqeb9LxRM6ZeF57Rnne5VmFVb/I7BX0yJ0bgtRYJtxPprPKINteLEr75p16bByaRxeiKZMzpy3qzqfFvyTrqXlwDfpuIGo6GbzF40k1djOohgoRDN/fdCPQNXZpYXiFeMSw415Y+jwwlY4FNr601LmVEv7wybpDDg9aRwq6bFBNr0umi7h8WqUJRpmpDi8GSjxH21KLj28pZqCpNZ5pekl0QeOve3LOsUnsWHS7JAhXomlxFzn+lTnlc0qZdqhcVlxrrOVqMPlpxqSz9q8Xg4chsxqtCkBdEx7hejG87jU2sbuSEc9me0Y6ez0HiGaJGnYIlCBW1Y1VTGjVd9FPbRWyHraYYZXE/jani1Y/1fgXpgswIBwqDCNI2sxnourCZIS1aEs2bhIwuO2vNFtC7lGjZ6BDagAGbYFGTeLuDee2BF+zbzA==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: vikunja
+      namespace: default
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vikunja
+  namespace: default
+data:
+  VIKUNJA_SERVICE_FRONTENDURL: "vikunja.kiski.co"
+  VIKUNJA_SERVICE_ENABLEREGISTRATION: "false"
+  VIKUNJA_SERVICE_TIMEZONE: "UTC"
+  VIKUNJA_DATABASE_TYPE: "sqlite"
+  VIKUNJA_MAILER_ENABLED: "true"
+  VIKUNJA_MAILER_FORCESSL: "true"
+  VIKUNJA_DEFAULTSETTINGS_AVATAR_PROVIDER: "gravatar"
+  VIKUNJA_DEFAULTSETTINGS_EMAIL_REMINDERS_ENABLED: "True"
+  VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_NAME: "true"
+  VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_EMAIL: "true"
+  VIKUNJA_DEFAULTSETTINGS_WEEK_START: "1"
+  VIKUNJA_FILES_BASEPATH: "/data/files"
+  VIKUNJA_DATABASE_PATH: "/data/vikunja.db"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vikunja
+  namespace: default
+  labels:
+    app: vikunja
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vikunja
+  serviceName: vikunja
+  template:
+    metadata:
+      labels:
+        app: vikunja
+    spec:
+      containers:
+      - name: vikunja-api
+        image: vikunja/api:0.20.1
+        ports:
+        - containerPort: 3456
+          protocol: TCP
+        env:
+        - name: PUID
+          value: '2004'
+        - name: PGID
+          value: '2000'
+        - name: VIKUNJA_MAILER_HOST
+          valueFrom:
+            secretKeyRef:
+              name: mailgun-smtp-creds
+              key: mailgun_host
+              optional: false
+        - name: VIKUNJA_MAILER_PORT
+          valueFrom:
+            secretKeyRef:
+              name: mailgun-smtp-creds
+              key: mailgun_tls_port
+              optional: false
+        - name: VIKUNJA_MAILER_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mailgun-smtp-creds
+              key: mailgun_username
+              optional: false
+        - name: VIKUNJA_MAILER_FROMEMAIL
+          valueFrom:
+            secretKeyRef:
+              name: mailgun-smtp-creds
+              key: mailgun_from_address
+              optional: false
+        - name: VIKUNJA_MAILER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mailgun-smtp-creds
+              key: mailgun_password
+              optional: false
+        envFrom:
+        - configMapRef:
+            name: vikunja
+        - secretRef:
+            name: vikunja
+        volumeMounts:
+        - mountPath: /data/
+          name: vikunja
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /data/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      - name: vikunja-frontend
+        image: vikunja/frontend:0.20.2
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      volumes:
+      - name: vikunja
+        persistentVolumeClaim:
+          claimName: vikunja
+      securityContext:
+        fsGroup: 2000
+        fsGroupChangePolicy: "OnRootMismatch"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vikunja
+  namespace: default
+  labels:
+    app: vikunja
+spec:
+  ports:
+  - port: 80
+    name: vikunja
+  - port: 3456
+    name: vikunja-api
+  selector:
+    app: vikunja
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/proxy-body-size: 512m
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 512m
+    kubernetes.io/ingress.class: "nginx"
+  name: vikunja
+  namespace: default
+spec:
+  rules:
+  - host: vikunja.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/api"
+        backend:
+          service:
+            name: vikunja
+            port:
+              number: 3456
+      - pathType: Prefix
+        path: "/dav"
+        backend:
+          service:
+            name: vikunja
+            port:
+              number: 3456
+      - pathType: Prefix
+        path: "/.well-known"
+        backend:
+          service:
+            name: vikunja
+            port:
+              number: 3456
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: vikunja
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - vikunja.kiski.co
+    secretName: vikunja-kiski-co-tls
+  - hosts:
+    - llama.kiski.co
+    secretName: llama-kiski-co-tls
