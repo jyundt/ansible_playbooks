@@ -33,7 +33,7 @@ metadata:
   name: vikunja
   namespace: default
 data:
-  VIKUNJA_SERVICE_FRONTENDURL: "vikunja.kiski.co"
+  VIKUNJA_SERVICE_FRONTENDURL: "llama.kiski.co"
   VIKUNJA_SERVICE_ENABLEREGISTRATION: "false"
   VIKUNJA_SERVICE_TIMEZONE: "UTC"
   VIKUNJA_DATABASE_TYPE: "sqlite"
@@ -164,6 +164,37 @@ metadata:
 spec:
   rules:
   - host: vikunja.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/api"
+        backend:
+          service:
+            name: vikunja
+            port:
+              number: 3456
+      - pathType: Prefix
+        path: "/dav"
+        backend:
+          service:
+            name: vikunja
+            port:
+              number: 3456
+      - pathType: Prefix
+        path: "/.well-known"
+        backend:
+          service:
+            name: vikunja
+            port:
+              number: 3456
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: vikunja
+            port:
+              number: 80
+  - host: llama.kiski.co
     http:
       paths:
       - pathType: Prefix
