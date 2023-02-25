@@ -67,7 +67,7 @@ spec:
     spec:
       containers:
       - name: vikunja-api
-        image: vikunja/api:0.20.1
+        image: vikunja/api:0.20.2
         ports:
         - containerPort: 3456
           protocol: TCP
@@ -122,7 +122,7 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 5
       - name: vikunja-frontend
-        image: vikunja/frontend:0.20.2
+        image: vikunja/frontend:0.20.3
         ports:
         - containerPort: 80
           protocol: TCP
