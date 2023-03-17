@@ -29,7 +29,7 @@ spec:
         app: tautulli
     spec:
       containers:
-      - image: linuxserver/tautulli:v2.12.1-ls71
+      - image: linuxserver/tautulli:v2.12.2-ls71
         imagePullPolicy: Always
         name: tautulli
         ports:
