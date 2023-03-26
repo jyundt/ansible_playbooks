@@ -75,6 +75,21 @@ spec:
               value: "jyundt@gmail.com"
             - name: NOCRON
               value: "1"
+          - name: gyb-emily-gmail
+            image: awbn/gyb:1.73
+            args:
+            - "/app/gyb"
+            - "--action"
+            - "backup"
+            volumeMounts:
+            - name: gyb
+              mountPath: /config
+              subPath: "emily.wolfe@gmail.com"
+            env:
+            - name: EMAIL
+              value: "emily.wolfe@gmail.com"
+            - name: NOCRON
+              value: "1"
           volumes:
           - name: gyb
             persistentVolumeClaim:
