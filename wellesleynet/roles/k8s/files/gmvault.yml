@@ -29,15 +29,25 @@ metadata:
 spec:
   capacity:
     storage: 1Pi
-  volumeMode: Filesystem
+  mountOptions:
+  - dir_mode=0777
+  - file_mode=0777
+  - uid=1001
+  - gid=1001
+  - nobrl
   accessModes:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /mnt/data/backups/mail/gmail
-    server: callisto.wellesleynet.com
-  mountOptions:
-  - nfsvers=4.1
+  storageClassName: ""
+  csi:
+    driver: smb.csi.k8s.io
+    readOnly: false
+    volumeHandle: gmvault
+    volumeAttributes:
+      source: "//callisto.wellesleynet.com/gmvault"
+    nodeStageSecretRef:
+      name: callisto-smb-creds
+      namespace: default
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -53,6 +63,7 @@ spec:
   resources:
     requests:
       storage: 1Pi
+  storageClassName: ""
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -117,54 +128,6 @@ spec:
               value: /opt/gmvault
             - name: HOME
               value: /opt/gmvault
-          - name: gmvault-emily-wolfe-gmail
-            image: jyundt/gmvault
-            args:
-            - sync
-            - -p
-            - -d
-            - "/opt/gmvault/data/emily.wolfe@gmail.com"
-            - "emily.wolfe@gmail.com"
-            volumeMounts:
-            - name: gmvault-home
-              mountPath: /opt/gmvault
-            - name: gmvault-secrets
-              mountPath: "/opt/gmvault/token.sec"
-              subPath: token.sec
-            - name: gmvault-secrets
-              mountPath: "/opt/gmvault/emily.wolfe@gmail.com.passwd"
-              subPath: emily-wolfe-gmail-passwd
-            - name: gmvault-data
-              mountPath: /opt/gmvault/data
-            env:
-            - name: GMVAULT_DIR
-              value: /opt/gmvault
-            - name: HOME
-              value: /opt/gmvault
-         #- name: gmvault-emily-packet
-         #  image: jyundt/gmvault
-         #  args:
-         #  - sync
-         #  - -p
-         #  - -d
-         #  - "/opt/gmvault/data/emily@packet.com"
-         #  - "emily@packet.com"
-         #  volumeMounts:
-         #  - name: gmvault-home
-         #    mountPath: /opt/gmvault
-         #  - name: gmvault-secrets
-         #    mountPath: "/opt/gmvault/token.sec"
-         #    subPath: token.sec
-         #  - name: gmvault-secrets
-         #    mountPath: "/opt/gmvault/emily@packet.com.passwd"
-         #    subPath: emily-packet-passwd
-         #  - name: gmvault-data
-         #    mountPath: /opt/gmvault/data
-         #  env:
-         #  - name: GMVAULT_DIR
-         #    value: /opt/gmvault
-         #  - name: HOME
-         #    value: /opt/gmvault
           volumes:
           - name: gmvault-home
             emptyDir:
