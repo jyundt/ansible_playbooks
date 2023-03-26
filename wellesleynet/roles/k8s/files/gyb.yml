@@ -1,0 +1,82 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gyb
+  namespace: default
+  labels:
+    name: gyb
+spec:
+  capacity:
+    storage: 1Pi
+  mountOptions:
+  - dir_mode=0777
+  - file_mode=0777
+  - uid=1001
+  - gid=1001
+  - nobrl
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  csi:
+    driver: smb.csi.k8s.io
+    readOnly: false
+    volumeHandle: gyb
+    volumeAttributes:
+      source: "//callisto.wellesleynet.com/gyb"
+    nodeStageSecretRef:
+      name: callisto-smb-creds
+      namespace: default
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gyb
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: gyb
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Pi
+  storageClassName: ""
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: gyb
+  namespace: default
+spec:
+  schedule: "00 6 * * * "
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 7
+  failedJobsHistoryLimit: 7
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: gyb-jyundt-gmail
+            image: awbn/gyb:1.73
+            args:
+            - "/app/gyb"
+            - "--action"
+            - "backup"
+            volumeMounts:
+            - name: gyb
+              mountPath: /config
+              subPath: "jyundt@gmail.com"
+            env:
+            - name: EMAIL
+              value: "jyundt@gmail.com"
+            - name: NOCRON
+              value: "1"
+          volumes:
+          - name: gyb
+            persistentVolumeClaim:
+              claimName: gyb
+          restartPolicy: OnFailure
