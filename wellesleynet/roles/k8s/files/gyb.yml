@@ -90,6 +90,21 @@ spec:
               value: "emily.wolfe@gmail.com"
             - name: NOCRON
               value: "1"
+          - name: gyb-emily-opentrons
+            image: awbn/gyb:1.73
+            args:
+            - "/app/gyb"
+            - "--action"
+            - "backup"
+            volumeMounts:
+            - name: gyb
+              mountPath: /config
+              subPath: "emily.wolfe@opentrons.com"
+            env:
+            - name: EMAIL
+              value: "emily.wolfe@opentrons.com"
+            - name: NOCRON
+              value: "1"
           volumes:
           - name: gyb
             persistentVolumeClaim:
