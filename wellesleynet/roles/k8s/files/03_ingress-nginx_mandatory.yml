@@ -322,8 +322,7 @@ apiVersion: v1
 data:
   allow-snippet-annotations: "true"
   server-tokens: "false"
-  ssl-protocols: "TLSv1.2"
-  ssl-ciphers: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS"
+  ssl-protocols: "TLSv1.2 TLSv1.3"
   hsts: "true"
   hsts-max-age: "31536000"
   use-geoip2: "true"
