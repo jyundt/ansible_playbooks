@@ -1,0 +1,116 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: wheresputin
+spec:
+  selector:
+    app: wheresputin
+  ports:
+  - name: wheresputin
+    port: 80
+    protocol: TCP
+    targetPort: 80
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: wheresputin-cloudflared-tunnel-credential
+  namespace: default
+spec:
+  encryptedData:
+    credentials.json: AgBhMcsV+vd7hWCyM20ZPCOme3aghiu15bIBUHQMujJNrhGY5CwoiF77l0CQGUJUYPNrfsVi3Qc7+OuQxEALMTdSkrSzBXVWeRbyKj+DbXwjt0OFiBdnpj+aWtZ297NQS2yg+Z+6H57/YGXjX0g2yZNGTtEvt4zQPQqGyk/4vzLxMwteT/5oco49pSh53fcqqZ/2AMZeTQQKOSaa0yKyjfQ9x/gGXt8i33yYqn45d9HJMBiSIWUtRCDibh5EjeNt7QLPctXoq9W1lB/SWb73FAP5FWxKkR5hxyOB8ziiO85o7WYLXmWfe9wYQD/VXCxUFOb8atTVIH5ezZeAgWkSdCYVy6hVn6ABu6dooGU/SKL3c49h4oi5aKYywb21DpMCwNh2MvLaE/QFB7DAwLT5z4MMizsfKLwzQIBsHP5wlaJESaXYB+bN7jxyQvQ1hqh4lnTOptSrKcyzMfZWlNV0sXncX8ZJ0DjfUgUOQfVZEwTpq6RtyqfMRVPEwpG2MPx2pyu2FDDKqGr7xLvJ1MFAe4VQdNlhTTY5eXeQ5awPG2U0s5JaoseSle0k3IxPuKK+/x7FZ5qENqJOg0clDCTAHr7AHhdNw9j8g7BvBtWRs4YEXFACGvFj+wphCGoCKjcfDznKPp9aKUdClU4Gmmltvks1l12gX6bMeRv/oxEICiijVQCOjGSitYmUhYRcu7IXodwo3pXZIfzRRwaAyh8fYDpVEZg8Mhf5RNq9FRDkg9s2Xrw7yGMTNd26YXTrjDd7DNt9jPnP//hhEj47Bjmhd668oxxa5upEc/+T90Kmsj16lDjZyT6pTSZWILg4XVcR5Vxz0Yn9ogxH3gtuVw/0JFIpzOxDFs55PkDQ8zFuOtD1CFhvnjPPOOs4PcSXhaxTAW09h0XzjGp44bD1UP7HC8b5dA==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: wheresputin-cloudflared-tunnel-credential
+      namespace: default
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wheresputin-cloudflared-tunnel-config
+data:
+  config.yaml: |
+    tunnel: wheresputin.com
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    metrics: 0.0.0.0:2000
+    no-autoupdate: true
+    ingress:
+    - hostname: wheresputin.com
+      service: http://wheresputin:80
+    - service: http_status:404
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: wheresputin
+  name: wheresputin
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wheresputin
+  template:
+    metadata:
+      labels:
+        app: wheresputin
+    spec:
+      containers:
+      - image: registry.digitalocean.com/jyundt/shametime:wheresputin-202304162324
+        imagePullPolicy: Always
+        name: wheresputin
+        ports:
+        - containerPort: 80
+      - image: cloudflare/cloudflared:2023.4.0
+        imagePullPolicy: Always
+        name: cloudflared
+        args:
+        - tunnel
+        - --config
+        - /etc/cloudflared/config/config.yaml
+        - run
+        livenessProbe:
+          httpGet:
+            path: /ready
+            port: 2000
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        volumeMounts:
+        - name: config
+          mountPath: /etc/cloudflared/config
+          readOnly: true
+        - name: creds
+          mountPath: /etc/cloudflared/creds
+          readOnly: true
+      volumes:
+      - name: creds
+        secret:
+          secretName: wheresputin-cloudflared-tunnel-credential
+      - name: config
+        configMap:
+          name: wheresputin-cloudflared-tunnel-config
+          items:
+          - key: config.yaml
+            path: config.yaml
+      imagePullSecrets:
+      - name: docker-registry-creds
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: wheresputin
+spec:
+  selector:
+    app: wheresputin
+  ports:
+  - name: wheresputin
+    port: 80
+    protocol: TCP
+    targetPort: 80
