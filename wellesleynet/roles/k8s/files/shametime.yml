@@ -48,7 +48,7 @@ spec:
         app: shametime
     spec:
       containers:
-      - image: registry.digitalocean.com/jyundt/shametime:202201151215
+      - image: registry.digitalocean.com/jyundt/shametime:202304162414
         imagePullPolicy: Always
         name: shametime
         ports:
