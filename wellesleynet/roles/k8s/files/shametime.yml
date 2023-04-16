@@ -1,4 +1,35 @@
 ---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: shametime-cloudflared-tunnel-credential
+  namespace: default
+spec:
+  encryptedData:
+    credentials.json: AgDQ3GC4Ts69q9acE+n/5BFLZvZKtrb35nwpL6LMoRvSJu9jleyKCH1OTpO3aJWh9xImHuOLNYiV04G/0uTyjCWq2+raoJ2yJNMOg+UV4cSuxVzQgXoZpFp2vzqET//q9vJ80+m4qYZW8a6TZ2pYOlZgzM3fAr0S7gqG9Ez/vZRLvEcOK7p06nUhYLmhYF8NBNKGXj9kSwuRXL0Xmz5iYhgmyHIE0V6FlgyzPXRH1RuF/Yw0FBGNkdvPYu6g2r1+c8b7Di3Zzrevm4UIbRvmXtMsZBs0s2yzjmgSk0d94aoWTV9M5Y3YMgn+p0bHFOsCJZrF6IXvs7HLwfJ5va9pRerzioaiaLOKjd4PljYsdq5adUU6/8vWYKeI1TG30Om2hp5x5IpuJF9yb16EHjYRZZb0NcuvMmNA2ZKH1yAyF7GbY0UoKv5ghkK8nmFbiTdIZdGuS8atyLySiIUlWxK9lrrrLt/Gq+Iw8DLx11HIMAWFtiKDjGAvoRzyZhHOi6AOKaMCagEkClQTknnLnsvCwZcI+GOzRtPMdrT5tVQBYDHrZQ6mpbCgU5859Mb2V/yEKfCcYLPsrqemtQJj5iukuj+/bpJ7TaxKzCBdbCgp71ZHqs9lgt9NwnzI+AlakOeBJnLqpVof8PZ05IZXX5pfttnIPnKuxc4qnzrGWhcdsqhVWaotCsdjlItWRpEHPZyO6eg7s9VN8CpBh2KeSBYUNJSH8qxwQINYf97gdmDS7UuwGdTie1ayy29Emq6jTiApPZLlblTT4apOEHg1Iw4/V/lDWucCyTrbVAIGsUL9V1Gq3v6o8RdrHJ7Pyq1ol14gHV8w5jnMcKGM5fUkIudd9BZNeFWaeDA2b96Zp+ikcpt2vB3LCvpOnVkD57k5pzH5mBVuV8XoQgILKrjIAy0TM0Zukw==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: shametime-cloudflared-tunnel-credential
+      namespace: default
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shametime-cloudflared-tunnel-config
+data:
+  config.yaml: |
+    tunnel: shametime.com
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    metrics: 0.0.0.0:2000
+    no-autoupdate: true
+    ingress:
+    - hostname: shametime.com
+      service: http://shametime:80
+    - service: http_status:404
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,6 +53,38 @@ spec:
         name: shametime
         ports:
         - containerPort: 80
+      - image: cloudflare/cloudflared:2023.4.0
+        imagePullPolicy: Always
+        name: cloudflared
+        args:
+        - tunnel
+        - --config
+        - /etc/cloudflared/config/config.yaml
+        - run
+        livenessProbe:
+          httpGet:
+            path: /ready
+            port: 2000
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        volumeMounts:
+        - name: config
+          mountPath: /etc/cloudflared/config
+          readOnly: true
+        - name: creds
+          mountPath: /etc/cloudflared/creds
+          readOnly: true
+      volumes:
+      - name: creds
+        secret:
+          secretName: shametime-cloudflared-tunnel-credential
+      - name: config
+        configMap:
+          name: shametime-cloudflared-tunnel-config
+          items:
+          - key: config.yaml
+            path: config.yaml
       imagePullSecrets:
       - name: docker-registry-creds
       restartPolicy: Always
@@ -78,4 +141,3 @@ spec:
   - hosts:
     - www.shametime.com
     secretName: www-shametime-com-tls
-
