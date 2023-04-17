@@ -78,7 +78,7 @@ spec:
     spec:
       enableServiceLinks: false
       containers:
-      - image: nitnelave/lldap:v0.4.1-alpine
+      - image: lldap/lldap:v0.4.3-alpine
         imagePullPolicy: Always
         name: lldap
         ports:
