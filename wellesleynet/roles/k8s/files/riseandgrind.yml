@@ -1,60 +1,92 @@
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
 metadata:
-  name: riseandgrind
+  creationTimestamp: null
+  name: riseandgrind-cloudflared-tunnel-credential
   namespace: default
 spec:
-  accessModes:
-  - ReadWriteOnce
-  storageClassName: longhorn-default
-  resources:
-    requests:
-      storage: 50Mi
+  encryptedData:
+    credentials.json: AgAvnm07pD4UqEaDVWDHVw1fF8RV0P+jXI0YvpyK1ygGjRioJaKf1xgD7eQCtovjktKLS/K764HVaPioYYZysirfEPJ/cHJ4jRLJUth45uina+bss/lfnY6lIZg89dv5bhiWlmbQixFNi5kHL7qjuAZpWbudtlisK08vU7A//sp04RTPvW2PyowtgkeSQ/RCNlXtsaajx17nIAj7KvefK6Phx+lY9B6nHNVH3TGGVdczvzFAiLwrA3IF0cg3Il22cWq8OPYb3H/2DznJuoOkH/3/H3AQnbzvaJUBHySciinH2ISCFNa+hAvbIbka88EM2/dzzW8BZ3499B4dZfR+xQ7PcU6nb+T9ilu6nKgBlktm3hBdi7f5sU4zEWyMiGxk8xnubL3+jksmg1ZIqV8jjhXgoyXWKCAifN0dQnwA6bng7BlTLP41bOEYNw7M26ivK6BULPdyiBds+xJ+CR+p7d2XIlyIoOfeccy2uWMU30CidhvUSzok9nKI4m7SFYiqAhSsxtCdyqQsjfzjKARW+O9Ol8gvgC78467I/JRFBf/sCHmpJ0xyKc8icYIg7dqPL9p+R0es7U1Ufji0uvGTGQ2pl9/MJBh5ySKJ4coPE5x12bEpI1/kHS+J3+0lR98c4CMGHvuGrq+yMDT0MXVZHPl8ekgvJaC5k5EWY4I21HObgHtDgVnqezAnKEqQVTT/3//+aKUXEuIcOlo/KlThVYCAMOsPjrO/+XSm9vj4hBX5pbbgARSFr6mHkmjrSKFFtlnfppyCC0K70UYP33PmwR6RRysicI5xYKjD4g+S+GX6zMWhg6jMrfFakA+DaagsyOLlzTiOa45SUrfrRbx5dAHIF/ApIBzIUbGoutEm08QTvYCp/mhIKssu3NlpqWPlm+nJQQ0VxQpBaXNij55nmJ16Ig==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: riseandgrind-cloudflared-tunnel-credential
+      namespace: default
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: riseandgrind-cloudflared-tunnel-config
+data:
+  config.yaml: |
+    tunnel: riseandgrind.nyc
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    metrics: 0.0.0.0:2000
+    no-autoupdate: true
+    ingress:
+    - hostname: riseandgrind.nyc
+      service: http://riseandgrind:80
+    - service: http_status:404
 ---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   labels:
     app: riseandgrind
   name: riseandgrind
   namespace: default
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: riseandgrind
-  serviceName: riseandgrind 
   template:
     metadata:
       labels:
         app: riseandgrind
     spec:
       containers:
-      - env:
-        - name: TZ
-          value: America/New_York
-        image: nginx:stable-alpine
+      - image: registry.digitalocean.com/jyundt/shametime:riseandgrind-202304170206
         imagePullPolicy: Always
         name: riseandgrind
         ports:
         - containerPort: 80
-          protocol: TCP
-        volumeMounts:
-        - mountPath: /usr/share/nginx/html
-          name: riseandgrind
+      - image: cloudflare/cloudflared:2023.4.0
+        imagePullPolicy: Always
+        name: cloudflared
+        args:
+        - tunnel
+        - --config
+        - /etc/cloudflared/config/config.yaml
+        - run
         livenessProbe:
-          exec:
-            command:
-            - ls
-            - /usr/share/nginx/html/lost+found
-          initialDelaySeconds: 5
-          periodSeconds: 5
+          httpGet:
+            path: /ready
+            port: 2000
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        volumeMounts:
+        - name: config
+          mountPath: /etc/cloudflared/config
+          readOnly: true
+        - name: creds
+          mountPath: /etc/cloudflared/creds
+          readOnly: true
       volumes:
-      - name: riseandgrind
-        persistentVolumeClaim:
-          claimName: riseandgrind
-
+      - name: creds
+        secret:
+          secretName: riseandgrind-cloudflared-tunnel-credential
+      - name: config
+        configMap:
+          name: riseandgrind-cloudflared-tunnel-config
+          items:
+          - key: config.yaml
+            path: config.yaml
+      imagePullSecrets:
+      - name: docker-registry-creds
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
@@ -69,43 +101,3 @@ spec:
     port: 80
     protocol: TCP
     targetPort: 80
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: riseandgrind
-  namespace: default
-  annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: HTTP
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
-    kubernetes.io/ingress.class: "nginx"
-spec:
-  rules:
-  - host: riseandgrind.nyc
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: riseandgrind
-            port:
-              number: 80
-  - host: www.riseandgrind.nyc
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: riseandgrind
-            port:
-              number: 80
-  tls:
-  - hosts:
-    - riseandgrind.nyc
-    secretName: riseandgrind-nyc-tls
-  - hosts:
-    - www.riseandgrind.nyc
-    secretName: www-riseandgrind-nyc-tls
-
