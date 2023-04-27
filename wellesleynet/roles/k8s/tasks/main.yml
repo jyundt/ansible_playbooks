@@ -185,12 +185,6 @@
       definition: "{{ lookup('file', 'rclone.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
-  - name: Create gmvault cronjob
-    k8s:
-      state: present
-      definition: "{{ lookup('file', 'gmvault.yml') }}"
-      kubeconfig: "{{ k8s_config }}"
-
   - name: Create bitwarden statefulset
     k8s:
       state: present
