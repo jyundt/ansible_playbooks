@@ -35,8 +35,8 @@ data:
  #9011: "default/croc:9011"
  #9012: "default/croc:9012"
  #9013: "default/croc:9013"
- #1883: "default/mosquitto:1883"
- #8883: "default/mosquitto:8883"
+  1883: "default/mosquitto:1883"
+  8883: "default/mosquitto:8883"
 ---
 kind: ConfigMap
 apiVersion: v1
