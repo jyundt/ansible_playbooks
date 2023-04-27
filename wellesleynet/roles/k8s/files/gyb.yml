@@ -105,6 +105,21 @@ spec:
               value: "emily.wolfe@opentrons.com"
             - name: NOCRON
               value: "1"
+          - name: gyb-jyundt-coreweave
+            image: awbn/gyb:1.73
+            args:
+            - "/app/gyb"
+            - "--action"
+            - "backup"
+            volumeMounts:
+            - name: gyb
+              mountPath: /config
+              subPath: "jyundt@coreweave.com"
+            env:
+            - name: EMAIL
+              value: "jyundt@coreweave.com"
+            - name: NOCRON
+              value: "1"
           volumes:
           - name: gyb
             persistentVolumeClaim:
