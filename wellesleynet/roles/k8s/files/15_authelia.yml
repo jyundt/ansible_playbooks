@@ -137,6 +137,8 @@ data:
         policy: two_factor
         subject:
           - 'group:admin'
+      - domain: charles.kiski.co
+        policy: two_factor
     storage:
       local:
         path: /data/db.sqlite3

@@ -170,3 +170,54 @@ spec:
   - hosts:
     - zwave.kiski.co
     secretName: zwave-kiski-co-tls
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: charles
+  namespace: default
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: charles
+  namespace: default
+subsets:
+  - addresses:
+    - ip: 192.168.67.29
+    ports:
+    - port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: charles
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: charles.kiski.co
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: charles
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - charles.kiski.co
+    secretName: charles-kiski-co-tls
+
