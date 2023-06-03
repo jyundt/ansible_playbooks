@@ -15,13 +15,16 @@ spec:
     spec:
       initContainers:
       - name: intel-gpu-initcontainer
-        image: intel/intel-gpu-initcontainer:0.22.0
+        image: intel/intel-gpu-initcontainer:0.27.0
         imagePullPolicy: IfNotPresent
         securityContext:
+          seLinuxOptions:
+            type: "container_device_plugin_init_t"
           readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
         volumeMounts:
         - mountPath: /etc/kubernetes/node-feature-discovery/source.d/
-          name: nfd-source-hooks
+          name: nfd-features
       containers:
       - name: intel-gpu-plugin
         env:
@@ -29,10 +32,17 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: spec.nodeName
-        image: intel/intel-gpu-plugin:0.22.0
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+        image: intel/intel-gpu-plugin:0.27.0
         imagePullPolicy: IfNotPresent
         securityContext:
+          seLinuxOptions:
+            type: "container_device_plugin_t"
           readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
         volumeMounts:
         - name: devfs
           mountPath: /dev/dri
@@ -52,7 +62,7 @@ spec:
       - name: kubeletsockets
         hostPath:
           path: /var/lib/kubelet/device-plugins
-      - name: nfd-source-hooks
+      - name: nfd-features
         hostPath:
           path: /etc/kubernetes/node-feature-discovery/source.d/
           type: DirectoryOrCreate
