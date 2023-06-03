@@ -67,7 +67,7 @@ spec:
         app: joplin
     spec:
       containers:
-      - image: joplin/server:2.9.7-beta
+      - image: joplin/server:2.11.1-beta
         imagePullPolicy: Always
         name: joplin
         ports:
