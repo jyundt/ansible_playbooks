@@ -14,11 +14,15 @@ spec:
       labels:
         app: csi-smb-controller
     spec:
-      dnsPolicy: Default  # available values: Default, ClusterFirstWithHostNet, ClusterFirst
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet  # available values: Default, ClusterFirstWithHostNet, ClusterFirst
       serviceAccountName: csi-smb-controller-sa
       nodeSelector:
         kubernetes.io/os: linux
       priorityClassName: system-cluster-critical
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       tolerations:
         - key: "node-role.kubernetes.io/master"
           operator: "Exists"
@@ -31,7 +35,7 @@ spec:
           effect: "NoSchedule"
       containers:
         - name: csi-provisioner
-          image: registry.k8s.io/sig-storage/csi-provisioner:v3.3.0
+          image: registry.k8s.io/sig-storage/csi-provisioner:v3.5.0
           args:
             - "-v=2"
             - "--csi-address=$(ADDRESS)"
@@ -52,7 +56,7 @@ spec:
               cpu: 10m
               memory: 20Mi
         - name: liveness-probe
-          image: registry.k8s.io/sig-storage/livenessprobe:v2.8.0
+          image: registry.k8s.io/sig-storage/livenessprobe:v2.10.0
           args:
             - --csi-address=/csi/csi.sock
             - --probe-timeout=3s
@@ -69,7 +73,7 @@ spec:
               cpu: 10m
               memory: 20Mi
         - name: smb
-          image: registry.k8s.io/sig-storage/smbplugin:v1.10.0
+          image: registry.k8s.io/sig-storage/smbplugin:v1.11.0
           imagePullPolicy: IfNotPresent
           args:
             - "--v=5"
@@ -141,13 +145,16 @@ spec:
       nodeSelector:
         kubernetes.io/os: windows
       priorityClassName: system-node-critical
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: csi-smb-node-sa
       containers:
         - name: liveness-probe
           volumeMounts:
             - mountPath: C:\csi
               name: plugin-dir
-          image: registry.k8s.io/sig-storage/livenessprobe:v2.8.0
+          image: registry.k8s.io/sig-storage/livenessprobe:v2.10.0
           args:
             - --csi-address=$(CSI_ENDPOINT)
             - --probe-timeout=3s
@@ -163,7 +170,7 @@ spec:
               cpu: 10m
               memory: 40Mi
         - name: node-driver-registrar
-          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.6.2
+          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
           args:
             - --v=2
             - --csi-address=$(CSI_ENDPOINT)
@@ -199,13 +206,12 @@ spec:
               cpu: 10m
               memory: 40Mi
         - name: smb
-          image: registry.k8s.io/sig-storage/smbplugin:v1.10.0
+          image: registry.k8s.io/sig-storage/smbplugin:v1.11.0
           imagePullPolicy: IfNotPresent
           args:
             - --v=5
             - --endpoint=$(CSI_ENDPOINT)
             - --nodeid=$(KUBE_NODE_NAME)
-            - "--metrics-address=0.0.0.0:29645"
             - "--remove-smb-mapping-during-unmount=true"
           ports:
             - containerPort: 29643
@@ -295,11 +301,14 @@ spec:
         app: csi-smb-node
     spec:
       hostNetwork: true
-      dnsPolicy: Default  # available values: Default, ClusterFirstWithHostNet, ClusterFirst
+      dnsPolicy: ClusterFirstWithHostNet  # available values: Default, ClusterFirstWithHostNet, ClusterFirst
       serviceAccountName: csi-smb-node-sa
       nodeSelector:
         kubernetes.io/os: linux
       priorityClassName: system-node-critical
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       tolerations:
         - operator: "Exists"
       containers:
@@ -307,7 +316,7 @@ spec:
           volumeMounts:
             - mountPath: /csi
               name: socket-dir
-          image: registry.k8s.io/sig-storage/livenessprobe:v2.8.0
+          image: registry.k8s.io/sig-storage/livenessprobe:v2.10.0
           args:
             - --csi-address=/csi/csi.sock
             - --probe-timeout=3s
@@ -320,7 +329,7 @@ spec:
               cpu: 10m
               memory: 20Mi
         - name: node-driver-registrar
-          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.6.2
+          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
           args:
             - --csi-address=$(ADDRESS)
             - --kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)
@@ -350,13 +359,12 @@ spec:
               cpu: 10m
               memory: 20Mi
         - name: smb
-          image: registry.k8s.io/sig-storage/smbplugin:v1.10.0
+          image: registry.k8s.io/sig-storage/smbplugin:v1.11.0
           imagePullPolicy: IfNotPresent
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--nodeid=$(KUBE_NODE_NAME)"
-            - "--metrics-address=0.0.0.0:29645"
           ports:
             - containerPort: 29643
               name: healthz
