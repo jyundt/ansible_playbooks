@@ -61,7 +61,7 @@ spec:
           mountPath: /dev/ttyUSB1
         securityContext:
           privileged: true
-      - image: zwavejs/zwave-js-ui:8.18.0
+      - image: zwavejs/zwave-js-ui:8.19.0
         imagePullPolicy: Always
         name: home-assistant-zwave
         ports:
