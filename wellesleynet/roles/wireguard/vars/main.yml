@@ -96,3 +96,7 @@ wireguard_data:
     privatekey: "{{ vault_wireguard_thonkpad_privatekey }}"
     publickey: "zMY4RX9n6OzpRAIBvMY7dFCw2THVE49Cx4lbf8lJ9n0="
     ip: "10.0.0.21/24"
+  athena:
+    privatekey: "{{ vault_wireguard_athena_privatekey }}"
+    publickey: "BIJlGER2gVAArzlxSv5B6JvEiGF6+hFli5dpwDhvoH0="
+    ip: "10.0.0.22/24"
