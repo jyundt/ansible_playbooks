@@ -389,5 +389,11 @@
       definition: "{{ lookup('file', 'riseandgrind.yml') }}"
       kubeconfig: "{{ k8s_config }}"
 
+  - name: Create imsorryaboutgoose deployment
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'imsorryaboutgoose.yml') }}"
+      kubeconfig: "{{ k8s_config }}"
+
   run_once: True
   delegate_to: "{{ k8s_master }}"

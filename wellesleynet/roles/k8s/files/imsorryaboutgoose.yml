@@ -1,0 +1,104 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: imsorryaboutgoose-cloudflared-tunnel-credential
+  namespace: default
+spec:
+  encryptedData:
+    credentials.json: AgAn5GBjb0MIxv8oQCXRS6JW1UJslq5JFqQVzlYOJATVK74IV8wpGtyliUMEfPddA1MSL6h2anUCjKAaGjeEQJQthEx4ENckx7NDB9S8EpXQP8u0ShL0uWpZ1HoA4ER6jwIXyG+wdFQTpAwDa+vlAlsd1D0jtk3YyVhI9Ap3XBBPr7sPBpPnv2GTF1BzLt/f6ahQP6cYxj341FnVZLPgOeWIOW+YxtgGIw0Rq/yiQLCDjtKBfFtpJxeSLEPbtWbzNAaYZXKhy1TLdLgV/8qfGpOMiX1hl4o+JRkta9+E36TkpBQ035Ta266CLt0/Hmw42RvMHmDjRkJlkZWkuSCJzcy844Klid6JCVvviaraLkT6qL/mzDvzkKoHTaX95iwPAOpm9vfL9xVH+tS6o4wPzmN2VfxaBDWK/dcnhLK3pYWfeBdld/STW/7ih+w9OQJoU1xedlfxRUdreu6GMbfiRv5u8Y7OIPPjuZdOEOYjh+iYE4p+MbpjGrfit283WKns99EbambaJ1Blh8cZA9qnR4N6OUUNUjFV+W7rWeISMKO3yfg7cC6SRmm9QsYRM7JpMdnbWfIaTVmSmaOGRhYKJi69nHweFCjP5JLpPKb+KW0AAct1m3nyK6Lb1KZ7uf2Gq3lTvMps2XA+L/grPFhhleKBiCnWqwyd4+CZ3AjD+vOIOoGFXnuvBytXUowJBZlF24w9di0FHW3t5czoJS2AwRrHwTWQJzDTU+R8Aj4nH+0Huo50q8pRguJIz0/EU392V25PP73sdNeosrO3HR69pxmO3WXY1LMqvUc3MdkgOI6E5JRCeUYMJZwWFSEK1pMJLqrB5oiQvZ3GUXNicWMlc1n0sDWOcq5xbl0wyVcGIYT9mUkp537om/sj1GETDQS6MD5aeNP96JqTzKV+PSMLsVrI1A==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: imsorryaboutgoose-cloudflared-tunnel-credential
+      namespace: default
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: imsorryaboutgoose-cloudflared-tunnel-config
+data:
+  config.yaml: |
+    tunnel: imsorryaboutgoose.com
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    metrics: 0.0.0.0:2000
+    no-autoupdate: true
+    ingress:
+    - hostname: imsorryaboutgoose.com
+      service: http://imsorryaboutgoose:80
+    - service: http_status:404
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: imsorryaboutgoose
+  name: imsorryaboutgoose
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: imsorryaboutgoose
+  template:
+    metadata:
+      labels:
+        app: imsorryaboutgoose
+    spec:
+      containers:
+      - image: registry.digitalocean.com/jyundt/shametime:imsorryaboutgoose-202307081617
+        imagePullPolicy: Always
+        name: imsorryaboutgoose
+        ports:
+        - containerPort: 80
+      - image: cloudflare/cloudflared:2023.6.1
+        imagePullPolicy: Always
+        name: cloudflared
+        args:
+        - tunnel
+        - --config
+        - /etc/cloudflared/config/config.yaml
+        - run
+        livenessProbe:
+          httpGet:
+            path: /ready
+            port: 2000
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        volumeMounts:
+        - name: config
+          mountPath: /etc/cloudflared/config
+          readOnly: true
+        - name: creds
+          mountPath: /etc/cloudflared/creds
+          readOnly: true
+      volumes:
+      - name: creds
+        secret:
+          secretName: imsorryaboutgoose-cloudflared-tunnel-credential
+      - name: config
+        configMap:
+          name: imsorryaboutgoose-cloudflared-tunnel-config
+          items:
+          - key: config.yaml
+            path: config.yaml
+      imagePullSecrets:
+      - name: docker-registry-creds
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: imsorryaboutgoose
+spec:
+  selector:
+    app: imsorryaboutgoose
+  ports:
+  - name: imsorryaboutgoose
+    port: 80
+    protocol: TCP
+    targetPort: 80
