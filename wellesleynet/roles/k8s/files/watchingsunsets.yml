@@ -1,0 +1,104 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: watchingsunsets-cloudflared-tunnel-credential
+  namespace: default
+spec:
+  encryptedData:
+    credentials.json: AgBruns3zJSUSv23so6Pf3urj1xNW/EKzvilzyyaVqqf/VFDlUyVFITyeQSOPvv0fzJ5w+hUY1XytnMbR/DfGTQcOzNeJzDSDba7BJxZ65GMTBv2lc1ez6KsOao5YnAt5VLKRzwIP0rkY4K2SYdqc/FUgSDFml6jwLSbQA7qEz2BLzIKvHu3I4832m0pSHCiwXpfNYwK5cEI/yVLqbidNS62FSca/JCUpMUGGzvCfKAF5ZpTjiZubYmpcjsPr3TcDlvPP4Wb3JN5W+R1yojTyJMTI/9rB06rAGAWLM4ABUhxiQMTwJqZLMF8Zzl9zhp14+K3BArobOu57DHpPE3XrXs41f8Gh/BjFv8xqA5UFcf0yqHtzsGNHM5qxV5ur5oynGuUKi+ZvNJstonpaW5ytXwPk35LuJR4hQFl1ZgPa78j8n94R/35Hot/mkW4OTC8fo1ecRphLge/Br/cr5RCYoJaQBmPh6ZYqQLyuGT9eSI5WB81j8arJNkPUiZ5OevenlL1TpW0TYYlNGl3YZORVWp1C9RP+6sNOul1F3WmFc52H7lQhwBgYvJ3TiC3PeLKDWJB7LHVCjIjr/JI5vhwtvAoHmdv+yxTWmQ2xmPN0FPUG6OmGRsUu1RuEqfkRiDJsGub0StMZMa4q/9VWZ8w+ad71hNaUQzQq8ycpUYtg8k7Nd+wIC7tDYaHGajlZK7xp1z0dC4nuaCgfmWMbUJlUuWoUrQzUxelEsZB6fxF7GBgVLS5l1psI1Hy/5thBz9g09LAEIthf6EsuduhnI8XODQ/jl2iETi7OZ9d578wEIvOB6k+lD5I07rl84CR08yXZu5GwzB98/skq/GklBPGRnQq+1Y6A5uNS9VJpc2+gWODXR7K/VhDD/JLqBYm/j9Q+Xp01tHFISXKwEwrFF1Eq2YWCA==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: watchingsunsets-cloudflared-tunnel-credential
+      namespace: default
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: watchingsunsets-cloudflared-tunnel-config
+data:
+  config.yaml: |
+    tunnel: watchingsunsets.cc
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    metrics: 0.0.0.0:2000
+    no-autoupdate: true
+    ingress:
+    - hostname: watchingsunsets.cc
+      service: http://watchingsunsets:80
+    - service: http_status:404
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: watchingsunsets
+  name: watchingsunsets
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: watchingsunsets
+  template:
+    metadata:
+      labels:
+        app: watchingsunsets
+    spec:
+      containers:
+      - image: registry.digitalocean.com/jyundt/shametime:watchingsunsets-202308200858
+        imagePullPolicy: Always
+        name: watchingsunsets
+        ports:
+        - containerPort: 80
+      - image: cloudflare/cloudflared:2023.6.1
+        imagePullPolicy: Always
+        name: cloudflared
+        args:
+        - tunnel
+        - --config
+        - /etc/cloudflared/config/config.yaml
+        - run
+        livenessProbe:
+          httpGet:
+            path: /ready
+            port: 2000
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        volumeMounts:
+        - name: config
+          mountPath: /etc/cloudflared/config
+          readOnly: true
+        - name: creds
+          mountPath: /etc/cloudflared/creds
+          readOnly: true
+      volumes:
+      - name: creds
+        secret:
+          secretName: watchingsunsets-cloudflared-tunnel-credential
+      - name: config
+        configMap:
+          name: watchingsunsets-cloudflared-tunnel-config
+          items:
+          - key: config.yaml
+            path: config.yaml
+      imagePullSecrets:
+      - name: docker-registry-creds
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: watchingsunsets
+spec:
+  selector:
+    app: watchingsunsets
+  ports:
+  - name: watchingsunsets
+    port: 80
+    protocol: TCP
+    targetPort: 80
