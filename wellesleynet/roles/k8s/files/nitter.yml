@@ -17,12 +17,12 @@ spec:
         app: nitter
     spec:
       containers:
-      - image: zedeus/nitter:d923c20aa6a87224343562f15b00e72e7780aa3d
+      - image: zedeus/nitter:d7ca353a55ea3440a2ec1f09155951210a374cc7
         imagePullPolicy: Always
         name: nitter
         ports:
         - containerPort: 8080
-      - image: redis:6.2.7-alpine
+      - image: redis:6.2.13-alpine
         imagePullPolicy: Always
         name: nitter-redis
       restartPolicy: Always
