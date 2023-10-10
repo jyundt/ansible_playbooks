@@ -64,7 +64,7 @@ spec:
         app: plex
     spec:
       containers:
-      - image: plexinc/pms-docker:1.32.4.7195-7c8f9d3b6
+      - image: plexinc/pms-docker:1.32.6.7557-1cf77d501
         imagePullPolicy: Always
         name: plex
         ports:
