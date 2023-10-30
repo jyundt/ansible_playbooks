@@ -329,6 +329,7 @@ data:
   ssl-dh-param: "ingress-nginx/lb-dhparam"
   add-headers: "ingress-nginx/custom-headers"
   proxy-set-headers: "ingress-nginx/custom-headers"
+  strict-validate-path-type: "true"
 kind: ConfigMap
 metadata:
   labels:
