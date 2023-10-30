@@ -450,6 +450,7 @@ spec:
         - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
         - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
         - --maxmind-license-key=$(MAXMIND_LICENSE_KEY)
+        - --enable-annotation-validation
         env:
         - name: POD_NAME
           valueFrom:
