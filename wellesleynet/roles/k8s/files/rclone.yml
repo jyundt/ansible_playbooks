@@ -99,7 +99,7 @@ spec:
         spec:
           containers:
           - name: rclone-jyundt-gmail
-            image: rclone/rclone:1.64.2
+            image: rclone/rclone:1.65.0
             args:
             - sync
             - "jyundt_gmail_gdrive:/"
@@ -113,7 +113,7 @@ spec:
               - secretRef:
                   name: rclone
           - name: rclone-jyundt-coreweave
-            image: rclone/rclone:1.64.2
+            image: rclone/rclone:1.65.0
             args:
             - sync
             - "jyundt_coreweave_gdrive:/"
@@ -127,7 +127,7 @@ spec:
               - secretRef:
                   name: rclone
           - name: rclone-emily-gmail
-            image: rclone/rclone:1.64.2
+            image: rclone/rclone:1.65.0
             args:
             - sync
             - "emily_gmail_gdrive:/"
