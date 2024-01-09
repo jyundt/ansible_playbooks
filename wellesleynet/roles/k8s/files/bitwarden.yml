@@ -24,6 +24,8 @@ data:
   SHOW_PASSWORD_HINT: "false"
   DOMAIN: "https://bitwarden.kiski.co"
   SMTP_SSL: "true"
+  TIME_ZONE: "UTC"
+  TZ: "UTC"
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -45,7 +47,7 @@ spec:
     spec:
       containers:
       - name: bitwarden
-        image: vaultwarden/server:1.29.2-alpine
+        image: vaultwarden/server:1.30.1-alpine
         ports:
         - containerPort: 80
           protocol: TCP
