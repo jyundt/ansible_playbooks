@@ -47,11 +47,9 @@ spec:
     spec:
       containers:
       - name: bitwarden
-        image: vaultwarden/server:1.30.1-alpine
+        image: vaultwarden/server:1.30.5-alpine
         ports:
         - containerPort: 80
-          protocol: TCP
-        - containerPort: 3012
           protocol: TCP
         env:
         - name: SMTP_HOST
@@ -113,8 +111,6 @@ spec:
   ports:
   - port: 80
     name: bitwarden
-  - port: 3012
-    name: bitwarden-ws
   selector:
     app: bitwarden
 ---
@@ -162,20 +158,6 @@ spec:
   - host: bitwarden.kiski.co
     http:
       paths:
-      - pathType: Prefix
-        path: "/notifications/hub"
-        backend:
-          service:
-            name: bitwarden
-            port:
-              number: 3012
-      - pathType: Prefix
-        path: "/notifications/hub/negotiate"
-        backend:
-          service:
-            name: bitwarden
-            port:
-              number: 80
       - pathType: Prefix
         path: "/"
         backend:
