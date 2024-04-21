@@ -1,4 +1,60 @@
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: csi-smb-controller-sa
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: csi-smb-node-sa
+  namespace: kube-system
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: smb-external-provisioner-role
+rules:
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "update"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["csinodes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+---
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: smb-csi-provisioner-binding
+subjects:
+  - kind: ServiceAccount
+    name: csi-smb-controller-sa
+    namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: smb-external-provisioner-role
+  apiGroup: rbac.authorization.k8s.io
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -35,7 +91,7 @@ spec:
           effect: "NoSchedule"
       containers:
         - name: csi-provisioner
-          image: registry.k8s.io/sig-storage/csi-provisioner:v3.5.0
+          image: registry.k8s.io/sig-storage/csi-provisioner:v3.6.2
           args:
             - "-v=2"
             - "--csi-address=$(ADDRESS)"
@@ -56,7 +112,7 @@ spec:
               cpu: 10m
               memory: 20Mi
         - name: liveness-probe
-          image: registry.k8s.io/sig-storage/livenessprobe:v2.10.0
+          image: registry.k8s.io/sig-storage/livenessprobe:v2.11.0
           args:
             - --csi-address=/csi/csi.sock
             - --probe-timeout=3s
@@ -73,7 +129,7 @@ spec:
               cpu: 10m
               memory: 20Mi
         - name: smb
-          image: registry.k8s.io/sig-storage/smbplugin:v1.11.0
+          image: registry.k8s.io/sig-storage/smbplugin:v1.14.0
           imagePullPolicy: IfNotPresent
           args:
             - "--v=5"
@@ -154,7 +210,7 @@ spec:
           volumeMounts:
             - mountPath: C:\csi
               name: plugin-dir
-          image: registry.k8s.io/sig-storage/livenessprobe:v2.10.0
+          image: registry.k8s.io/sig-storage/livenessprobe:v2.11.0
           args:
             - --csi-address=$(CSI_ENDPOINT)
             - --probe-timeout=3s
@@ -170,7 +226,7 @@ spec:
               cpu: 10m
               memory: 40Mi
         - name: node-driver-registrar
-          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
+          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.9.1
           args:
             - --v=2
             - --csi-address=$(CSI_ENDPOINT)
@@ -206,7 +262,7 @@ spec:
               cpu: 10m
               memory: 40Mi
         - name: smb
-          image: registry.k8s.io/sig-storage/smbplugin:v1.11.0
+          image: registry.k8s.io/sig-storage/smbplugin:v1.14.0
           imagePullPolicy: IfNotPresent
           args:
             - --v=5
@@ -316,7 +372,7 @@ spec:
           volumeMounts:
             - mountPath: /csi
               name: socket-dir
-          image: registry.k8s.io/sig-storage/livenessprobe:v2.10.0
+          image: registry.k8s.io/sig-storage/livenessprobe:v2.11.0
           args:
             - --csi-address=/csi/csi.sock
             - --probe-timeout=3s
@@ -329,7 +385,7 @@ spec:
               cpu: 10m
               memory: 20Mi
         - name: node-driver-registrar
-          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
+          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.9.1
           args:
             - --csi-address=$(ADDRESS)
             - --kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)
@@ -359,7 +415,7 @@ spec:
               cpu: 10m
               memory: 20Mi
         - name: smb
-          image: registry.k8s.io/sig-storage/smbplugin:v1.11.0
+          image: registry.k8s.io/sig-storage/smbplugin:v1.14.0
           imagePullPolicy: IfNotPresent
           args:
             - "--v=5"
@@ -413,59 +469,3 @@ spec:
             type: DirectoryOrCreate
           name: registration-dir
 ---
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: csi-smb-controller-sa
-  namespace: kube-system
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: csi-smb-node-sa
-  namespace: kube-system
----
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: smb-external-provisioner-role
-rules:
-  - apiGroups: [""]
-    resources: ["persistentvolumes"]
-    verbs: ["get", "list", "watch", "create", "delete"]
-  - apiGroups: [""]
-    resources: ["persistentvolumeclaims"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["storageclasses"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: [""]
-    resources: ["events"]
-    verbs: ["get", "list", "watch", "create", "update", "patch"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["csinodes"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["coordination.k8s.io"]
-    resources: ["leases"]
-    verbs: ["get", "list", "watch", "create", "update", "patch"]
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get"]
----
-
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: smb-csi-provisioner-binding
-subjects:
-  - kind: ServiceAccount
-    name: csi-smb-controller-sa
-    namespace: kube-system
-roleRef:
-  kind: ClusterRole
-  name: smb-external-provisioner-role
-  apiGroup: rbac.authorization.k8s.io
