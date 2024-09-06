@@ -53,7 +53,7 @@ spec:
         name: imsorryaboutgoose
         ports:
         - containerPort: 80
-      - image: cloudflare/cloudflared:2023.6.1
+      - image: cloudflare/cloudflared:2024.8.3
         imagePullPolicy: Always
         name: cloudflared
         args:

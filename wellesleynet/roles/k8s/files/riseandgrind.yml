@@ -52,7 +52,7 @@ spec:
         name: riseandgrind
         ports:
         - containerPort: 80
-      - image: cloudflare/cloudflared:2023.4.0
+      - image: cloudflare/cloudflared:2024.8.3
         imagePullPolicy: Always
         name: cloudflared
         args:
