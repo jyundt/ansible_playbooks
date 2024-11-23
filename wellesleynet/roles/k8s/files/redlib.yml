@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       # No idea what version this is
-      - image: quay.io/redlib/redlib@sha256:42db7afd24d3e55ceccb38f6e91ecfd44d78f381a04848bb4de67dae1836a3e4
+      - image: quay.io/redlib/redlib@sha256:d350eebf055527e2f2189aa0ef3a1e5a178a427ff6ae65a9d3ecbe7f43e83f71
         imagePullPolicy: Always
         name: redlib
         ports:
