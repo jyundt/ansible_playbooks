@@ -11,29 +11,11 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: io-external
-  namespace: default
-spec:
-  type: ExternalName
-  externalName: io.wellesleynet.com
----
-kind: Service
-apiVersion: v1
-metadata:
   name: callisto-bmc-external
   namespace: default
 spec:
   type: ExternalName
   externalName: callisto-bmc.wellesleynet.com
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: io-bmc-external
-  namespace: default
-spec:
-  type: ExternalName
-  externalName: io-bmc.wellesleynet.com
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -66,34 +48,6 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: io
-  namespace: default
-  annotations:
-    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
-    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
-    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
-    kubernetes.io/ingress.class: "nginx"
-spec:
-  rules:
-  - host: io.kiski.co
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: io-external
-            port:
-              number: 443
-  tls:
-  - hosts:
-    - io.kiski.co
-    secretName: io-kiski-co-tls
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
   name: callisto-bmc
   namespace: default
   annotations:
@@ -120,33 +74,3 @@ spec:
   - hosts:
     - callisto-bmc.kiski.co
     secretName: callisto-bmc-kiski-co-tls
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: io-bmc
-  namespace: default
-  annotations:
-    nginx.ingress.kubernetes.io/auth-url: "https://authelia.kiski.co/api/verify"
-    nginx.ingress.kubernetes.io/auth-signin: "https://authelia.kiski.co"
-    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-    # BMC/BIOS updates can be ~32MB
-    nginx.ingress.kubernetes.io/proxy-body-size: 33m
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
-    kubernetes.io/ingress.class: "nginx"
-spec:
-  rules:
-  - host: io-bmc.kiski.co
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: io-bmc-external
-            port:
-              number: 443
-  tls:
-  - hosts:
-    - io-bmc.kiski.co
-    secretName: io-bmc-kiski-co-tls
