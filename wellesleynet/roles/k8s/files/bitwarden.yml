@@ -47,7 +47,7 @@ spec:
     spec:
       containers:
       - name: bitwarden
-        image: vaultwarden/server:1.33.1-alpine
+        image: vaultwarden/server:1.33.2-alpine
         ports:
         - containerPort: 80
           protocol: TCP
