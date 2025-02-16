@@ -174,7 +174,7 @@ spec:
     spec:
       enableServiceLinks: false
       containers:
-      - image: authelia/authelia:4.38.18
+      - image: authelia/authelia:4.38.19
         imagePullPolicy: Always
         name: authelia
         ports:
@@ -197,7 +197,7 @@ spec:
             - /data/lost+found
           initialDelaySeconds: 5
           periodSeconds: 5
-      - image: redis:7.4.1-alpine
+      - image: redis:7.4.2-alpine
         imagePullPolicy: Always
         name: authelia-redis
         command:
